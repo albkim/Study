@@ -1,0 +1,360 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="var" priority="80" />
+      <Item value="new" priority="42" />
+      <Item value="LinkedListNode" priority="1" />
+      <Item value="Value" priority="13" />
+      <Item value="Assert`0" priority="24" />
+      <Item value="list" priority="7" />
+      <Item value="next" priority="4" />
+      <Item value="head" priority="15" />
+      <Item value="Node`0" priority="5" />
+      <Item value="Next" priority="5" />
+      <Item value="second" priority="1" />
+      <Item value="if" priority="32" />
+      <Item value="Node" priority="2" />
+      <Item value="return" priority="31" />
+      <Item value="else" priority="12" />
+      <Item value="headCopy" priority="3" />
+      <Item value="value" priority="4" />
+      <Item value="public" priority="35" />
+      <Item value="Head" priority="19" />
+      <Item value="static" priority="9" />
+      <Item value="private" priority="7" />
+      <Item value="Stack" priority="1" />
+      <Item value="void" priority="12" />
+      <Item value="QueueWithTwoStacksTests`0" priority="0" />
+      <Item value="object" priority="4" />
+      <Item value="null" priority="7" />
+      <Item value="const" priority="0" />
+      <Item value="int" priority="18" />
+      <Item value="queue" priority="1" />
+      <Item value="_holder" priority="5" />
+      <Item value="_popper" priority="5" />
+      <Item value="result" priority="23" />
+      <Item value="while" priority="8" />
+      <Item value="EnvironmentVariableTarget`0" priority="0" />
+      <Item value="Stack&lt;object&gt;" priority="0" />
+      <Item value="item" priority="1" />
+      <Item value="CircularLinkedList`0" priority="0" />
+      <Item value="currentItem" priority="4" />
+      <Item value="string" priority="15" />
+      <Item value="IEnumerable" priority="5" />
+      <Item value="_words" priority="2" />
+      <Item value="words" priority="0" />
+      <Item value="w" priority="0" />
+      <Item value="word" priority="3" />
+      <Item value="chars" priority="1" />
+      <Item value="foreach" priority="7" />
+      <Item value="EntryPointNotFoundException`0" priority="0" />
+      <Item value="lookup" priority="0" />
+      <Item value="List" priority="4" />
+      <Item value="entry" priority="0" />
+      <Item value="List&lt;string&gt;" priority="0" />
+      <Item value="IDictionary" priority="0" />
+      <Item value="char" priority="1" />
+      <Item value="Dictionary&lt;char,int&gt;" priority="0" />
+      <Item value="in" priority="4" />
+      <Item value="long" priority="0" />
+      <Item value="_hashMap" priority="0" />
+      <Item value="AnagramTests`0" priority="0" />
+      <Item value="anagram" priority="0" />
+      <Item value="bool" priority="2" />
+      <Item value="slow" priority="3" />
+      <Item value="fast" priority="3" />
+      <Item value="false" priority="5" />
+      <Item value="circular" priority="0" />
+      <Item value="true" priority="4" />
+      <Item value="break" priority="0" />
+      <Item value="ParallelEnumerable`0" priority="1" />
+      <Item value="third" priority="0" />
+      <Item value="TestMethod" priority="4" />
+      <Item value="ContinuousRegionTests`0" priority="0" />
+      <Item value="region" priority="0" />
+      <Item value="_matrix" priority="2" />
+      <Item value="GetLength`0" priority="1" />
+      <Item value="row" priority="3" />
+      <Item value="continuous" priority="3" />
+      <Item value="column" priority="1" />
+      <Item value="count" priority="9" />
+      <Item value="String`0" priority="0" />
+      <Item value="using" priority="1" />
+      <Item value="Algorithms" priority="0" />
+      <Item value="Implementation" priority="0" />
+      <Item value="word1" priority="5" />
+      <Item value="word2" priority="5" />
+      <Item value="shuffle" priority="4" />
+      <Item value="CheckWordFragment`0" priority="1" />
+      <Item value="TreeNode`0" priority="2" />
+      <Item value="BinarySearchTreeTests`0" priority="0" />
+      <Item value="tree" priority="0" />
+      <Item value="Root" priority="3" />
+      <Item value="TreeNode" priority="3" />
+      <Item value="Left" priority="1" />
+      <Item value="Right" priority="0" />
+      <Item value="root" priority="4" />
+      <Item value="IsValidBST`0" priority="0" />
+      <Item value="maxValue" priority="1" />
+      <Item value="left" priority="0" />
+      <Item value="right" priority="0" />
+      <Item value="minValue" priority="0" />
+      <Item value="Dictionary" priority="0" />
+      <Item value="pathTracker" priority="3" />
+      <Item value="source" priority="0" />
+      <Item value="Queue" priority="0" />
+      <Item value="bfsQueue" priority="3" />
+      <Item value="GraphNode`0" priority="2" />
+      <Item value="GraphNode" priority="0" />
+      <Item value="current" priority="1" />
+      <Item value="node" priority="2" />
+      <Item value="target" priority="0" />
+      <Item value="resultCurrent" priority="1" />
+      <Item value="Edges" priority="1" />
+      <Item value="List&lt;GraphNode&gt;" priority="1" />
+      <Item value="ed" priority="1" />
+      <Item value="Graph`0" priority="0" />
+      <Item value="cat" priority="0" />
+      <Item value="graph" priority="0" />
+      <Item value="IList" priority="1" />
+      <Item value="original" priority="8" />
+      <Item value="GetAllPermutations`0" priority="1" />
+      <Item value="permutations" priority="0" />
+      <Item value="String" priority="2" />
+      <Item value="for" priority="2" />
+      <Item value="ToString`0" priority="0" />
+      <Item value="charArray" priority="0" />
+      <Item value="temp" priority="0" />
+      <Item value="ReverseString`0" priority="1" />
+      <Item value="reversedString" priority="4" />
+      <Item value="StringBuilder`0" priority="0" />
+      <Item value="ch" priority="1" />
+      <Item value="buffer" priority="2" />
+      <Item value="startPosition" priority="3" />
+      <Item value="newString" priority="0" />
+      <Item value="float" priority="1" />
+      <Item value="number" priority="5" />
+      <Item value="Math" priority="3" />
+      <Item value="System" priority="0" />
+      <Item value="Math`0" priority="3" />
+      <Item value="digits" priority="1" />
+      <Item value="estimate" priority="4" />
+      <Item value="double" priority="2" />
+      <Item value="precision" priority="1" />
+      <Item value="IAsyncResult`0" priority="0" />
+      <Item value="Baylonian`0" priority="0" />
+      <Item value="array" priority="13" />
+      <Item value="start" priority="2" />
+      <Item value="end" priority="5" />
+      <Item value="Length" priority="1" />
+      <Item value="pivotIndex" priority="2" />
+      <Item value="newPivotIndex" priority="1" />
+      <Item value="k" priority="2" />
+      <Item value="index2" priority="0" />
+      <Item value="tmp" priority="0" />
+      <Item value="swap`0" priority="2" />
+      <Item value="index" priority="1" />
+      <Item value="pivotValue" priority="0" />
+      <Item value="processedIndex" priority="3" />
+      <Item value="Array`0" priority="0" />
+      <Item value="phoneMap" priority="0" />
+      <Item value="phoneNumber" priority="0" />
+      <Item value="rta" priority="0" />
+      <Item value="Random`0" priority="1" />
+      <Item value="a" priority="0" />
+      <Item value="vector" priority="0" />
+      <Item value="rand" priority="1" />
+      <Item value="Func" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Microsoft.VisualStudio.TestTools.UnitTesting.Assert">
+      <Item value="IsNotNull`0" priority="5" />
+      <Item value="AreEqual`0" priority="14" />
+      <Item value="AreSame`0" priority="0" />
+      <Item value="IsNull`0" priority="0" />
+      <Item value="IsFalse`0" priority="2" />
+      <Item value="IsTrue`0" priority="0" />
+      <Item value="Equals`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.Models.Node">
+      <Item value="Next" priority="23" />
+      <Item value="Value" priority="9" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.CircularLinkedList">
+      <Item value="Head" priority="3" />
+      <Item value="InsertSorted`0" priority="0" />
+      <Item value="Detect`0" priority="0" />
+      <Item value="InsertAtEnd`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.QueueWithTwoStacks">
+      <Item value="Enqueue`0" priority="0" />
+      <Item value="Dequeue`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.Stack`1">
+      <Item value="Push`0" priority="1" />
+      <Item value="Pop`0" priority="5" />
+      <Item value="Peek`0" priority="3" />
+      <Item value="Count" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IEnumerable`1">
+      <Item value="ToLookup`3" priority="0" />
+      <Item value="DefaultIfEmpty`1" priority="0" />
+      <Item value="Count`1" priority="0" />
+      <Item value="ElementAt`1" priority="1" />
+      <Item value="Equals`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="ToCharArray`0" priority="1" />
+      <Item value="ToLower`0" priority="0" />
+      <Item value="Length" priority="12" />
+      <Item value="Substring`0" priority="5" />
+      <Item value="Insert`0" priority="1" />
+      <Item value="Remove`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
+      <Item value="Add`0" priority="5" />
+      <Item value="Insert`0" priority="1" />
+      <Item value="AddRange`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.Anagram">
+      <Item value="FindUsingSorting`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.ContinuousRegion">
+      <Item value="Count`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.BinarySearchTree">
+      <Item value="IsValidBST`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.Models.TreeNode">
+      <Item value="Left" priority="2" />
+      <Item value="Value" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Int32">
+      <Item value="MinValue" priority="0" />
+      <Item value="MaxValue" priority="0" />
+      <Item value="Parse`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.Dictionary`2">
+      <Item value="Add`0" priority="1" />
+      <Item value="ContainsKey`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.Queue`1">
+      <Item value="Enqueue`0" priority="1" />
+      <Item value="Count" priority="0" />
+      <Item value="Dequeue`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.Models.GraphNode">
+      <Item value="Edges" priority="2" />
+      <Item value="Value" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Algorithms.Implementation.Models.Graph">
+      <Item value="SearchForShortestPath`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IList`1">
+      <Item value="Add`0" priority="1" />
+      <Item value="Count" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Char">
+      <Item value="ToString`0" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Algorithms.Implementation.String">
+      <Item value="FindAllPermutations`0" priority="0" />
+      <Item value="ReverseWord`0" priority="0" />
+      <Item value="FindAllPhoneNumberPermutations`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Math">
+      <Item value="Round`0" priority="2" />
+      <Item value="Floor`0" priority="0" />
+      <Item value="Log10`0" priority="0" />
+      <Item value="Exp`0" priority="0" />
+      <Item value="Pow`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Text.StringBuilder">
+      <Item value="Append`0" priority="2" />
+      <Item value="ToString`0" priority="1" />
+      <Item value="Clear`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Algorithms.Implementation.Math">
+      <Item value="SquareRoot`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Algorithms.Implementation.Array">
+      <Item value="FindKthSmallest`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Random">
+      <Item value="Next`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:QueueWithTwoStacksTests.cs" caret="1551" fromTop="15" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:CircularLinkedListTests.cs" caret="1679" fromTop="24" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:ContinuousRegionTests.cs" caret="778" fromTop="13" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/d:Models/f:TreeNode.cs" caret="303" fromTop="12" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:GraphTests.cs" caret="2736" fromTop="67" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:MathTests.cs" caret="407" fromTop="17" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:ArrayTests.cs" caret="432" fromTop="18" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:AnagramTests.cs" caret="0" fromTop="0" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:BinarySearchTreeTests.cs" caret="313" fromTop="12" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:StringTests.cs" caret="1241" fromTop="28" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="4864" fromTop="143" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:QueueWithTwoStacks.cs" caret="958" fromTop="35" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Math.cs" caret="1002" fromTop="7" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:LinkedList.cs" caret="1467" fromTop="29" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Graph.cs" caret="4158" fromTop="28" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:ContinuousRegion.cs" caret="0" fromTop="0" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:CircularLinkedList.cs" caret="1026" fromTop="0" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:BinarySearchTree.cs" caret="618" fromTop="24" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="1132" fromTop="0" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Anagram.cs" caret="1564" fromTop="0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Math.cs" caret="1838" fromTop="30" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:BinarySearchTree.cs" caret="534" fromTop="19" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="1961" fromTop="44" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="184" fromTop="5" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="1663" fromTop="39" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:ArrayTests.cs" caret="640" fromTop="26" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:ArrayTests.cs" caret="617" fromTop="24" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:ArrayTests.cs" caret="487" fromTop="20" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="635" fromTop="5" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="334" fromTop="15" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="784" fromTop="29" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Array.cs" caret="915" fromTop="33" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:CircularLinkedList.cs" caret="647" fromTop="20" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:BinarySearchTree.cs" caret="693" fromTop="27" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:BinarySearchTreeTests.cs" caret="361" fromTop="14" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:BinarySearchTreeTests.cs" caret="457" fromTop="18" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="3512" fromTop="28" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="3644" fromTop="26" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="3785" fromTop="23" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="4579" fromTop="28" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="4453" fromTop="28" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:StringTests.cs" caret="964" fromTop="37" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:StringTests.cs" caret="1241" fromTop="46" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:StringTests.cs" caret="1458" fromTop="45" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="4718" fromTop="35" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:String.cs" caret="4544" fromTop="31" />
+      <File id="570DF244-8F91-48DD-B68A-25554C6EE581/f:StringTests.cs" caret="1429" fromTop="34" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Math.cs" caret="793" fromTop="25" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Math.cs" caret="264" fromTop="12" />
+      <File id="936193CD-1B32-4373-8BE8-688865BC1721/f:Math.cs" caret="1045" fromTop="30" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
