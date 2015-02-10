@@ -5,40 +5,43 @@ using System.Text;
 
 namespace Algorithms.Implementation
 {
-    
-    public class MinStack {
-        
+    public class MinStack
+    {
         private Stack<int> stack = new Stack<int>();
-        private int min = int.MaxValue;
-        
-        public void Push(int value) {
-            stack.Push(value - min);
-            if (value < min) {
-                min = value;
+        private Stack<int> minStack = new Stack<int>();
+
+        public void Push(int value)
+        {
+            stack.Push(value);
+            if (minStack.Count == 0 || value <= minStack.Peek())
+            {
+                minStack.Push(value);
             }
         }
-        
-        public int Pop() {
-            if (stack.Count == 0) {
+
+        public int Pop()
+        {
+            if (stack.Count == 0)
+            {
                 throw new InvalidOperationException();
             }
-            
-            int currentMin = min;
-            int diff = stack.Pop();
-            
-            if (diff < 0) {
-                min = currentMin - diff;
+
+            int value = stack.Pop();
+            if (value == minStack.Peek())
+            {
+                minStack.Pop();
             }
-            
-            return diff + min;
+            return value;
         }
-        
-        public int GetMin() {
-            if (stack.Count == 0) {
+
+        public int GetMin()
+        {
+            if (minStack.Count == 0)
+            {
                 throw new InvalidOperationException();
             }
-            return min;
+            return minStack.Peek();
         }
-        
+
     }
 }
