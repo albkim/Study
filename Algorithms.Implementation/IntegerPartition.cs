@@ -35,10 +35,11 @@ namespace Algorithms.Implementation
                 //we crossed the end, we should finish this partition
                 //3. add to partition 1 + 1 + 1 + 1
                 //8. add to partition 2 + 1 + 1
-                //10. add to partition 2 + 2
-                //15. add to partition 3 + 1
+                //11. add to partition 2 + 2
+                //16. add to partition 3 + 1
                 //19. add to partition 4
-                partitions.Add(currentParitition);
+                partitions.Add(new List<int> (currentParitition));
+                currentParitition.Clear();
                 return;
             }
 
@@ -48,12 +49,12 @@ namespace Algorithms.Implementation
                 //1. have 4, 4 -> 4, 3 -> 4, 2 -> 4, 1
                 //4. process 4, 2
                 //6. have 2, 2 -> 2, 1
-                //8. process 2, 2
-                //11. process 4, 3
-                //13. have 1, 3 -> 1, 2 -> 1, 1
-                //16. process 1, 2 -> process 1, 3
-                //17. process 4, 4
-                GetPartition(sum, largestNumber - 1, partitions, new List<int>());
+                //9. process 2, 2
+                //12. process 4, 3
+                //14. have 1, 3 -> 1, 2 -> 1, 1
+                //17. process 1, 2 -> process 1, 3
+                //18. process 4, 4
+                GetPartition(sum, largestNumber - 1, partitions, currentParitition);
             }
             
             if (sum >= largestNumber)
@@ -62,10 +63,10 @@ namespace Algorithms.Implementation
                 //2. add 1 -> 3, 1 -> add 1 -> 2, 1 -> add 1 -> 1, 1 -> add 1 -> 0, 1
                 //5. add 2 -> 2, 2
                 //7. add 1 -> 1, 1 -> add 1 -> 0, 1
-                //9. add 2 -> 1, 2 -> add 2 -> -1, 2
-                //12. add 3 -> 1, 3 
-                //14. add 1 -> 0, 1
-                //18. add 4 -> 0, 4
+                //10. add 2 -> 0, 2
+                //13. add 3 -> 1, 3 
+                //15. add 1 -> 0, 1
+                //19. add 4 -> 0, 4
                 currentParitition.Add(largestNumber);
                 GetPartition(sum - largestNumber, largestNumber, partitions, currentParitition);
             }
