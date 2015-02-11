@@ -46,6 +46,7 @@
     <Compile Include="ContinuousRegion.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="IntegerPartition.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="MinStack.cs" />
     <Compile Include="MinStackConstantSpace.cs" />
