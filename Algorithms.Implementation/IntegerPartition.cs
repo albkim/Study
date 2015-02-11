@@ -8,11 +8,11 @@ namespace Algorithms.Implementation
     public class IntegerPartition
     {
 
-        public static List<List<int>> GetPartition(int number)
+        public static List<List<int>> Partition(int number)
         {
             List<List<int>> partitions = new List<List<int>>();
 
-            GetPartition(4, 4, partitions, new List<int>());
+            Partition(number, number, partitions, new List<int>());
 
             return partitions;
         }
@@ -28,7 +28,7 @@ namespace Algorithms.Implementation
         /// <param name="sum"></param>
         /// <param name="largestNumber"></param>
         /// <param name="partitions"></param>
-        private static void GetPartition(int sum, int largestNumber, List<List<int>> partitions, List<int> currentParitition)
+        private static void Partition(int sum, int largestNumber, List<List<int>> partitions, List<int> currentParitition)
         {
             if (sum <= 0)
             {
@@ -38,8 +38,7 @@ namespace Algorithms.Implementation
                 //11. add to partition 2 + 2
                 //16. add to partition 3 + 1
                 //19. add to partition 4
-                partitions.Add(new List<int> (currentParitition));
-                currentParitition.Clear();
+                partitions.Add(currentParitition);
                 return;
             }
 
@@ -54,7 +53,7 @@ namespace Algorithms.Implementation
                 //14. have 1, 3 -> 1, 2 -> 1, 1
                 //17. process 1, 2 -> process 1, 3
                 //18. process 4, 4
-                GetPartition(sum, largestNumber - 1, partitions, currentParitition);
+                Partition(sum, largestNumber - 1, partitions, new List<int>(currentParitition));
             }
             
             if (sum >= largestNumber)
@@ -68,7 +67,39 @@ namespace Algorithms.Implementation
                 //15. add 1 -> 0, 1
                 //19. add 4 -> 0, 4
                 currentParitition.Add(largestNumber);
-                GetPartition(sum - largestNumber, largestNumber, partitions, currentParitition);
+                Partition(sum - largestNumber, largestNumber, partitions, currentParitition);
+            }
+        }
+
+        public static List<List<int>> CombinationSubSet(int[] array, int number)
+        {
+            List<List<int>> partitions = new List<List<int>>();
+
+            CombinationSubSet(array, number, array.Length - 1, partitions, new List<int>());
+
+            return partitions;
+        }
+
+        private static void CombinationSubSet(int[] array, int sum, int index, List<List<int>> partitions, List<int> currentParitition)
+        {
+            if (sum <= 0)
+            {
+                //we found the exact match
+                partitions.Add(currentParitition);
+                return;
+            }
+
+            int number = array[index];
+
+            if (index > 0)
+            {
+                CombinationSubSet(array, sum, index - 1, partitions, new List<int>(currentParitition));
+            }
+
+            if (sum >= number)
+            {
+                currentParitition.Add(number);
+                CombinationSubSet(array, sum - number, index, partitions, currentParitition);
             }
         }
 

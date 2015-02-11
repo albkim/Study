@@ -11,11 +11,13 @@ namespace Algorithms.Tests
     [TestClass]
     public class IntegerPartitionTests
     {
-        
+
+        #region Partition
+
         [TestMethod]
-        public void Simple()
+        public void PartitionSimple()
         {
-            var result = IntegerPartition.GetPartition(4);
+            var result = IntegerPartition.Partition(4);
 
             Assert.AreEqual(5, result.Count);
 
@@ -39,8 +41,65 @@ namespace Algorithms.Tests
             Assert.AreEqual(1, result[3][1]);
 
             Assert.AreEqual(1, result[4].Count);
-            Assert.AreEqual(4, result[3][0]);
+            Assert.AreEqual(4, result[4][0]);
         }
+
+        #endregion
+
+        #region CombinationSubSet
+
+        [TestMethod]
+        public void CombinationSubSetSimple()
+        {
+            var result = IntegerPartition.CombinationSubSet(new[] { 2, 3, 7 }, 10);
+
+            Assert.AreEqual(3, result.Count);
+
+            Assert.AreEqual(5, result[0].Count);
+            Assert.AreEqual(2, result[0][0]);
+            Assert.AreEqual(2, result[0][1]);
+            Assert.AreEqual(2, result[0][2]);
+            Assert.AreEqual(2, result[0][3]);
+            Assert.AreEqual(2, result[0][4]);
+
+            Assert.AreEqual(4, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(3, result[1][1]);
+            Assert.AreEqual(2, result[1][2]);
+            Assert.AreEqual(2, result[1][3]);
+
+            Assert.AreEqual(2, result[2].Count);
+            Assert.AreEqual(7, result[2][0]);
+            Assert.AreEqual(3, result[2][1]);
+        }
+
+        [TestMethod]
+        public void CombinationSubSetWrongOrder()
+        {
+            var result = IntegerPartition.CombinationSubSet(new[] { 2, 7, 3 }, 10);
+
+            Assert.AreEqual(3, result.Count);
+            
+            Assert.AreEqual(5, result[0].Count);
+            Assert.AreEqual(2, result[0][0]);
+            Assert.AreEqual(2, result[0][1]);
+            Assert.AreEqual(2, result[0][2]);
+            Assert.AreEqual(2, result[0][3]);
+            Assert.AreEqual(2, result[0][4]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(7, result[1][1]);
+
+
+            Assert.AreEqual(4, result[2].Count);
+            Assert.AreEqual(3, result[2][0]);
+            Assert.AreEqual(3, result[2][1]);
+            Assert.AreEqual(2, result[2][2]);
+            Assert.AreEqual(2, result[2][3]);
+        }
+
+        #endregion
 
     }
 

@@ -9,18 +9,6 @@ namespace Algorithms.Tests
     public class ArrayTests
     {
 
-        #region FindAllPossibleCombinations
-
-        [TestMethod]
-        public void Simple()
-        {
-            List<List<int>> result = Array.FindAllPossibleCombinations(new[] { 2, 3, 7 }, 10);
-
-            Assert.AreEqual(3, result.Count);
-        }
-
-        #endregion
-
         #region FindKthSmallest
 
         [TestMethod]
