@@ -6,6 +6,32 @@ namespace Algorithms.Implementation
 {
     public class Array
     {
+
+        public static List<List<int>> FindAllPossibleCombinations(int[] array, int total) {
+            List<List<int>> validCombinations = new List<List<int>>();
+
+            FindAllPossibleCombinations(array, 0, total, new List<int>(), validCombinations);
+
+            return validCombinations;
+        }
+
+        private static void FindAllPossibleCombinations(int[] array, int currentTotal, int total, List<int> path, List<List<int>> validCombinations) {
+            foreach (int number in array)
+            {
+                List<int> newPath = new List<int>(path);
+                newPath.Add(number);
+                if (currentTotal + number == total)
+                {
+                    validCombinations.Add(newPath);
+                }
+                else if (currentTotal + number < total)
+                {
+                    //if there is still a chance (less than total), then iterate one more
+                    FindAllPossibleCombinations(array, currentTotal + number, total, newPath, validCombinations);
+                }
+            }
+        }
+
         public static int FindKthSmallest(int[] array, int k)
         {
             if (array.Length == 1)

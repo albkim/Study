@@ -44,6 +44,7 @@
     <Compile Include="BinarySearchTree.cs" />
     <Compile Include="CircularLinkedList.cs" />
     <Compile Include="ContinuousRegion.cs" />
+    <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="MinStack.cs" />

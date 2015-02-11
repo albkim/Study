@@ -10,6 +10,58 @@ namespace Algorithms.Tests
     [TestClass]
     public class StringTests
     {
+        #region Boyer Moore Replace
+
+        [TestMethod]
+        public void TestReplaceSimple()
+        {
+            var result = String.Replace("aabbccdd", "bb", "11");
+
+            Assert.AreEqual("aa11ccdd", result);
+        }
+
+        [TestMethod]
+        public void TestReplaceLargerSearch()
+        {
+            var result = String.Replace("aabbccdd", "bbcc", "11");
+
+            Assert.AreEqual("aa11dd", result);
+        }
+
+        [TestMethod]
+        public void TestReplaceLargerReplace()
+        {
+            var result = String.Replace("aabbccdd", "bb", "11111");
+
+            Assert.AreEqual("aa11111ccdd", result);
+        }
+
+        [TestMethod]
+        public void TestReplaceLargerMultiple()
+        {
+            var result = String.Replace("aabbccddbb", "bb", "11");
+
+            Assert.AreEqual("aa11ccdd11", result);
+        }
+
+        [TestMethod]
+        public void TestReplaceLargerStartSame()
+        {
+            var result = String.Replace("aaaabbccdd", "aabb", "11");
+
+            Assert.AreEqual("aa11ccdd", result);
+        }
+
+        [TestMethod]
+        public void TestReplaceLargerStartOdd()
+        {
+            var result = String.Replace("aaabbccdd", "aabb", "11");
+
+            Assert.AreEqual("a11ccdd", result);
+        }
+
+        #endregion
+
         #region FindAllPermutations
 
         [TestMethod]

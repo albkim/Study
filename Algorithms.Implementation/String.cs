@@ -7,6 +7,187 @@ namespace Algorithms.Implementation
 {
     public class String
     {
+
+        #region Justification
+
+        private class TextWrapper
+        {
+            public string Text { get; set; }
+            public int Space { get; set; }
+        }
+
+        public static void Justify(string[] text, int length)
+        {
+            List<List<TextWrapper>> storage = new List<List<TextWrapper>>();
+
+            int lineLength = 0;
+            List<TextWrapper> line = new List<TextWrapper>();
+            foreach (string word in text)
+            {
+                int wordLength = word.Length;
+                int diff = length - (lineLength + wordLength);
+                if (diff < 0)
+                {
+                    lineLength = CleanupLastWord(lineLength, line);
+
+                    //readjust spaces and create new line
+                    int leftOverEqual = (int)System.Math.Floor((length - lineLength) / (1d * (line.Count - 1)));
+                    int leftOverMore = (length - lineLength) % (line.Count - 1);
+                    int index = 0;
+                    foreach (TextWrapper textWord in line)
+                    {
+                        textWord.Space += leftOverEqual + (index < leftOverMore ? 1 : 0);
+                    }
+                    storage.Add(line);
+                    lineLength = 0;
+                    line = new List<TextWrapper>();
+                }
+
+                TextWrapper textWrapper = new TextWrapper { Text = word, Space = (diff > 0) ? 1 : 0 };
+                line.Add(textWrapper);
+                lineLength += wordLength + textWrapper.Space;
+            }
+
+            //print rest
+            foreach (List<TextWrapper> printLine in storage)
+            {
+                foreach (TextWrapper word in printLine)
+                {
+                    Console.Write(word.Text);
+                    PrintSpace(word.Space);
+                }
+                Console.Write("\r\n");
+            }
+
+            //process last line;
+            lineLength = CleanupLastWord(lineLength, line);
+            line[line.Count - 1].Space = length - lineLength + line[line.Count - 1].Space;
+            foreach (TextWrapper word in line)
+            {
+                Console.Write(word.Text);
+                PrintSpace(word.Space);
+            }
+        }
+
+        private static int CleanupLastWord(int lineLength, List<TextWrapper> line)
+        {
+            //remove space from last word, since it has to be aligned to the end
+            TextWrapper lastWord = line[line.Count - 1];
+
+            if (lastWord.Space > 0)
+            {
+                lineLength -= lastWord.Space;
+                lastWord.Space = 0;
+            }
+
+            return lineLength;
+        }
+
+        private static void PrintSpace(int space)
+        {
+            for (int count = 0; count < space; count++)
+            {
+                Console.Write(" ");
+            }
+        }
+
+        #endregion
+
+        #region String Replace Boyer Moore
+
+        public static string Replace(string original, string search, string replace)
+        {
+            int index = search.Length - 1;
+            List<int> validIndexes = new List<int>();
+
+            Dictionary<char, int> searchIndexes = new Dictionary<char, int>();
+            for (int charIndex = search.Length - 1; charIndex >= 0; charIndex--)
+            {
+                if (!searchIndexes.ContainsKey(search[charIndex]))
+                {
+                    searchIndexes.Add(search[charIndex], search.Length - charIndex - 1);
+                }
+            }
+
+            while (index < original.Length)
+            {
+                //match from the back...if it is not a match, try to skip to the next possible match
+                //if the letter exists in the search string, then skip to the last index and try to align,
+                //if not, skip the whole length of search string
+                char character = original[index];
+                if (character == search[search.Length - 1])
+                {
+                    bool valid = true;
+                    for (int charIndex = search.Length - 2; charIndex >= 0; charIndex--)
+                    {
+                        if (search[charIndex] != original[index - (search.Length - charIndex - 1)])
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+                    if (valid)
+                    {
+                        validIndexes.Add(index - (search.Length - 1));
+                        index += search.Length;
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+                else
+                {
+                    if (searchIndexes.ContainsKey(character))
+                    {
+                        index += searchIndexes[character];
+                    }
+                    else
+                    {
+                        index += search.Length;
+                    }
+                }
+            }
+
+            if (validIndexes.Count > 0)
+            {
+                List<char> originalChar = new List<char>(original.ToArray());
+                foreach (int validIndex in validIndexes)
+                {
+                    for (int charIndex = 0; charIndex < search.Length; charIndex++)
+                    {
+                        int replaceIndex = validIndex + charIndex;
+                        if (charIndex < replace.Length)
+                        {
+                            //if replace is within search then replace
+                            originalChar[replaceIndex] = replace[charIndex];
+                        }
+                        else
+                        {
+                            //remove extra search strings
+                            originalChar.RemoveAt(validIndex + replace.Length);
+                        }
+                    }
+                    if (search.Length < replace.Length)
+                    {
+                        //if replace is longer
+                        for (int charIndex = search.Length; charIndex < replace.Length; charIndex++)
+                        {
+                            int injectIndex = validIndex + search.Length;
+                            originalChar.Insert(injectIndex, replace[charIndex]);
+                        }
+                    }
+                }
+                return new string(originalChar.ToArray());
+            }
+
+            return original;
+        }
+
+        #endregion
+
+        #region Reverse Word
+
         public static string ReverseWord(string original)
         {
             //first reverse everything
@@ -17,7 +198,7 @@ namespace Algorithms.Implementation
             var buffer = new StringBuilder();
             var startPosition = 0;
             var count = 0;
-            foreach(var ch in reversedString)
+            foreach (var ch in reversedString)
             {
                 if (ch == ' ')
                 {
@@ -28,7 +209,7 @@ namespace Algorithms.Implementation
                 }
                 count++;
             }
-            
+
             //handle the last piece
             buffer.Append(ReverseString(reversedString.Substring(startPosition, count - startPosition)));
 
@@ -46,6 +227,10 @@ namespace Algorithms.Implementation
             }
             return new string(charArray);
         }
+
+        #endregion
+
+        #region Find All Permutations
 
         public static IList<string> FindAllPermutations(string original)
         {
@@ -66,9 +251,9 @@ namespace Algorithms.Implementation
             if (original.Length > 1)
             {
                 var permutations = GetAllPermutations(original.Substring(1));
-                foreach(var word in permutations)
+                foreach (var word in permutations)
                 {
-                    for(var count = 0; count <= word.Length; count++)
+                    for (var count = 0; count <= word.Length; count++)
                     {
                         result.Add(word.Insert(count, original[0].ToString()));
                     }
@@ -81,6 +266,10 @@ namespace Algorithms.Implementation
 
             return result;
         }
+
+        #endregion
+
+        #region Find All Phone Number Permutations
 
         public static IList<string> FindAllPhoneNumberPermutations(string phoneNumber)
         {
@@ -142,6 +331,10 @@ namespace Algorithms.Implementation
             return result;
         }
 
+        #endregion
+
+        #region Valid Shuffle
+
         public static bool ValidShuffle(string word1, string word2, string shuffle)
         {
             if (word1.Length + word2.Length != shuffle.Length)
@@ -171,5 +364,8 @@ namespace Algorithms.Implementation
                 return false;
             }
         }
+
+        #endregion
+
     }
 }

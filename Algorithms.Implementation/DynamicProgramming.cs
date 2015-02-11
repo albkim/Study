@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Algorithms.Implementation
+{
+    
+    public class DynamicProgramming
+    {
+
+        /// <summary>
+        /// 0 - 1 knapsack where the item can be included or not included
+        /// <image url="$(SolutionDir)\Images\knapsack.png" />
+        /// </summary>
+        /// <param name="total"></param>
+        /// <param name="weights"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static int Knapsack(int capacity, int[] weights, int[] values, List<int> choices)
+        {
+            int[,] Value = new int[weights.Length + 1, capacity + 1];
+
+            for (int item = 0; item <= weights.Length; item++)
+            {
+                for (int space = 0; space <= capacity; space++)
+                {
+                    if ((item == 0) || (space == 0))
+                    {
+                        //initialize
+                        Value[item, space] = 0;
+                        continue;
+                    }
+
+                    int currentWeight = weights[item - 1];
+                    int currentValue = values[item - 1];
+
+                    if (currentWeight <= space)
+                    {
+                        //now this item may be valid since it's smaller than available space
+                        //cost is max of the following
+                        //if current item is included, then n-1 item + current item with W minus current weight
+                        //if current item is not included then n-1 item and W
+                        Value[item, space] = System.Math.Max(Value[item - 1, space - currentWeight] + currentValue, Value[item - 1, space]);
+                    }
+                    else
+                    {
+                        //this item is not valid...keep the last one
+                        Value[item, space] = Value[item - 1, space];
+                    }
+                }
+            }
+
+            int weight = capacity;
+            for (int item = weights.Length; item > 0; item--)
+            {
+                if (Value[item, weight] != Value[item - 1, weight])
+                {
+                    //if the value here is equal to the previous item's max, that means i did not take this item
+                    //if they are not equal, that means i took this item
+                    choices.Add(weights[item - 1]);
+                }
+            }
+
+            return Value[weights.Length, capacity];
+        }
+
+    }
+
+}
