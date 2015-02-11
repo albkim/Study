@@ -50,6 +50,7 @@
     <Compile Include="CircularLinkedListTests.cs" />
     <Compile Include="ContinuousRegionTests.cs" />
     <Compile Include="GraphTests.cs" />
+    <Compile Include="IntegerPartitionTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="MathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
