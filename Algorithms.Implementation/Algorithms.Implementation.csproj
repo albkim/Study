@@ -57,6 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueWithTwoStacks.cs" />
     <Compile Include="Array.cs" />
+    <Compile Include="Sort.cs" />
     <Compile Include="String.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

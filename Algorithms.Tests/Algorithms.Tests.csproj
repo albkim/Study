@@ -49,6 +49,7 @@
     <Compile Include="BinarySearchTreeTests.cs" />
     <Compile Include="CircularLinkedListTests.cs" />
     <Compile Include="ContinuousRegionTests.cs" />
+    <Compile Include="SortTests.cs" />
     <Compile Include="DynamicProgrammingTests.cs" />
     <Compile Include="GraphTests.cs" />
     <Compile Include="IntegerPartitionTests.cs" />
