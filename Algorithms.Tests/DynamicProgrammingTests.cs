@@ -10,6 +10,7 @@ namespace Algorithms.Tests
     [TestClass]
     public class DynamicProgrammingTests
     {
+
         #region Knapsack
 
         [TestMethod]
@@ -26,5 +27,14 @@ namespace Algorithms.Tests
         
         #endregion
 
+        #region Edit Distance
+
+        [TestMethod]
+        public void EditDistanceRecursive()
+        {
+            Assert.AreEqual(3, DynamicProgramming.EditDistanceRecursive("SATURDAY", "SUNDAY"));
+        }
+
+        #endregion
     }
 }

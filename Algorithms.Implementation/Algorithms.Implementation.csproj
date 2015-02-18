@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anagram.cs" />
+    <Compile Include="BinarySearch.cs" />
     <Compile Include="BinarySearchTree.cs" />
     <Compile Include="CircularLinkedList.cs" />
     <Compile Include="ContinuousRegion.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Hamiltonian.cs" />
     <Compile Include="IntegerPartition.cs" />
     <Compile Include="LinkedList.cs" />
+    <Compile Include="Majority.cs" />
     <Compile Include="MinStack.cs" />
     <Compile Include="MinStackConstantSpace.cs" />
     <Compile Include="Models\Graphes\Graph.cs" />

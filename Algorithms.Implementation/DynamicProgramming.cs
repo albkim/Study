@@ -65,6 +65,60 @@ namespace Algorithms.Implementation
             return Value[weights.Length, capacity];
         }
 
+        /// <summary>
+        /// +1 for delete, insertion and substitution
+        /// e.g. Saturday & Sunday has 3
+        /// S a(i) t(i) u r(n -> r) day
+        /// </summary>
+        /// <param name="string1"></param>
+        /// <param name="string2"></param>
+        /// <returns></returns>
+        public static int EditDistanceRecursive(string string1, string string2)
+        {
+            return EditDistanceRecursive(string1, string2, string1.Length, string2.Length);
+        }
+
+        private static int EditDistanceRecursive(string string1, string string2, int length1, int length2)
+        {
+            // if one is shorter, then we need to make as many changes as the other string
+            if (length1 == 0)
+            {
+                return length2;
+            } 
+            if (length2 == 0)
+            {
+                return length1;
+            }
+
+            //now we have three cases
+            //cost of current letter which could be 0 or 1 and added with cost of all previous letters (abcd <> abce)
+            //cost of removing one letter (abcd <> abc)
+            //cost of adding one letter (abc <> abcd)
+            //then we just have to recursively do this for each length
+            return System.Math.Min(System.Math.Min(
+                EditDistanceRecursive(string1, string2, length1 - 1, length2 - 1) + ((string1[length1 - 1] == string2[length2 - 1]) ? 0 : 1),
+                EditDistanceRecursive(string1, string2, length1 - 1, length2) + 1), //since we removed one, we have to take the cost
+                EditDistanceRecursive(string1, string2, length1, length2 - 1) + 1 //this is same as adding one to string 1
+            );
+        }
+
+        /// <summary>
+        ///             S   A   T   U   R   D   A   Y
+        ///     S       0   1   2   3   4   5   6   7
+        ///     U       1   1   2   2   3   4   5   6
+        ///     N       2   2   3   3   4   5   6   7
+        ///     D       3   3   3   3   4   4   5   6
+        ///     A       4
+        ///     Y       5
+        /// </summary>
+        /// <param name="string1"></param>
+        /// <param name="string2"></param>
+        /// <returns></returns>
+        public static int EditDistanceDynamicProgramming(string string1, string string2)
+        {
+
+        }
+
     }
 
 }

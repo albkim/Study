@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnagramTests.cs" />
+    <Compile Include="BinarySearchTests.cs" />
     <Compile Include="BinarySearchTreeTests.cs" />
     <Compile Include="CircularLinkedListTests.cs" />
     <Compile Include="ContinuousRegionTests.cs" />
+    <Compile Include="MajorityTests.cs" />
     <Compile Include="SortTests.cs" />
     <Compile Include="DynamicProgrammingTests.cs" />
     <Compile Include="GraphTests.cs" />
