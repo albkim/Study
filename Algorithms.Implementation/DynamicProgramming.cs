@@ -104,19 +104,44 @@ namespace Algorithms.Implementation
 
         /// <summary>
         ///             S   A   T   U   R   D   A   Y
-        ///     S       0   1   2   3   4   5   6   7
-        ///     U       1   1   2   2   3   4   5   6
-        ///     N       2   2   3   3   4   5   6   7
-        ///     D       3   3   3   3   4   4   5   6
-        ///     A       4
-        ///     Y       5
+        ///         0   1   2   3   4   5   6   7   8   
+        ///     S   1   0   1   2   3   4   5   6   7
+        ///     U   2   1   1   2   2   3   4   5   6
+        ///     N   3   2   2   2   3   3   4   5   6
+        ///     D   4   3   3   3   3   4   3   4   5
+        ///     A   5   4   3   4   4   4   4   3   4
+        ///     Y   6   5   4   4   5   5   5   4   3
         /// </summary>
         /// <param name="string1"></param>
         /// <param name="string2"></param>
         /// <returns></returns>
         public static int EditDistanceDynamicProgramming(string string1, string string2)
         {
+            int[,] distance = new int[string1.Length + 1, string2.Length + 1];
+            
+            //base case
+            //for all length of 0, edit distance is equal to length of the other string
+            for (int count = 1; count <= string1.Length; count++) {
+                distance[count, 0] = count;
+            }
+            for (int count = 1; count <= string2.Length; count++)
+            {
+                distance[0, count] = count;
+            }
 
+            //build bottom up use the same logic as recursive method
+            for (int i = 1; i <= string1.Length; i++)
+            {
+                for (int j = 1; j <= string2.Length; j++)
+                {
+                    distance[i, j] = System.Math.Min(System.Math.Min(
+                        distance[i - 1, j - 1] + (string1[i - 1] == string2[j - 1] ? 0 : 1),
+                        distance[i - 1, j] + 1),
+                        distance[i, j - 1] + 1);
+                }
+            }
+
+            return distance[string1.Length, string2.Length];
         }
 
     }

@@ -35,6 +35,12 @@ namespace Algorithms.Tests
             Assert.AreEqual(3, DynamicProgramming.EditDistanceRecursive("SATURDAY", "SUNDAY"));
         }
 
+        [TestMethod]
+        public void EditDistanceDynamicProgramming()
+        {
+            Assert.AreEqual(3, DynamicProgramming.EditDistanceDynamicProgramming("SATURDAY", "SUNDAY"));
+        }
+
         #endregion
     }
 }
