@@ -9,6 +9,8 @@ namespace Algorithms.Implementation
     public class DynamicProgramming
     {
 
+        #region Knapsack
+
         /// <summary>
         /// 0 - 1 knapsack where the item can be included or not included
         /// <image url="$(SolutionDir)\Images\knapsack.png" />
@@ -65,6 +67,10 @@ namespace Algorithms.Implementation
             return Value[weights.Length, capacity];
         }
 
+        #endregion
+
+        #region Edit Distance
+        
         /// <summary>
         /// +1 for delete, insertion and substitution
         /// e.g. Saturday & Sunday has 3
@@ -84,7 +90,7 @@ namespace Algorithms.Implementation
             if (length1 == 0)
             {
                 return length2;
-            } 
+            }
             if (length2 == 0)
             {
                 return length1;
@@ -118,10 +124,11 @@ namespace Algorithms.Implementation
         public static int EditDistanceDynamicProgramming(string string1, string string2)
         {
             int[,] distance = new int[string1.Length + 1, string2.Length + 1];
-            
+
             //base case
             //for all length of 0, edit distance is equal to length of the other string
-            for (int count = 1; count <= string1.Length; count++) {
+            for (int count = 1; count <= string1.Length; count++)
+            {
                 distance[count, 0] = count;
             }
             for (int count = 1; count <= string2.Length; count++)
@@ -144,6 +151,28 @@ namespace Algorithms.Implementation
             return distance[string1.Length, string2.Length];
         }
 
+        #endregion
+
+        #region The 100 Game
+
+        /// <summary>
+        /// In "the 100 game," two players take turns adding, to a running 
+        /// total, any integer from 1..10. The player who first causes the running 
+	    /// total to reach or exceed 100 wins. 
+	    /// What if we change the game so that players cannot re-use integers? 
+	    /// For example, if two players might take turns drawing from a common pool of numbers 
+	    /// of 1..15 without replacement until they reach a total >= 100. This problem is 
+        /// to write a program that determines which player would win with ideal play. 
+        /// </summary>
+        /// <param name="range"></param>
+        /// <param name="number"></param>
+        public static void CanIWin(int range, int number)
+        {
+
+        }
+
+        #endregion
+        
     }
 
 }

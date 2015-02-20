@@ -43,6 +43,7 @@
     <Compile Include="Anagram.cs" />
     <Compile Include="BinarySearch.cs" />
     <Compile Include="BinarySearchTree.cs" />
+    <Compile Include="BlockingQueue.cs" />
     <Compile Include="CircularLinkedList.cs" />
     <Compile Include="ContinuousRegion.cs" />
     <Compile Include="DynamicProgramming.cs" />

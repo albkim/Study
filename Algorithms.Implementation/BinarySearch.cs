@@ -9,6 +9,8 @@ namespace Algorithms.Implementation
     public class BinarySearch
     {
 
+        #region Normal Search
+
         public static bool Search(int[] array, int number)
         {
             return Search(array, number, 0, array.Length - 1);
@@ -38,6 +40,10 @@ namespace Algorithms.Implementation
             //if we are here, we did not find it and ran out of numbers
             return false;
         }
+
+        #endregion
+
+        #region Rotated Array
 
         public static bool SearchRotatedArray(int[] array, int number)
         {
@@ -93,6 +99,49 @@ namespace Algorithms.Implementation
 
             return false;
         }
+
+        #endregion
+
+        #region Next Smallest
+
+        public static int SearchNext(int[] array, int number)
+        {
+            int start = 0;
+            int end = array.Length - 1;
+
+            int next = int.MaxValue;
+
+            while (start <= end)
+            {
+                int mid = start + (int)System.Math.Floor((end - start) / 2d);
+
+                if (array[mid] <= number)
+                {
+                    //since we are looking for a number larger than the number, we can discard left
+                    start = mid + 1;
+                }
+                else
+                {
+                    if ((array[mid] > number) && (array[mid] < next))
+                    {
+                        next = array[mid];
+                    }
+
+                    //since we captured the smallest number larger than the number, we can now discard
+                    end = mid - 1;
+                }
+            }
+
+            if (next == int.MaxValue)
+            {
+                //cannot find...all numbers smaller than number
+                throw new ArgumentException();
+            }
+
+            return next;
+        }
+
+        #endregion
 
     }
 

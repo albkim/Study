@@ -6,6 +6,15 @@ using Algorithms.Implementation.Models;
 
 namespace Algorithms.Implementation
 {
+
+    /// <summary>
+    /// In order - left, current, right
+    /// Pre order - current, left, right
+    /// Post order - left, right, current
+    /// 
+    /// for BST, we cannot determine the structure unless we have in order traversal
+    /// </summary>
+
     public class BinarySearchTree
     {
         public TreeNode Root { get; set; }
