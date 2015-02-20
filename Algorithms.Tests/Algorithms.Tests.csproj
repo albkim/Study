@@ -54,7 +54,7 @@
     <Compile Include="SortTests.cs" />
     <Compile Include="DynamicProgrammingTests.cs" />
     <Compile Include="GraphTests.cs" />
-    <Compile Include="HamiltonianTests.cs" />
+    <Compile Include="BackTrackingTests.cs" />
     <Compile Include="IntegerPartitionTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="MathTests.cs" />

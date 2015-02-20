@@ -8,7 +8,7 @@ using System.Text;
 namespace Algorithms.Tests
 {
     [TestClass]
-    public class HamiltonianTests
+    public class BackTrackingTests
     {
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Algorithms.Tests
             graph.Add(3, new List<int> { 0, 1, 4 });
             graph.Add(4, new List<int> { 1, 2, 3 });
 
-            Assert.IsTrue(Hamiltonian.Exists(graph));
+            Assert.IsTrue(BackTracking.HamiltonianExists(graph));
         }
 
         /// <summary>
@@ -48,7 +48,22 @@ namespace Algorithms.Tests
             graph.Add(3, new List<int> { 0, 1 });
             graph.Add(4, new List<int> { 1, 2 });
 
-            Assert.IsFalse(Hamiltonian.Exists(graph));
+            Assert.IsFalse(BackTracking.HamiltonianExists(graph));
+        }
+
+        [TestMethod]
+        public void Can1Win()
+        {            
+            //Assert.IsTrue(BackTracking.Can1Win(1, 1));
+            //Assert.IsTrue(BackTracking.Can1Win(2, 1));
+            Assert.IsTrue(BackTracking.Can1Win(3, 5));
+            Assert.IsTrue(BackTracking.Can1Win(5, 12));
+        }
+
+        [TestMethod]
+        public void Can1Win3_4()
+        {
+            Assert.IsFalse(BackTracking.Can1Win(3, 4));
         }
 
     }

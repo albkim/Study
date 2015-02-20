@@ -48,7 +48,7 @@
     <Compile Include="ContinuousRegion.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="Hamiltonian.cs" />
+    <Compile Include="BackTracking.cs" />
     <Compile Include="IntegerPartition.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="Majority.cs" />
