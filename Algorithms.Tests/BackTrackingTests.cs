@@ -54,8 +54,8 @@ namespace Algorithms.Tests
         [TestMethod]
         public void Can1Win()
         {            
-            //Assert.IsTrue(BackTracking.Can1Win(1, 1));
-            //Assert.IsTrue(BackTracking.Can1Win(2, 1));
+            Assert.IsTrue(BackTracking.Can1Win(1, 1));
+            Assert.IsTrue(BackTracking.Can1Win(2, 1));
             Assert.IsTrue(BackTracking.Can1Win(3, 5));
             Assert.IsTrue(BackTracking.Can1Win(5, 12));
         }

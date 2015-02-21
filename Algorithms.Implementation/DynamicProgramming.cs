@@ -152,7 +152,7 @@ namespace Algorithms.Implementation
         }
 
         #endregion
-        
+
     }
 
 }

@@ -46,6 +46,7 @@
     <Compile Include="BlockingQueue.cs" />
     <Compile Include="CircularLinkedList.cs" />
     <Compile Include="ContinuousRegion.cs" />
+    <Compile Include="DeepIterator.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="BackTracking.cs" />

@@ -8,6 +8,48 @@ namespace Algorithms.Implementation
     public class String
     {
 
+        #region Common Character In Multiple Strings
+
+        public static string GetCommonCharacters(string[] words)
+        {
+            StringBuilder commonCharacters = new StringBuilder();
+            Dictionary<char, int> counter = new Dictionary<char, int>();
+            Dictionary<char, char> uniqueCharacters = new Dictionary<char, char>();
+
+            foreach (string word in words)
+            {
+                uniqueCharacters.Clear();
+                foreach (char character in word)
+                {
+                    if (!uniqueCharacters.ContainsKey(character))
+                    {
+                        //we haven't seen it before let's add it and increment counter
+                        uniqueCharacters.Add(character, character);
+                        if (!counter.ContainsKey(character))
+                        {
+                            counter.Add(character, 1);
+                        }
+                        else
+                        {
+                            counter[character]++;
+                        }
+                    }
+                }
+            }
+
+            foreach (char character in counter.Keys)
+            {
+                if (counter[character] == words.Length)
+                {
+                    commonCharacters.Append(character);
+                }
+            }
+
+            return commonCharacters.ToString();
+        }
+
+        #endregion
+
         #region Justification
 
         private class TextWrapper

@@ -273,6 +273,59 @@ namespace Algorithms.Implementation
 
             return partitions;
         }
-        
+
+
+        #region Factors
+
+        /// <summary>
+        /// input 12
+        /// 2*2*3
+        /// 3*4
+        /// 2*6
+        /// 1*12
+        /// 
+        /// get sqrt of number, for each int, iterate down and divide, if still divisible, recurse
+        /// same as integer partitioning
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static List<List<int>> GetFactorsRecursive(int number)
+        {
+            List<List<int>> result = new List<List<int>>();
+
+            GetFactorsRecursive(number, (int)System.Math.Floor(System.Math.Sqrt(number)), result, new List<int>());
+
+            return result;
+        }
+
+        private static void GetFactorsRecursive(int number, int divisor, List<List<int>> result, List<int> currentSet) {
+            if (divisor > 1)
+            {
+                //handle cases like 3, 2, 1
+                GetFactorsRecursive(number, divisor - 1, result, new List<int>(currentSet));
+            }
+
+            //since this is division, and we already have terminal condition we just have to do it if it's a clean division (no fraction)
+            if ((number >= divisor) && ((number % divisor) == 0))
+            {
+                //handle cases like 3, 4 -> 3, 2, 2
+                if (divisor == 1)
+                {
+                    currentSet.Add(number);
+                    if (currentSet.Count == 1)
+                    {
+                        currentSet.Add(1);
+                    }
+                    result.Add(currentSet);
+                }
+                else
+                {
+                    currentSet.Add(divisor);
+                    GetFactorsRecursive(number / divisor, (int)System.Math.Floor(System.Math.Sqrt(number / divisor)), result, currentSet);
+                }
+            }
+        }
+
+        #endregion
     }
 }

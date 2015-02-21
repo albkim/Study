@@ -10,6 +10,7 @@ namespace Algorithms.Tests
     [TestClass]
     public class StringTests
     {
+     
         #region Boyer Moore Replace
 
         [TestMethod]
@@ -181,5 +182,16 @@ namespace Algorithms.Tests
         }
 
         #endregion
+
+        #region Common Character In Multiple Strings
+
+        [TestMethod]
+        public void GetCommonCharacters()
+        {
+            Assert.AreEqual("akf", String.GetCommonCharacters(new string[] { "aghkafgklt", "dfghako", "qwemnaarkf" }));
+        }
+        
+        #endregion
+
     }
 }
