@@ -17,7 +17,7 @@ namespace Algorithms.Implementation
 
     public class BinarySearchTree
     {
-        public TreeNode Root { get; set; }
+        public TreeNode<int> Root { get; set; }
 
         public object NthLargestItem()
         {
@@ -40,12 +40,12 @@ namespace Algorithms.Implementation
             return IsValidBstNode(Root, int.MinValue, int.MaxValue);
         }
 
-        private static bool IsValidBstNode(TreeNode root, int minValue, int maxValue)
+        private static bool IsValidBstNode(TreeNode<int> root, int minValue, int maxValue)
         {
-            var left = (root.Left == null) ? true : IsValidBstNode(root.Left, minValue, (int)root.Value);
-            var right = (root.Right == null) ? true : IsValidBstNode(root.Right, (int)root.Value, maxValue);
+            var left = (root.Left == null) ? true : IsValidBstNode(root.Left, minValue, root.Value);
+            var right = (root.Right == null) ? true : IsValidBstNode(root.Right, root.Value, maxValue);
 
-            return left && right && (minValue < (int)root.Value) && (maxValue > (int)root.Value);
+            return left && right && (minValue < root.Value) && (maxValue > root.Value);
         }
     }
 }

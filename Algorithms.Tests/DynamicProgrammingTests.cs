@@ -42,5 +42,26 @@ namespace Algorithms.Tests
         }
 
         #endregion
+
+        #region Longest Subsequence
+
+        [TestMethod]
+        public void LongestSubstringRecursive()
+        {
+            var result = DynamicProgramming.LongestSubstringRecursive("BANANA", "ATANA");
+
+            Assert.AreEqual("AANA", result);
+        }
+
+        [TestMethod]
+        public void LongestSubstringDynamic()
+        {
+            var result = DynamicProgramming.LongestSubstringDynamic("BANANA", "ATANA");
+
+            Assert.AreEqual("AANA", result);
+        }
+
+        #endregion
+
     }
 }

@@ -153,6 +153,92 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Longest Subsequence
+
+        /// <summary>
+        /// Not common substring which has to be consecutive
+        /// Given two strings like BANANA & ATANA answer is AANA and there are 3 cases
+        ///     If last characters are the same, then we can remove and continue comparing
+        ///            BANAN, ATAN => BANA, ATA => BAN, AT and come up with ANA
+        ///     If last characters are different then try variation by removing last character
+        ///         BAN, AT => BA, AT => BA, A and come up with A
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static string LongestSubstringRecursive(string s1, string s2)
+        {
+            return LongestSubstringRecursive(s1, s2, s1.Length, s2.Length);
+        }
+
+        private static string LongestSubstringRecursive(string s1, string s2, int length1, int length2)
+        {
+            StringBuilder subsequence = new StringBuilder();
+
+            if ((length1 == 0) || (length2 == 0))
+            {
+                return string.Empty;
+            }
+
+            if (s1[length1 - 1] == s2[length2 - 1])
+            {
+                subsequence.Append(LongestSubstringRecursive(s1, s2, length1 - 1, length2 - 1));
+                subsequence.Append(s1[length1 - 1]);
+            }
+            else
+            {
+                string subsequence1 = LongestSubstringRecursive(s1, s2, length1 - 1, length2);
+                string subsequence2 = LongestSubstringRecursive(s1, s2, length1, length2 - 1);
+
+                subsequence.Insert(0, (subsequence1.Length > subsequence2.Length) ? subsequence1 : subsequence2);
+            }
+
+            return subsequence.ToString();
+        }
+
+        /// <summary>
+        ///             B       A       N       A       N       A
+        ///             ""      ""      ""      ""      ""      ""
+        /// A      ""   ""      A       A       A       A       A
+        /// T      ""   ""      A       A       A       A       A
+        /// A      ""   ""      A       A       AA      AA      AA
+        /// N      ""   ""      A      AN      AN/AA    AAN     AAN
+        /// A      ""   ""      A      AN       ANA    ANA/AAN  AANA
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static string LongestSubstringDynamic(string s1, string s2)
+        {
+            string[,] matrix = new string[s1.Length + 1, s2.Length + 1];
+
+            for (int i1 = 0; i1 <= s1.Length; i1++)
+            {
+                for (int i2 = 0; i2 <= s2.Length; i2++)
+                {
+                    if ((i1 == 0) || (i2 == 0))
+                    {
+                        matrix[i1, i2] = string.Empty;
+                        continue;
+                    }
+
+                    if (s1[i1 - 1] == s2[i2 - 1]) {
+                        matrix[i1, i2] = matrix[i1 - 1, i2 - 1] + s1[i1 - 1];
+                    }
+                    else {
+                        string substring1 = matrix[i1 - 1, i2];
+                        string substring2 = matrix[i1, i2 - 1];
+                        
+                        matrix[i1, i2] = ((substring1.Length > substring2.Length) ? substring1 : substring2);
+                    }
+                }
+            }
+
+            return matrix[s1.Length, s2.Length];
+        }
+
+        #endregion
+
     }
 
 }

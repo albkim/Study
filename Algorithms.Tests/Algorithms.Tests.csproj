@@ -48,6 +48,7 @@
     <Compile Include="AnagramTests.cs" />
     <Compile Include="BinarySearchTests.cs" />
     <Compile Include="BinarySearchTreeTests.cs" />
+    <Compile Include="CelebrityTests.cs" />
     <Compile Include="CircularLinkedListTests.cs" />
     <Compile Include="ContinuousRegionTests.cs" />
     <Compile Include="DeepIteratorTests.cs" />
@@ -65,6 +66,10 @@
     <Compile Include="ShortestPathTests.cs" />
     <Compile Include="StringTests.cs" />
     <Compile Include="MinStackTests.cs" />
+    <Compile Include="IntervalTests.cs" />
+    <Compile Include="BinaryTreeTests.cs" />
+    <Compile Include="PriorityQueueTests.cs" />
+    <Compile Include="NearestPointsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithms.Implementation\Algorithms.Implementation.csproj">

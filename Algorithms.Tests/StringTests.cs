@@ -193,5 +193,61 @@ namespace Algorithms.Tests
         
         #endregion
 
+        #region Is Number
+
+        [TestMethod]
+        public void SimpleTrue()
+        {
+            Assert.IsTrue(String.IsNumber("1"));
+            Assert.IsTrue(String.IsNumber("+1"));
+            Assert.IsTrue(String.IsNumber("-1"));
+            Assert.IsTrue(String.IsNumber("0.6"));
+            Assert.IsTrue(String.IsNumber("1.6"));
+            Assert.IsTrue(String.IsNumber("1.06"));
+            Assert.IsTrue(String.IsNumber("+1.6"));
+            Assert.IsTrue(String.IsNumber("-1.6"));
+            Assert.IsTrue(String.IsNumber("1.6E10"));
+            Assert.IsTrue(String.IsNumber("1.6E+10"));
+            Assert.IsTrue(String.IsNumber("1.6E-10"));
+        }
+
+        [TestMethod]
+        public void SimpleFalse()
+        {
+            Assert.IsFalse(String.IsNumber("dsfsdf"));
+            Assert.IsFalse(String.IsNumber("+E"));
+            Assert.IsFalse(String.IsNumber("10.10.20"));
+        }
+
+        #endregion
+
+        #region Isomorphic
+
+        [TestMethod]
+        public void Simple()
+        {
+            Assert.IsTrue(String.IsIsomorphic("foo", "app"));
+            Assert.IsFalse(String.IsIsomorphic("bar", "foo"));
+            Assert.IsTrue(String.IsIsomorphic("ab", "ca"));
+        }
+
+        #endregion
+
+        #region Longest Palindrom
+
+        [TestMethod]
+        public void SimplePalindrom()
+        {
+            string result = String.LongestPalindrom("4123456543444444");
+
+            Assert.AreEqual("3456543", result);
+
+            result = String.LongestPalindrom("4123456543444444444");
+
+            Assert.AreEqual("444444444", result);
+        }
+        
+        #endregion
+
     }
 }

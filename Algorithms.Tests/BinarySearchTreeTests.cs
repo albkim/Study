@@ -24,7 +24,7 @@ namespace Algorithms.Tests
         {
             var tree = new BinarySearchTree
                            {
-                               Root = new TreeNode {Value = 1}
+                               Root = new TreeNode<int> {Value = 1}
                            };
 
             Assert.IsTrue(tree.IsValidBST());
@@ -35,7 +35,7 @@ namespace Algorithms.Tests
         {
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Left = new TreeNode { Value = 2 } }
+                Root = new TreeNode<int> { Value = 5, Left = new TreeNode<int> { Value = 2 } }
             };
 
             Assert.IsTrue(tree.IsValidBST());
@@ -46,7 +46,7 @@ namespace Algorithms.Tests
         {
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Left = new TreeNode { Value = 7 } }
+                Root = new TreeNode<int> { Value = 5, Left = new TreeNode<int> { Value = 7 } }
             };
 
             Assert.IsFalse(tree.IsValidBST());
@@ -57,7 +57,7 @@ namespace Algorithms.Tests
         {
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Right = new TreeNode { Value = 7 } }
+                Root = new TreeNode<int> { Value = 5, Right = new TreeNode<int> { Value = 7 } }
             };
 
             Assert.IsTrue(tree.IsValidBST());
@@ -68,7 +68,7 @@ namespace Algorithms.Tests
         {
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Right = new TreeNode { Value = 2 } }
+                Root = new TreeNode<int> { Value = 5, Right = new TreeNode<int> { Value = 2 } }
             };
 
             Assert.IsFalse(tree.IsValidBST());
@@ -84,7 +84,12 @@ namespace Algorithms.Tests
              */
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Left = new TreeNode { Value = 2, Left = new TreeNode { Value = 1 }, Right = new TreeNode { Value = 3 } } }
+                Root = new TreeNode<int> { Value = 5, 
+                    Left = new TreeNode<int> { Value = 2, 
+                        Left = new TreeNode<int> { Value = 1 },
+                        Right = new TreeNode<int> { Value = 3 }
+                    }
+                }
             };
 
             Assert.IsTrue(tree.IsValidBST());
@@ -100,7 +105,10 @@ namespace Algorithms.Tests
              */
             var tree = new BinarySearchTree
             {
-                Root = new TreeNode { Value = 5, Left = new TreeNode { Value = 2, Left = new TreeNode { Value = 1 }, Right = new TreeNode { Value = 8 } } }
+                Root = new TreeNode<int> { Value = 5, 
+                    Left = new TreeNode<int> { Value = 2, 
+                        Left = new TreeNode<int> { Value = 1 }, 
+                        Right = new TreeNode<int> { Value = 8 } } }
             };
 
             Assert.IsFalse(tree.IsValidBST());

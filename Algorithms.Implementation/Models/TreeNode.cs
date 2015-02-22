@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Algorithms.Implementation.Models
 {
-    public class TreeNode
+    public class TreeNode<T>
     {
-        public TreeNode Left { get; set; }
-        public TreeNode Right { get; set; }
+        public TreeNode<T> Left { get; set; }
+        public TreeNode<T> Right { get; set; }
 
-        public object Value { get; set; }
+        public T Value { get; set; }
     }
 }

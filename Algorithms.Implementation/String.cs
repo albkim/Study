@@ -409,5 +409,220 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Is Number
+
+        private enum NumberState
+        {
+            Start,
+            Sign, // +-
+            Zero,
+            Number, // 1-9
+            ZeroNumber, // 0-9
+            Decimal, // .
+            Exponent, // E
+            NaN
+        }
+
+        /// <summary>
+        /// 1. Positive/Negative Integer,
+        /// 2. Positive/Negative decimal with only one dot(.)
+        /// 3. E: such as 1.3E2333343
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool IsNumber(string s)
+        {
+            NumberState state = NumberState.Start;
+
+            foreach (char c in s)
+            {
+                NumberState nextState = NumberState.NaN;
+
+                switch (state)
+                {
+                    case NumberState.Start:
+                        //valid start values, sign, zero, number
+                        if ((c == '+') || (c == '-'))
+                        {
+                            nextState = NumberState.Sign;
+                        }
+                        else if (c == '0')
+                        {
+                            nextState = NumberState.Zero;
+                        }
+                        else if ((c >= '1') && (c <= '9'))
+                        {
+                            nextState = NumberState.Number;
+                        }
+                        break;
+                    case NumberState.Sign:
+                        //only numbers can come now
+                        if (c == '0')
+                        {
+                            nextState = NumberState.Zero;
+                        }
+                        else if ((c >= '1') && (c <= '9'))
+                        {
+                            nextState = NumberState.Number;
+                        }
+                        break;
+                    case NumberState.Zero:
+                        //if we had a zero, only valid one is decimal now
+                        if (c == '.')
+                        {
+                            nextState = NumberState.Decimal;
+                        }
+                        break;
+                    case NumberState.Decimal:
+                        //if we are in decimal it has to be numbers now including zero
+                        if ((c >= '0') && (c <= '9'))
+                        {
+                            nextState = NumberState.ZeroNumber;
+                        }
+                        break;
+                    case NumberState.Number:
+                        //valid ones are another decimal point, all numbers and exponent
+                        if (c == '.')
+                        {
+                            nextState = NumberState.Decimal;
+                        }
+                        else if (c == 'E')
+                        {
+                            nextState = NumberState.Exponent;
+                        }
+                        else if ((c >= '0') && (c <= '9'))
+                        {
+                            nextState = NumberState.Number;
+                        }
+                        break;
+                    case NumberState.ZeroNumber:
+                        //since we are already in decimals, only valid ones are other numbers and exponent
+                        if (c == 'E')
+                        {
+                            nextState = NumberState.Exponent;
+                        }
+                        else if ((c >= '0') && (c <= '9'))
+                        {
+                            nextState = NumberState.ZeroNumber;
+                        }
+                        break;
+                    case NumberState.Exponent:
+                        //if we are past exponent, only integers are allowed
+                        if ((c == '+') || (c == '-'))
+                        {
+                            nextState = NumberState.Exponent;
+                        }
+                        else if ((c >= '0') && (c <= '9'))
+                        {
+                            nextState = NumberState.Exponent;
+                        }
+                        break;
+                    default:
+                        nextState = NumberState.NaN;
+                        break;
+                }
+
+                state = nextState;
+            }
+
+            return state != NumberState.NaN;
+        }
+
+        #endregion
+
+        #region Isomorphic
+
+        /// <summary>
+        /// Two words are called isomorphic if the letters in one word can be remapped to get the second word.
+        /// 
+        /// given "foo", "app"; returns true we can map f -> a and o->p
+        /// given "bar", "foo"; returns false we can't map both 'a' and 'r' to 'o'
+        /// given "ab", "ca"; returns true we can map 'a' -> 'b' and 'c' -> 'a'
+        /// 
+        /// seems pretty simple, retain a mapping dictionary, where key is the word to change to (o in example 2)
+        /// if value is different (a in example 2) from current value (r in example 2) then cannot be isomorphic
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static bool IsIsomorphic(string s1, string s2)
+        {
+            if (s1.Length != s2.Length)
+            {
+                return false;
+            }
+
+            Dictionary<char, char> mapping = new Dictionary<char, char>();
+            for (int index = 0; index < s1.Length; index++)
+            {
+                if (mapping.ContainsKey(s2[index])) {
+                    if (mapping[s2[index]] != s1[index]) {
+                        return false;
+                    }
+                }
+                else {
+                    mapping.Add(s2[index], s1[index]);
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
+        
+        #region Longest Palindrom
+
+        /// <summary>
+        /// abcdeeeeeeeeefghi
+        /// 
+        /// this should be simple, naive solution gives n^3 complexity (for each sub sequence n^2, try
+        /// palindrom check n), dynamic solutions gives n^2 with n^2 space, what about iterative solution
+        /// 
+        /// for each character, try expanding the palindrom as far as it goes
+        /// Just be careful that there are two types of palindrom
+        /// 
+        /// aba and abba
+        /// 
+        /// so you have to try both
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string LongestPalindrom(string s)
+        {
+            string longest = string.Empty;
+
+            for (int index = 0; index < s.Length; index++)
+            {
+                //get ones like aba
+                string palindrom1 = GetLongestPalindrom(s, index, index);
+                if (palindrom1.Length > longest.Length)
+                {
+                    longest = palindrom1;
+                }
+                if (index < (s.Length - 1))
+                {
+                    string palindrom2 = GetLongestPalindrom(s, index, index + 1);
+                    if (palindrom2.Length > longest.Length)
+                    {
+                        longest = palindrom2;
+                    }
+                }
+            }
+
+            return longest;
+        }
+        private static string GetLongestPalindrom(string s, int leftIndex, int rightIndex)
+        {
+            while ((leftIndex >= 0) && (rightIndex <= (s.Length - 1)) && (s[leftIndex] == s[rightIndex]))
+            {
+                leftIndex--;
+                rightIndex++;
+            }
+
+            return s.Substring(leftIndex + 1, rightIndex - 1 - leftIndex);
+        }
+
+        #endregion
+
     }
 }
