@@ -70,6 +70,8 @@
     <Compile Include="BinaryTreeTests.cs" />
     <Compile Include="PriorityQueueTests.cs" />
     <Compile Include="NearestPointsTests.cs" />
+    <Compile Include="BitsTests.cs" />
+    <Compile Include="TrieTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithms.Implementation\Algorithms.Implementation.csproj">

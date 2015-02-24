@@ -249,5 +249,29 @@ namespace Algorithms.Tests
         
         #endregion
 
+        #region Shortest Pattern
+
+        [TestMethod]
+        public void ShortestPatternSimple()
+        {
+            Assert.AreEqual("a programming test this", String.ShortestPattern("This is a test This is a programming test a programming test this is",
+                new string[] { "this", "test", "a", "programming" }));
+        }
+
+        #endregion
+
+        #region Word Distance
+
+        [TestMethod]
+        public void WordDistanceIterate()
+        {
+            string text = "We will assume for this question that We doesn't interviewer whether wordl or interviewer appears"
+                + "first. This is a question We should ask your interviewer. If the word order does matter, We"
+                + "can make the small modification shown in the code below";
+            Assert.AreEqual(2, String.WordDistanceIterate(text.Split(' '), "We", "interviewer"));
+        }
+
+        #endregion
+
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="BinarySearch.cs" />
     <Compile Include="BinarySearchTree.cs" />
     <Compile Include="BinaryTree.cs" />
+    <Compile Include="Bits.cs" />
     <Compile Include="BlockingQueue.cs" />
     <Compile Include="Celebrity.cs" />
     <Compile Include="CircularLinkedList.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\SentinelTreeNode.cs" />
     <Compile Include="Models\TreeNode.cs" />
+    <Compile Include="Models\TrieNode.cs" />
     <Compile Include="NearestPoints.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Sort.cs" />
     <Compile Include="ShortestPath.cs" />
     <Compile Include="String.cs" />
+    <Compile Include="Trie.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

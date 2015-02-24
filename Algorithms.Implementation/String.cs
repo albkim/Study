@@ -137,6 +137,12 @@ namespace Algorithms.Implementation
 
         #region String Replace Boyer Moore
 
+        /// <summary>
+        /// </summary>
+        /// <param name="original"></param>
+        /// <param name="search"></param>
+        /// <param name="replace"></param>
+        /// <returns></returns>
         public static string Replace(string original, string search, string replace)
         {
             int index = search.Length - 1;
@@ -599,6 +605,8 @@ namespace Algorithms.Implementation
                 {
                     longest = palindrom1;
                 }
+
+                //get one like abba, also check that there is letter to the right
                 if (index < (s.Length - 1))
                 {
                     string palindrom2 = GetLongestPalindrom(s, index, index + 1);
@@ -611,6 +619,7 @@ namespace Algorithms.Implementation
 
             return longest;
         }
+
         private static string GetLongestPalindrom(string s, int leftIndex, int rightIndex)
         {
             while ((leftIndex >= 0) && (rightIndex <= (s.Length - 1)) && (s[leftIndex] == s[rightIndex]))
@@ -621,6 +630,138 @@ namespace Algorithms.Implementation
 
             return s.Substring(leftIndex + 1, rightIndex - 1 - leftIndex);
         }
+
+        #endregion
+
+        #region Shortest Pattern
+
+        /// <summary>
+        /// Given a large document and a set of words (W1, W2, W3), find the shortest pattern
+        /// which has all the patterns in any order
+        /// 
+        /// e.g. W2 xxx yyyy W1 jjjj kkk W3
+        /// 
+        /// If all words in the pattern are unique, we can use a dictionary to keep track of last
+        /// found indexes and only replace the solution if max(index) - min(index) < min(length)
+        /// </summary>
+        /// <param name="longText"></param>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        public static string ShortestPattern(string longText, string[] pattern)
+        {
+            int minimumLength = int.MaxValue;
+            int minStartingIndex = 0;
+            int minEndingIndex = 0;
+
+            bool sequenceComplete = false;
+            Dictionary<string, int> positions = new Dictionary<string, int>();
+
+            //assume space as a terminator for a while
+            StringBuilder lastWord = new StringBuilder();
+            for (int index = 0; index < longText.Length; index++)
+            {
+                char character = longText[index];
+                if (character == ' ')
+                {
+                    //handle word found
+                    if (lastWord.Length > 0)
+                    {
+                        string word = lastWord.ToString().ToLower();
+                        lastWord.Clear();
+
+                        if ((positions.ContainsKey(word)) || (pattern.Contains(word)))
+                        {
+                            if (positions.ContainsKey(word))
+                            {
+                                //we are updating position of existing words, we need to check if we see another minimum
+                                positions[word] = index - 1;
+                                if (sequenceComplete)
+                                {
+                                    //this has to be the current one
+                                    int max = positions[word];
+
+                                    //this is ending position of the word, we want the actual min since there could be another
+                                    //one with similar ending position but shorter word
+                                    int min = positions.Values.Min();
+                                    string minWord = (from kv in positions where kv.Value == min select kv.Key).SingleOrDefault();
+                                    min -= (minWord.Length - 1);
+
+                                    int length = max - min + 1;
+                                    if (length < minimumLength)
+                                    {
+                                        minimumLength = length;
+                                        minStartingIndex = min;
+                                        minEndingIndex = max;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //we are still finding words...check if our sequence is complete
+                                positions.Add(word, index - 1);
+                                sequenceComplete = positions.Count == pattern.Length;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    lastWord.Append(character);
+                }
+            }
+
+            if (minimumLength != int.MaxValue)
+            {
+                //we found one
+                return (longText.Substring(minStartingIndex, minEndingIndex - minStartingIndex + 1));
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region Word Distance
+
+        /// <summary>
+        /// You have a large text file containing words. Given any two words, find the 
+        /// shortest distance (in terms of number of words) between them in the file. If the 
+        /// operation will be repeated many times for the same file (but different pairs of 
+        /// words), can you optimize your solution?
+        /// 
+        /// as we encounter each words, update the position and see if it's shorter than previous
+        /// </summary>
+        /// <param name="words"></param>
+        /// <param name="wordsToSearch"></param>
+        /// <returns></returns>
+        public static int WordDistanceIterate(string[] words, string s1, string s2)
+        {
+            Dictionary<string, int> lookup = new Dictionary<string, int>();
+
+            int minDistance = int.MaxValue;
+            for (int index = 0; index < words.Length; index++)
+            {
+                var word = words[index];
+                if ((word == s1) || (word == s2))
+                {
+                    lookup[word] = index;
+
+                    if (lookup.Count == 2)
+                    {
+                        int distance = System.Math.Abs(lookup.Values.ElementAt(0) - lookup.Values.ElementAt(1));
+                        if (minDistance > distance)
+                        {
+                            minDistance = distance;
+                        }
+                    }
+                }
+            }
+
+            return minDistance;
+        }
+
+        ///for reusable method, store index of all occurrence for each work in a dictionary. Then for 2 words, use the
+        ///min different in array to find the min different index. (min(abs(x-y)) in Array.cs
 
         #endregion
 

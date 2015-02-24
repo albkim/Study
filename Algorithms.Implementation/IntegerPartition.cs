@@ -30,6 +30,8 @@ namespace Algorithms.Implementation
             }
         }
 
+        #region Partition
+
         public static List<List<int>> Partition(int number)
         {
             List<List<int>> partitions = new List<List<int>>();
@@ -169,6 +171,10 @@ namespace Algorithms.Implementation
             return partitions;
         }
 
+        #endregion
+
+        #region Combination Subset
+
         public static List<List<int>> CombinationSubSet(int[] array, int number)
         {
             List<List<int>> partitions = new List<List<int>>();
@@ -274,6 +280,7 @@ namespace Algorithms.Implementation
             return partitions;
         }
 
+        #endregion
 
         #region Factors
 
@@ -327,5 +334,6 @@ namespace Algorithms.Implementation
         }
 
         #endregion
+
     }
 }
