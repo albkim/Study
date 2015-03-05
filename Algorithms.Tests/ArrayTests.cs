@@ -369,5 +369,17 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Number To String
+
+        [TestMethod]
+        public void NumberToString() {
+            Assert.AreEqual("Sixty Seven", Array.NumberToString(67));
+            Assert.AreEqual("Twelve", Array.NumberToString(12));
+            Assert.AreEqual("Twelve Thousand", Array.NumberToString(12000));
+            Assert.AreEqual("Twelve Thousand Six Hundred Forty Three", Array.NumberToString(12643));
+        }
+
+        #endregion
+
     }
 }

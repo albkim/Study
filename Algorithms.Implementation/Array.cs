@@ -827,6 +827,121 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Number To String
+
+        private static string[] thousands = new string[] { "", "Thousand", "Million", "Billion" };
+        private static string[] digits = new string[] { "", "One", "Two", "Three", "Four", "Five",
+				"Six", "Seven", "Eight", "Nine" };
+        private static string[] teens = new string[] { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+				"Fifteen", "Sixteen", "Eighteen", "Nineteen" };
+        private static string[] tens = new string[] { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty",
+				"Seventy", "Eighty", "Ninety" };
+
+        public static string NumberToString(int number)
+        {
+            StringBuilder result = new StringBuilder();
+
+            int count = 0;
+            while (number > 0)
+            {
+                //process 1000 at a time going from the back
+                string segment = string.Empty;
+
+                int numberUnderThousand = number % 1000;
+                if (numberUnderThousand < 10)
+                {
+                    //if it's just 1 digit after thousand. e.g. 4000
+                    segment = digits[numberUnderThousand];
+                }
+                else if (numberUnderThousand < 20)
+                {
+                    //if it's 2 digits under 20...e.g. 11000 - eleven...11%10 = 1
+                    segment = teens[numberUnderThousand % 10];
+                }
+                else if (numberUnderThousand < 100)
+                {
+                    //if it's 2 digit between 20 - 100. e.g. 67000 sixty seven
+                    segment = tens[numberUnderThousand / 10] + " " + digits[numberUnderThousand % 10];
+                }
+                else if (numberUnderThousand < 1000)
+                {
+                    //handle 3 digit...then it's number + hundred and same thing as all of above for rest
+                    segment = digits[numberUnderThousand / 100] + " Hundred " + NumberToString(numberUnderThousand % 100);
+                }
+
+                result.Insert(0, segment + " " + thousands[count] + " ");
+
+                number /= 1000;
+                count++;
+            }
+
+            return result.ToString().Trim();
+        }
+
+        #endregion
+
+        #region Stocks
+
+        public static int MaxProfitOneBuyOneSell(int[] prices)
+        {
+            int min = int.MaxValue;
+            int maxProfit = 0;
+            foreach (int price in prices)
+            {
+                if (price < min)
+                {
+                    min = price;
+                }
+                // min = Math.min(min, price)
+                if ((price - min) > maxProfit)
+                {
+                    maxProfit = price - min;
+                }
+                // maxProfit = Math.max(maxProfit, (price - min))
+            }
+            return maxProfit;
+        }
+
+        // 1,2,4,2,5,7,2,4,9 (price)
+        // 0,1,3,3,4,6,6,6,8 (max profit till i)
+        // 8,7,7,7,7,7,7,5,0 (max profit from i)
+        // so two transaction should be (1, 7) + (2, 9) = 13
+        // use DP to store max profit on day i and then max profit from day i
+        public static int MaxProfitTwoTransactions(int[] prices)
+        {
+            int min = prices[0];
+            int max = prices[prices.Length - 1];
+
+            int maxProfit = 0;
+
+            int[] profitUntil = new int[prices.Length];
+            int[] profitFrom = new int[prices.Length];
+
+            for (int day = 1; day < prices.Length; day++)
+            {
+                min = System.Math.Min(min, prices[day]);
+                profitUntil[day] = System.Math.Max(profitUntil[day - 1], prices[day] - min);
+            }
+            //should produce 0, 1, 3, 3, 4, 6, 6, 6, 8
+
+            for (int day = prices.Length - 2; day >= 0; day--)
+            {
+                max = System.Math.Max(max, prices[day]);
+                profitFrom[day] = System.Math.Max(profitFrom[day + 1], max - prices[day]);
+            }
+            //should produce 8, 7, 7, 7, 7, 7, 7, 5, 0
+
+            //now it's just a matter of finding the max combo
+            for (int day = 1; day < prices.Length; day++)
+            {
+                maxProfit = System.Math.Max(maxProfit, profitUntil[day] + profitFrom[day]);
+            }
+
+            return maxProfit;
+        }
+
+        #endregion
+
     }
 
 }
