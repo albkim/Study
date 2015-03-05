@@ -381,5 +381,20 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Interval Merging
+
+        [TestMethod]
+        public void Simple()
+        {
+            Assert.AreEqual(6, Array.GetTotalCoveredLength(new List<int[]>
+            {
+                new int[] { 3, 6 },
+                new int[] { 8, 9 },
+                new int[] { 1, 5 }
+            }));
+        }
+
+        #endregion
+
     }
 }

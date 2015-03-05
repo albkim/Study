@@ -69,6 +69,80 @@ namespace Algorithms.Implementation
         {
             return (estimate + number / estimate) / 2d;
         }
+        
+        public static double SqrtBinarySearch(double number, double precision)
+        {
+            if (number < 0)
+            {
+                throw new ArgumentException();
+            }
+
+            double min = 0;
+            double max = number;
+
+            while (System.Math.Abs(max - min) > precision)
+            {
+                double mid = min + ((max - min) / 2);
+                if ((System.Math.Pow(mid, 2)) > number)
+                {
+                    max = mid;
+                }
+                else
+                {
+                    min = mid;
+                }
+            }
+
+            return System.Math.Round(min + ((max - min) / 2), (int)System.Math.Log10(1/precision));
+        }
+
+        public static double SqrtImprovedBinarySearch(double number, double precision)
+        {
+            double min = 0;
+            double max = number;
+
+            while (System.Math.Abs(max - min) > precision)
+            {
+                double mid = min + ((max - min) / 2);
+                if ((System.Math.Pow(mid, 2)) > number)
+                {
+                    max = mid;
+                    min = number / mid;
+                }
+                else
+                {
+                    min = mid;
+                    max = number / mid;
+                }
+            }
+
+            return System.Math.Round(min + ((max - min) / 2), (int)System.Math.Log10(1 / precision));
+        }
+
+        /// <summary>
+        /// Rewrite mid = (min + max) / 2 using min & max value which are same in both cases
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        public static double SqrtNewtonBinarySearch(double number, double precision)
+        {
+            if (number < 0)
+            {
+                throw new ArgumentException();
+            }
+
+            double mid = number;
+            double previous = 0;
+
+            while (System.Math.Abs(mid - previous) > precision)
+            {
+                previous = mid;
+                mid = (mid + (number / mid)) / 2;
+            }
+
+            return System.Math.Round(mid, (int)System.Math.Log10(1 / precision)); ;
+        }
 
         #endregion
 
@@ -170,73 +244,5 @@ namespace Algorithms.Implementation
 
         #endregion
         
-        public static double SqrtBinarySearch(double number, double precision)
-        {
-            if (number < 0)
-            {
-                throw new ArgumentException();
-            }
-
-            double min = 0;
-            double max = number;
-
-            while (System.Math.Abs(max - min) > precision)
-            {
-                double mid = min + ((max - min) / 2);
-                if ((System.Math.Pow(mid, 2)) > number)
-                {
-                    max = mid;
-                }
-                else
-                {
-                    min = mid;
-                }
-            }
-
-            return min + ((max - min) / 2);
-        }
-
-        public static double SqrtImprovedBinarySearch(double number, double precision)
-        {
-            double min = 0;
-            double max = number;
-
-            while (System.Math.Abs(max - min) > precision)
-            {
-                double mid = min + ((max - min) / 2);
-                if ((System.Math.Pow(mid, 2)) > number)
-                {
-                    max = mid;
-                    min = number / mid;
-                }
-                else
-                {
-                    min = mid;
-                    max = number / mid;
-                }
-            }
-
-            return min + ((max - min) / 2);
-        }
-
-        public static double SqrtNewtonBinarySearch(double number, double precision)
-        {
-            if (number < 0)
-            {
-                throw new ArgumentException();
-            }
-
-            double mid = number;
-            double previous = 0;
-
-            while (System.Math.Abs(mid - previous) > precision)
-            {
-                previous = mid;
-                mid = (mid + (number / mid)) / 2;
-            }
-
-            return mid;
-        }
-
     }
 }

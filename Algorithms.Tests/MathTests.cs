@@ -14,9 +14,10 @@ namespace Algorithms.Tests
         [TestMethod]
         public void SimpleSquareRoot()
         {
-            var result = Math.SquareRoot(125348, 6);
-
-            Assert.AreEqual(354.045, result);
+            Assert.AreEqual(354.045, Math.SquareRoot(125348, 6));
+            Assert.AreEqual(354.045, Math.SqrtBinarySearch(125348, 0.001));
+            Assert.AreEqual(354.045, Math.SqrtImprovedBinarySearch(125348, 0.001));
+            Assert.AreEqual(354.045, Math.SqrtNewtonBinarySearch(125348, 0.001));
         }
 
         [TestMethod]
