@@ -145,5 +145,98 @@ namespace Algorithms.Implementation
             return path;
         }
 
+        /// <summary>
+        /// Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
+        ///
+        /// Only one letter can be changed at a time
+        /// Each intermediate word must exist in the dictionary
+        /// For example,
+        /// 
+        /// Given:
+        /// start = "hit"
+        /// end = "cog"
+        /// dict = ["hot","dot","dog","lot","log"]
+        /// As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+        /// return its length 5.
+        ///
+        /// Note:
+        /// Return 0 if there is no such transformation sequence.
+        /// All words have the same length.
+        /// All words contain only lowercase alphabetic characters.
+        /// 
+        /// realize that this is a shortest path problem if we are able to form the following graph
+        ///             dot
+        ///          /   /   \
+        /// hit -- hot   /    dog
+        ///         \   /     /  \
+        ///           lot--log--cog
+        ///           
+        /// Simplest will be BFS while deciding which word is is eligible and not travelled
+        /// </summary>
+        /// <param name="words"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static List<string> WordLadder(List<string> words, string start, string end)
+        {
+            //to store travelled nodes and previous for contructing the path
+            Dictionary<string, string> check = new Dictionary<string, string>();
+            //queue to use in bfs
+            Queue<string> queue = new Queue<string>();
+
+            //add end to the list of word as a potential node to travel
+            words.Add(end);
+
+            //start with starting point
+            queue.Enqueue(start);
+            check.Add(start, null);
+
+            //until queue is empty;
+            while (queue.Count > 0)
+            {
+                string current = queue.Dequeue();
+
+                //terminal condition; if we reached the end;
+                if (current == end)
+                {
+                    //do stuff like constructing the path and return
+                    List<string> path = new List<string>();
+                    string pathElement = end;
+                    while (pathElement != start)
+                    {
+                        path.Insert(0, pathElement);
+                        pathElement = check[pathElement];
+                    }
+                    path.Insert(0, start);
+                    return path;
+                }
+
+                //check if there is a node to travel
+                foreach (string newWord in words)
+                {
+                    //if not travelled and off by 1 letter
+                    if ((!check.ContainsKey(newWord)) && (DifferByOneLetter(current, newWord)))
+                    {
+                        //queue for potential travel
+                        queue.Enqueue(newWord);
+                        //add to check to track
+                        check.Add(newWord, current);
+                    }
+                }
+            }
+
+            return null; //if we reached here no path
+        }
+
+        private static bool DifferByOneLetter(string current, string newWord)
+        {
+            int countDifferentLetter = 0;
+            for (int index = 0; index < current.Length; index++)
+            {
+                countDifferentLetter += (current[index] == newWord[index]) ? 0 : 1;
+            }
+            return countDifferentLetter == 1;
+        }
+
     }
 }

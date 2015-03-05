@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Algorithms.Implementation
 {
@@ -656,6 +657,172 @@ namespace Algorithms.Implementation
             }
 
             return null;
+        }
+
+        #endregion
+
+        #region Count Inversion
+
+        /// <summary>
+        /// Count elements out of order
+        /// 
+        /// 1, 3, 5, 2, 4, 6
+        /// 
+        /// Inversions are
+        /// (3, 2), (5, 2), (5, 4)
+        /// 
+        /// What if we do merge sort
+        /// 1, 3, 5
+        /// 2, 4, 6
+        /// 
+        /// start with left side, for every number, any traverse on the right side is an inversion
+        /// we have an inversion
+        /// 
+        /// 1 3 (2) 5 (2, 4)
+        ///   2     4        6
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public static int CountInversion(int[] numbers)
+        {
+            int[] sortedNumbers;
+
+            return CountInversionR(numbers, out sortedNumbers);
+        }
+
+        private static int CountInversionR(int[] numbers, out int[] sortedNumbers)
+        {
+            sortedNumbers = new int[numbers.Length];
+
+            if (numbers.Length == 1)
+            {
+                sortedNumbers[0] = numbers[0];
+                return 0;
+            }
+
+            int[] sortedLeft;
+            int[] sortedRight;
+
+            int mid = (int)System.Math.Floor(numbers.Length / 2d);
+            int leftCount = CountInversionR(numbers.Take(mid).ToArray(), out sortedLeft);
+            int rightCount = CountInversionR(numbers.Skip(mid).ToArray(), out sortedRight);
+
+            int index = 0;
+            int rightIndex = 0;
+            int mergeCount = 0;
+            int inversionCount = 0;
+            foreach (int number in sortedLeft)
+            {
+                while ((rightIndex < sortedRight.Length) && (sortedRight[rightIndex] < number))
+                {
+                    sortedNumbers[index] = sortedRight[rightIndex];
+
+                    index++;
+                    rightIndex++;
+                    mergeCount++;
+                }
+
+                sortedNumbers[index] = number;
+                index++;
+                inversionCount += mergeCount;
+            }
+
+            for (int rest = rightIndex; rest < sortedRight.Length; rest++)
+            {
+                sortedNumbers[index] = sortedRight[rest];
+                index++;
+            }
+
+            return leftCount + rightCount + inversionCount;
+        }
+
+        #endregion     
+
+        #region Largest Number Formed from Array
+
+        /// <summary>
+        /// For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+        /// 
+        /// Seems like we just line up the number from the highest digit 9 -> 0. The tricky part is
+        /// multiple digit numbers; 9 should come before 34
+        /// 
+        /// What if we cast everything to string and just do string sort
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static int LargestNumber(int[] numbers)
+        {
+            string[] stringNumbers = (from n in numbers select n.ToString()).ToArray();
+
+            System.Array.Sort(stringNumbers);
+
+            StringBuilder result = new StringBuilder();
+            for (int index = stringNumbers.Length - 1; index >= 0; index--) 
+            {
+                result.Append(stringNumbers[index]);
+            }
+
+            return int.Parse(result.ToString());
+        }
+
+        #endregion
+
+        #region Number of ways color rgb
+
+        /// <summary>
+        /// Given n boards, find the number of ways of coloring each board with rgb
+        /// No three adjacent board can have the same color (rrr, ggg, bbb)
+        /// 
+        /// r   r   b   r
+        ///             g
+        ///             b
+        ///         g   r
+        ///             g
+        ///             b
+        ///     g   r   r
+        ///             g
+        ///             b
+        ///         g   r
+        ///             b
+        ///         b   r
+        ///             g
+        ///             b
+        ///     b   r   r
+        ///             g
+        ///             b
+        ///         g   r
+        ///             g
+        ///             b
+        ///         b   r
+        ///             g
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static int NumberOfWaysColor(int number)
+        {
+            return NumberOfWaysColor(number, 'a', new List<char> { 'r', 'g', 'b' });
+        }
+
+        private static int NumberOfWaysColor(int number, char previousOne, List<char> characters)
+        {
+            if (number == 1)
+            {
+                return characters.Count;
+            }
+
+            int count = 0;
+
+            foreach (char color in characters)
+            {
+                List<char> availableCharacters = new List<char> { 'r', 'g', 'b' };
+                if (color == previousOne)
+                {
+                    availableCharacters.Remove(color);
+                }
+                count += NumberOfWaysColor(number - 1, color, availableCharacters);
+            }
+
+            return count;
         }
 
         #endregion

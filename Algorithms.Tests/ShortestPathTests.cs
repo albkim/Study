@@ -87,6 +87,19 @@ namespace Algorithms.Tests
             Assert.AreEqual(3, result[3]);
         }
 
+        [TestMethod]
+        public void WordLadder()
+        {
+            var result = ShortestPath.WordLadder(new List<string> { "hot", "dot", "dog", "lot", "log" }, "hit", "cog");
+
+            Assert.AreEqual(5, result.Count);
+            Assert.AreEqual("hit", result[0]);
+            Assert.AreEqual("hot", result[1]);
+            Assert.AreEqual("dot", result[2]);
+            Assert.AreEqual("dog", result[3]);
+            Assert.AreEqual("cog", result[4]);
+        }
+
     }
 
 }

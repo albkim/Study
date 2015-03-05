@@ -18,6 +18,13 @@ namespace Algorithms.Tests
 
             Assert.AreEqual(354.045, result);
         }
+
+        [TestMethod]
+        public void SumOfAllFactorOf3And5()
+        {
+            Assert.AreEqual(14, Math.SumOfAllFactorOf3And5(9));
+            Assert.AreEqual(23, Math.SumOfAllFactorOf3And5(10));
+        }
     } 
 
 }

@@ -338,5 +338,36 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Count Inversion
+
+        [TestMethod]
+        public void CountInversion()
+        {
+            Assert.AreEqual(3, Array.CountInversion(new int[] {1, 3, 5, 2, 4, 6}));
+        }
+
+        #endregion
+
+        #region Largest Number Formed from Array
+
+        [TestMethod]
+        public void LargestNumber()
+        {
+            Assert.AreEqual(95343130, Array.LargestNumber(new int[] {31, 30, 34, 5, 9}));
+        }
+
+        #endregion
+
+        #region Number of ways color rgb
+
+        [TestMethod]
+        public void NumberOfWaysColor()
+        {
+            Assert.AreEqual(24, Array.NumberOfWaysColor(3));
+            Assert.AreEqual(66, Array.NumberOfWaysColor(4));
+        }
+
+        #endregion
+
     }
 }
