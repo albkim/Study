@@ -338,6 +338,37 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Count Inversion
+
+        [TestMethod]
+        public void CountInversion()
+        {
+            Assert.AreEqual(3, Array.CountInversion(new int[] {1, 3, 5, 2, 4, 6}));
+        }
+
+        #endregion
+
+        #region Largest Number Formed from Array
+
+        [TestMethod]
+        public void LargestNumber()
+        {
+            Assert.AreEqual(95343130, Array.LargestNumber(new int[] {31, 30, 34, 5, 9}));
+        }
+
+        #endregion
+
+        #region Number of ways color rgb
+
+        [TestMethod]
+        public void NumberOfWaysColor()
+        {
+            Assert.AreEqual(24, Array.NumberOfWaysColor(3));
+            Assert.AreEqual(66, Array.NumberOfWaysColor(4));
+        }
+
+        #endregion
+
         #region Number To String
 
         [TestMethod]
@@ -346,6 +377,21 @@ namespace Algorithms.Tests
             Assert.AreEqual("Twelve", Array.NumberToString(12));
             Assert.AreEqual("Twelve Thousand", Array.NumberToString(12000));
             Assert.AreEqual("Twelve Thousand Six Hundred Forty Three", Array.NumberToString(12643));
+        }
+
+        #endregion
+
+        #region Interval Merging
+
+        [TestMethod]
+        public void Simple()
+        {
+            Assert.AreEqual(6, Array.GetTotalCoveredLength(new List<int[]>
+            {
+                new int[] { 3, 6 },
+                new int[] { 8, 9 },
+                new int[] { 1, 5 }
+            }));
         }
 
         #endregion

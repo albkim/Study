@@ -82,6 +82,89 @@ namespace Algorithms.Implementation
             return result;
         }
 
+        public List<List<T>> BFSWithLevelRecursion()
+        {
+            List<List<T>> result = new List<List<T>>();
+
+            Queue<TreeNode<T>> queue = new Queue<TreeNode<T>>();
+            queue.Enqueue(this.Root);
+
+            this.BFSWithLevelRecursion(result, queue);
+
+            return result;
+        }
+
+        private void BFSWithLevelRecursion(List<List<T>> result, Queue<TreeNode<T>> queue)
+        {
+            Queue<TreeNode<T>> lowerLevel = new Queue<TreeNode<T>>();
+
+            List<T> level = new List<T>();
+            foreach(TreeNode<T> node in queue) {
+                if (node.Left != null)
+                {
+                    lowerLevel.Enqueue(node.Left);
+                }
+                if (node.Right != null)
+                {
+                    lowerLevel.Enqueue(node.Right);
+                }
+
+                level.Add(node.Value);
+            }
+
+            result.Add(level);
+
+            if (lowerLevel.Count > 0)
+            {
+                BFSWithLevelRecursion(result, lowerLevel);
+            }
+        }
+
+        public List<List<T>> LevelZigZag()
+        {
+            List<List<T>> result = new List<List<T>>();
+
+            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+            stack.Push(this.Root);
+
+            this.LevelZigZag(result, stack, false);
+
+            return result;
+        }
+
+        private void LevelZigZag(List<List<T>> result, Stack<TreeNode<T>> stack, bool leftFirst)
+        {
+            Stack<TreeNode<T>> lowerLevel = new Stack<TreeNode<T>>();
+
+            List<T> level = new List<T>();
+            
+            while(stack.Count > 0)
+            {
+                TreeNode<T> node = stack.Pop();
+                
+                TreeNode<T> newFirstNode = (leftFirst) ? node.Left : node.Right;
+                TreeNode<T> newSecondNode = (leftFirst) ? node.Right : node.Left;
+                
+                if (newFirstNode != null)
+                {
+                    lowerLevel.Push(newFirstNode);
+                }
+                if (newSecondNode != null)
+                {
+                    lowerLevel.Push(newSecondNode);
+                }
+
+                level.Add(node.Value);
+            }
+
+            result.Add(level);
+
+            if (lowerLevel.Count > 0)
+            {
+                LevelZigZag(result, lowerLevel, !leftFirst);
+            }
+        }
+
         #endregion
 
         #region Least Common Ancestor

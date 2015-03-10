@@ -83,6 +83,70 @@ namespace Algorithms.Tests
             Assert.AreEqual(8, result[3][1]);
         }
 
+        [TestMethod]
+        public void BFSWithLevelRecursion()
+        {
+            var result = this.bt.BFSWithLevelRecursion();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result[0][0]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(5, result[1][1]);
+
+            Assert.AreEqual(3, result[2].Count);
+            Assert.AreEqual(2, result[2][0]);
+            Assert.AreEqual(4, result[2][1]);
+            Assert.AreEqual(7, result[2][2]);
+
+            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(9, result[3][0]);
+            Assert.AreEqual(8, result[3][1]);
+        }
+
+        /// <summary>
+        ///          1
+        ///         / \
+        ///        3   5
+        ///       / \   \
+        ///      2   4   7
+        ///     /     \
+        ///    9       8
+        ///    
+        /// Expected output:
+        ///   1
+        ///   3 5
+        ///   7, 4, 2
+        ///   9 8
+        [TestMethod]
+        public void LevelZigZag()
+        {
+            var result = this.bt.LevelZigZag();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result[0][0]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(5, result[1][1]);
+
+            Assert.AreEqual(3, result[2].Count);
+            Assert.AreEqual(7, result[2][0]);
+            Assert.AreEqual(4, result[2][1]);
+            Assert.AreEqual(2, result[2][2]);
+
+            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(9, result[3][0]);
+            Assert.AreEqual(8, result[3][1]);
+        }
+
         #endregion
 
         #region Least Common Ancestor
