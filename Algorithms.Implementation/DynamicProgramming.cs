@@ -239,6 +239,40 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Matrix Traverse
+
+        /// <summary>
+        /// A robot has to move in a grid which is in the form of a matrix. It can go to
+        /// 1.) A(i,j)--> A(i+j,j) (Right)
+        /// 2.) A(i,j)--> A(i,i+j) (Down)
+        /// 
+        /// Given it starts at (1,1) and it has to go to A(m,n), find the minimum number of STEPS it has to take to get to (m,n) and write
+        /// public static int minSteps(int m,int n)
+        /// 
+        /// For instance to go from (1,1) to m=3 and n=2 it has to take (1, 1) -> (1, 2) -> (3, 2) i.e. 2 steps
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int TraverseMatrix(int m, int n)
+        {
+            if ((m == 1) && (n == 1)) {
+                return 0;
+            }
+
+            if (m < n)
+            {
+                //if m is smaller we can only go n - m
+                return 1 + TraverseMatrix(m, n - m);
+            }
+            else
+            {
+                return 1 + TraverseMatrix(m - n, n);
+            }
+        }
+
+        #endregion
+
     }
 
 }

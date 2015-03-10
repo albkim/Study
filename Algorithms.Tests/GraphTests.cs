@@ -6,88 +6,11 @@ namespace Algorithms.Tests
     using System.Collections.Generic;
 
     using Algorithms.Implementation.Models;
+    using Algorithms.Implementation.Models.Graphes;
 
     [TestClass]
     public class GraphTests
     {
-        #region SearchForShortestPath
-
-        [TestMethod]
-        public void SearchOne()
-        {
-            var ed = new GraphNode {Value = "ed", Edges = new List<GraphNode> {}};
-            var ad = new GraphNode {Value = "ad", Edges = new List<GraphNode> { ed }};
-            var bed = new GraphNode {Value = "bed", Edges = new List<GraphNode> { ed }};
-            var bet = new GraphNode {Value = "bet", Edges = new List<GraphNode> { bed }};
-            ed.Edges.Add(bed);
-            var bat = new GraphNode {Value = "bat", Edges = new List<GraphNode> { bet}};
-            var at = new GraphNode {Value = "at", Edges = new List<GraphNode> { ad, bat }};
-            var cat = new GraphNode { Value = "cat", Edges = new List<GraphNode> { bat, at } };
-            bat.Edges.Add(at);
-            bat.Edges.Add(cat);
-            at.Edges.Add(cat);
-
-            var graph = new Graph {Head = cat};
-
-            var result = graph.SearchForShortestPath("cat", "bed");
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(4, result.Count);
-            Assert.AreEqual("cat", result[0]);
-            Assert.AreEqual("bat", result[1]);
-            Assert.AreEqual("bet", result[2]);
-            Assert.AreEqual("bed", result[3]);
-        }
-
-        [TestMethod]
-        public void SearchTwo()
-        {
-            var ed = new GraphNode { Value = "ed", Edges = new List<GraphNode> { } };
-            var ad = new GraphNode { Value = "ad", Edges = new List<GraphNode> { ed } };
-            var bed = new GraphNode { Value = "bed", Edges = new List<GraphNode> { ed } };
-            ed.Edges.Add(bed);
-            var bat = new GraphNode { Value = "bat", Edges = new List<GraphNode> { } };
-            var at = new GraphNode { Value = "at", Edges = new List<GraphNode> { ad, bat } };
-            var cat = new GraphNode { Value = "cat", Edges = new List<GraphNode> { bat, at } };
-            bat.Edges.Add(at);
-            bat.Edges.Add(cat);
-            at.Edges.Add(cat);
-
-            var graph = new Graph { Head = cat };
-
-            var result = graph.SearchForShortestPath("cat", "bed");
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(5, result.Count);
-            Assert.AreEqual("cat", result[0]);
-            Assert.AreEqual("at", result[1]);
-            Assert.AreEqual("ad", result[2]);
-            Assert.AreEqual("ed", result[3]);
-            Assert.AreEqual("bed", result[4]);
-        }
-
-        [TestMethod]
-        public void NoResult()
-        {
-            var ed = new GraphNode { Value = "ed", Edges = new List<GraphNode> { } };
-            var bed = new GraphNode { Value = "bed", Edges = new List<GraphNode> { ed } };
-            ed.Edges.Add(bed);
-            var bat = new GraphNode { Value = "bat", Edges = new List<GraphNode> { } };
-            var at = new GraphNode { Value = "at", Edges = new List<GraphNode> { bat } };
-            var cat = new GraphNode { Value = "cat", Edges = new List<GraphNode> { bat, at } };
-            bat.Edges.Add(at);
-            bat.Edges.Add(cat);
-            at.Edges.Add(cat);
-
-            var graph = new Graph { Head = cat };
-
-            var result = graph.SearchForShortestPath("cat", "bed");
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
-        }
-
-        #endregion
 
         #region DetectCircular
 
@@ -351,6 +274,70 @@ namespace Algorithms.Tests
         }
 
         #endregion
+
+        #region Task Scheduler
+
+        [TestMethod]
+        public void TaskScheduler()
+        {
+            Graph.Task task5 = new Graph.Task { Value = 5, Dependencies = new List<Graph.Task>() };
+            Graph.Task task4 = new Graph.Task { Value = 4, Dependencies = new List<Graph.Task> { task5 } };
+            Graph.Task task3 = new Graph.Task { Value = 3, Dependencies = new List<Graph.Task> { task4, task5 } };
+            Graph.Task task2 = new Graph.Task { Value = 2, Dependencies = new List<Graph.Task> { task3, task4, task5 } };
+            Graph.Task task1 = new Graph.Task { Value = 1, Dependencies = new List<Graph.Task> { task2, task3, task4, task5 } };
+            
+            List<Graph.Task> tasks = new List<Graph.Task> { task1, task2, task3, task4, task5 };
+
+            var result = Graph.TaskScheduler(tasks);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result.Count);
+            Assert.AreEqual(5, result[0]);
+            Assert.AreEqual(4, result[1]);
+            Assert.AreEqual(3, result[2]);
+            Assert.AreEqual(2, result[3]);
+            Assert.AreEqual(1, result[4]);
+        }
+
+        #endregion
+
+        #region Topological Sort
+
+        [TestMethod]
+        public void TopologicalSort()
+        {
+            Node<char> a = new Node<char> { Value = 'A' };
+            Node<char> b = new Node<char> { Value = 'B' };
+            Node<char> c = new Node<char> { Value = 'C' };
+            Node<char> d = new Node<char> { Value = 'D' };
+            Node<char> e = new Node<char> { Value = 'E' };
+            Node<char> f = new Node<char> { Value = 'F' };
+
+            Graph<char> graph = new Graph<char>();
+            graph.Nodes = new List<Node<char>> { a, b, c, d, e, f };
+            graph.Edges = new List<Edge<char>>();
+
+            graph.Edges.Add(new Edge<char> { Left = d, Right = b });
+            graph.Edges.Add(new Edge<char> { Left = d, Right = c });
+            graph.Edges.Add(new Edge<char> { Left = e, Right = c });
+            graph.Edges.Add(new Edge<char> { Left = e, Right = f });
+            graph.Edges.Add(new Edge<char> { Left = b, Right = a });
+            graph.Edges.Add(new Edge<char> { Left = a, Right = f });
+
+            var result = Graph.TopologicalSort(graph);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(6, result.Count);
+            Assert.AreEqual('F', result[0]);
+            Assert.AreEqual('A', result[1]);
+            Assert.AreEqual('C', result[2]);
+            Assert.AreEqual('B', result[3]);
+            Assert.AreEqual('E', result[4]);
+            Assert.AreEqual('D', result[5]);
+        }
+
+        #endregion
+
     }
 }
 

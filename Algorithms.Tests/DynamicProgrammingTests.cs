@@ -63,5 +63,15 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Matrix Traverse
+
+        [TestMethod]
+        public void TraverseMatrix()
+        {
+            Assert.AreEqual(2, DynamicProgramming.TraverseMatrix(3, 2));
+        }
+
+        #endregion
+
     }
 }
