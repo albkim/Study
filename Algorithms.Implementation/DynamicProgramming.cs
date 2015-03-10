@@ -273,6 +273,98 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Discontinuous String
+
+        /// <summary>
+        /// Given two strings, find number of discontinuous matches.
+        /// “cat”, “catapult”
+        /// 
+        /// 3 => “CATapult”, “CatApulT”, “CAtapulT”
+        /// 
+        /// Seems like i can do this, for each substring of the longer word, pass shorter string to see if i find a match
+        /// If the character matches, pass substrings of both to see if there is a further match
+        /// If shorter word has just one character left, then do contains and increment a count
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static int DiscontinuousStringRecursive(string s1, string s2)
+        {
+            if (s1.Length == 1)
+            {
+                return (s2.Contains(s1[0])) ? 1 : 0;
+            }
+
+            if (s2.Length == 1)
+            {
+                return 0;
+            }
+
+            int count = 0;
+
+            if (s1[s1.Length - 1] == s2[s2.Length - 1])
+            {
+                count += DiscontinuousStringRecursive(s1.Substring(0, s1.Length - 1), s2.Substring(0, s2.Length - 1));
+            }
+
+            if (s2.Length > s1.Length)
+            {
+                count += DiscontinuousStringRecursive(s1, s2.Substring(0, s2.Length - 1));
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        ///             C   A   T   A   P   U   L   T
+        ///         0   0   0   0   0   0   0   0   0 
+        ///      C  0   1   1   1   1   1   1   1   1   
+        ///      A  0   0   1   1   2   2   2   2   2
+        ///      T  0   0   0   1   1   1   1   1   3
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        public static int DiscontinuousStringDynamic(string s1, string s2)
+        {
+            int[,] matrix = new int[s1.Length + 1, s2.Length + 1];
+
+            for (int i = 0; i <= s1.Length; i++)
+            {
+                for (int j = 0; j <= s2.Length; j++)
+                {
+                    if ((i == 0) || (j == 0))
+                    {
+                        matrix[i, j] = 0;
+                        continue;
+                    }
+
+                    if (i == 1)
+                    {
+                        matrix[i, j] = s2.Substring(0, j).Contains(s1[i - 1]) ? 1 : 0;
+                        continue;
+                    }
+
+                    int count = 0;
+                    if (s1[i - 1] == s2[j - 1])
+                    {
+                        count += matrix[i - 1, j - 1];
+                    }
+
+                    if (j > i)
+                    {
+                        count += matrix[i, j - 1];
+                    }
+
+                    matrix[i, j] = count;
+                }
+            }
+
+            return matrix[s1.Length, s2.Length];
+        }
+
+        #endregion
+
     }
 
 }

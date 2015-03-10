@@ -986,6 +986,54 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Longest Continuous Subsequence For Sum K
+
+        /// <summary>
+        /// [3, 5, 6, 7, 9]
+        /// Longest continuous subsequence for sum of 18 - [5, 6, 7]
+        /// 
+        /// Calculate the cumulative sum and then make this into a two sum question
+        /// [3, 8, 14, 21, 30] in a dictionary
+        /// from the back, see if total - k exists in the dictionary
+        /// 30 -> look for 12?
+        /// 21 -> look for 3?
+        /// 
+        /// When we find one, start from the next cell to the current cell
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static List<int> LongestSubsequenceForK(int[] numbers, int k)
+        {
+            Dictionary<int, int> sums = new Dictionary<int, int>();
+
+            int sum = 0;
+            int index = 0;
+            foreach (int number in numbers)
+            {
+                sum += number;
+                sums.Add(sum, index);
+                index++;
+            }
+
+            foreach (int number in sums.Keys)
+            {
+                int remainder = number - k;
+                if ((sums.ContainsKey(remainder)) && (sums[number] > sums[remainder]))
+                {
+                    List<int> result = new List<int>();
+                    for (int resultIndex = sums[remainder] + 1; resultIndex <= sums[number]; resultIndex++)
+                    {
+                        result.Add(numbers[resultIndex]);
+                    }
+                    return result;
+                }
+            }
+
+            throw new Exception("Cannot find a valid subsequence");
+        }
+
+        #endregion
     }
 
 }

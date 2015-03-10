@@ -233,6 +233,75 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Lowest Common Ancestor With Parent
+
+        /// <summary>
+        ///         _______3______
+        ///        /              \
+        ///     ___5__          ___1__
+        ///    /      \        /      \
+        ///    6      _2       0       8
+        ///          /  \
+        ///          7   4
+        ///          
+        /// 5 & 1 = 3
+        /// 5 & 4 = 5
+        /// 
+        /// Using a dictionary, track visited nodes
+        /// Move one parent by one parent, and see if current parent is in the tracker
+        /// First encountered parent is the LCA
+        /// 
+        /// 
+        /// More clever solution not using a dictionary is figure out the height difference
+        /// If we eliminate the height different (by fast forwarding the lower level one towards the root)
+        /// we just need to move both nodes one by one and they will at the LCA
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static int LowestCommonAncestorParent(TreeNode<int> left, TreeNode<int> right)
+        {
+            Dictionary<int, int> tracker = new Dictionary<int, int>();
+            tracker.Add(left.Value, left.Value);
+            tracker.Add(right.Value, right.Value);
+
+            while ((left != null) || (right != null))
+            {
+                if (left != null)
+                {
+                    if (left.Parent != null) 
+                    {
+                        if (tracker.ContainsKey(left.Parent.Value)) {
+                            return left.Parent.Value;
+                        }
+                        else {
+                            tracker.Add(left.Parent.Value, left.Parent.Value);
+                        }
+                    }
+                    left = left.Parent;
+                }
+                if (right != null)
+                {
+                    if (right.Parent != null)
+                    {
+                        if (tracker.ContainsKey(right.Parent.Value))
+                        {
+                            return right.Parent.Value;
+                        }
+                        else
+                        {
+                            tracker.Add(right.Parent.Value, right.Parent.Value);
+                        }
+                    }
+                    right = right.Parent;
+                }
+            }
+
+            throw new Exception("No LCA");
+        }
+
+        #endregion
+
     }
 
 }

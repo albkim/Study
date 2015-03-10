@@ -9,6 +9,7 @@ namespace Algorithms.Implementation.Models
     {
         public TreeNode<T> Left { get; set; }
         public TreeNode<T> Right { get; set; }
+        public TreeNode<T> Parent { get; set; }
 
         public T Value { get; set; }
     }

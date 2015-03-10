@@ -182,5 +182,45 @@ namespace Algorithms.Tests
         
         #endregion
 
+        #region Lowest Common Ancestor With Parent
+
+        [TestMethod]
+        public void LowestCommonAncestorParent() {
+            TreeNode<int> zero = new TreeNode<int> { Value = 0 };
+            TreeNode<int> one = new TreeNode<int> { Value = 1 };
+            TreeNode<int> two = new TreeNode<int> { Value = 2 };
+            TreeNode<int> three = new TreeNode<int> { Value = 3 };
+            TreeNode<int> four = new TreeNode<int> { Value = 4 };
+            TreeNode<int> five = new TreeNode<int> { Value = 5 };
+            TreeNode<int> six = new TreeNode<int> { Value = 6 };
+            TreeNode<int> seven = new TreeNode<int> { Value = 7 };
+            TreeNode<int> eight = new TreeNode<int> { Value = 8 };
+
+            three.Left = five;
+            three.Right = one;
+            five.Parent = three;
+            one.Parent = three;
+
+            five.Left = six;
+            five.Right = two;
+            six.Parent = five;
+            two.Parent = five;
+
+            two.Left = seven;
+            two.Right = four;
+            seven.Parent = two;
+            four.Parent = two;
+
+            one.Left = zero;
+            one.Right = eight;
+            zero.Parent = one;
+            eight.Parent = one;
+
+            Assert.AreEqual(3, BinaryTree<int>.LowestCommonAncestorParent(five, one));
+            Assert.AreEqual(5, BinaryTree<int>.LowestCommonAncestorParent(five, four));
+        }
+
+        #endregion
+
     }
 }

@@ -396,5 +396,21 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Longest Continuous Subsequence For Sum K
+
+        [TestMethod]
+        public void LongestSubsequenceForK()
+        {
+            var result = Array.LongestSubsequenceForK(new int[] { 3, 5, 6, 7, 9 }, 18);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(5, result[0]);
+            Assert.AreEqual(6, result[1]);
+            Assert.AreEqual(7, result[2]);
+        }
+
+        #endregion
+
     }
 }

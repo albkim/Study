@@ -73,5 +73,21 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Discontinuous String
+
+        [TestMethod]
+        public void DiscontinuousStringRecursive()
+        {
+            Assert.AreEqual(3, DynamicProgramming.DiscontinuousStringRecursive("cat", "catapult"));
+        }
+
+        [TestMethod]
+        public void DiscontinuousStringDynamic()
+        {
+            Assert.AreEqual(3, DynamicProgramming.DiscontinuousStringDynamic("cat", "catapult"));
+        }
+
+        #endregion
+
     }
 }
