@@ -365,6 +365,107 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Raggedness of line
+
+        /// <summary>
+        /// Given the jaggedness as sum of squares of trailing spaces, find the optimal line breaks to reduce
+        /// jaggedness
+        /// 
+        /// column size of 6
+        /// aaa bb
+        /// cc
+        /// ddddd
+        /// 
+        /// or 
+        /// 
+        /// aaa
+        /// bb cc
+        /// ddddd
+        /// 
+        /// Seems like a simple DP problem
+        /// 
+        /// Take min between (adding it to previous line, removing last word and putting it together with current, or adding as a new line)
+        /// 
+        ///             1                2                            3       4
+        ///             0                0                            0       0
+        /// aaa     0   9                9                            9       9
+        /// bb      0   0          min(9 - 9, 36 + 0, 9 + 16)         0       0
+        /// cc      0   0          min(in, 0 + 9 + 1, 0 + 16)         10      10
+        /// ddddd   0   0               0                             11      11
+        /// </summary>
+        /// <param name="words"></param>
+        /// <param name="columnSize"></param>
+        /// <returns></returns>
+        public static List<string> ReduceRaggedness(string[] words, int columnSize)
+        {
+            int[,] matrix = new int[words.Length + 1, words.Length + 1];
+
+            for (int i = 0; i <= words.Length; i++)
+            {
+                for (int j = 0; j <= words.Length; j++)
+                {
+                    if ((i == 0) || (j == 0))
+                    {
+                        matrix[i, j] = 0;
+                        continue;
+                    }
+
+                    string word = words[i - 1];
+                    
+                    //if there is a room in previous (score ^ 1/2 >= word.length + space)
+                    int scorePreviousLine = (System.Math.Sqrt(matrix[i - 1, j - 1]) >= (word.Length + 1)) ?
+                        (int)System.Math.Pow(System.Math.Sqrt(matrix[i - 1, j - 1]) - word.Length - 1, 2) : int.MaxValue;
+                    
+                    //try removing the last word from last line and then combining with current
+                    int scoreCombine = int.MaxValue;
+                    if ((i > 1) && ((words[i - 2].Length + 1 + word.Length <= columnSize)))
+                    {
+                        scoreCombine = matrix[i - 2, j - 1] + (int)System.Math.Pow(columnSize - words[i - 2].Length - 1 - word.Length, 2);
+                    }
+
+                    //now just put it on the new line
+                    int scoreNewLine = matrix[i - 1, j - 1] + (int)System.Math.Pow(columnSize - word.Length, 2);
+
+                    matrix[i, j] = System.Math.Min(scorePreviousLine, System.Math.Min(scoreCombine, scoreNewLine));
+                }
+            }
+
+            List<string> result = new List<string>();
+
+            int lastWordIndex = 1;
+            for (int line = 1; line <= words.Length; line++)
+            {
+                StringBuilder sb = new StringBuilder();
+                
+                //scan from the bottom and see what is the last work index;
+                int wordIndex = words.Length;
+                while ((wordIndex > 0) && (matrix[wordIndex, line] == 0))
+                {
+                    wordIndex--;
+                }
+
+                //append up to the word index
+                for (int index = lastWordIndex; index <= wordIndex; index++)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(' ');
+                    }
+                    sb.Append(words[index - 1]);
+                }
+                result.Add(sb.ToString());
+                lastWordIndex = wordIndex + 1;
+
+                if (lastWordIndex >= words.Length)
+                {
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 
 }

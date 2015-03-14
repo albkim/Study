@@ -167,6 +167,76 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Max Depth
+
+        /// <summary>
+        /// Return the maximum depth of a binary tree
+        /// 
+        /// Should just do bfs with count incremented every level
+        /// 
+        /// return count if no other child to traverse
+        /// </summary>
+        /// <returns></returns>
+        public int MaxDepthBFS()
+        {
+            Queue<TreeNode<T>> queue = new Queue<TreeNode<T>>();
+            queue.Enqueue(this.Root);
+
+            return MaxDepthBFS(queue, 0);
+        }
+
+        private int MaxDepthBFS(Queue<TreeNode<T>> queue, int level)
+        {
+            if (queue.Count == 0)
+            {
+                return level;
+            }
+
+            Queue<TreeNode<T>> nextLevel = new Queue<TreeNode<T>>();
+            foreach (TreeNode<T> node in queue)
+            {
+                if (node.Left != null)
+                {
+                    nextLevel.Enqueue(node.Left);
+                }
+                if (node.Right != null)
+                {
+                    nextLevel.Enqueue(node.Right);
+                }
+            }
+
+            return MaxDepthBFS(nextLevel, level + 1);
+        }
+
+        public int MaxDepthDFS()
+        {
+            return this.MaxDepthDFS(this.Root, 1);
+        }
+
+        private int MaxDepthDFS(TreeNode<T> node, int level)
+        {
+            //if leaf node, return the level
+            if ((node.Left == null) && (node.Right == null))
+            {
+                return level;
+            }
+
+            int newLevel = level;
+
+            if (node.Left != null)
+            {
+                newLevel = System.Math.Max(newLevel, this.MaxDepthDFS(node.Left, level + 1));
+            }
+            if (node.Right != null)
+            {
+                newLevel = System.Math.Max(newLevel, this.MaxDepthDFS(node.Right, level + 1));
+            }
+
+            return newLevel;
+        }
+
+        #endregion
+
         #region Least Common Ancestor
 
         /// <summary>

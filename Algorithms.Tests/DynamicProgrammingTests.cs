@@ -89,5 +89,19 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Raggedness of line
+
+        [TestMethod]
+        public void ReduceRaggedness() {
+            var result = DynamicProgramming.ReduceRaggedness(new string[] { "aaa", "bb", "cc", "ddddd" }, 6);
+
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual("aaa", result[0]);
+            Assert.AreEqual("bb cc", result[1]);
+            Assert.AreEqual("ddddd", result[2]);
+        }
+        
+        #endregion
+
     }
 }

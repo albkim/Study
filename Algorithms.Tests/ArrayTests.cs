@@ -412,5 +412,33 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Count Lines Cross Over
+
+        /// <summary>
+        /// 
+        ///                |   |
+        ///         _______|___|__       |
+        ///                |   |         |_______
+        ///                | __|_________|__
+        ///                    |
+        ///                    
+        /// </summary>
+        [TestMethod]
+        public void CountCrossOver()
+        {
+            List<Array.Line> lines = new List<Array.Line>();
+            lines.Add(new Array.Line { Start = new Array.Point { X = 1, Y = 4 }, End = new Array.Point { X = 5, Y = 4 } });
+            lines.Add(new Array.Line { Start = new Array.Point { X = 3, Y = 1 }, End = new Array.Point { X = 10, Y = 1 } });
+            lines.Add(new Array.Line { Start = new Array.Point { X = 7, Y = 3 }, End = new Array.Point { X = 12, Y = 3 } });
+
+            lines.Add(new Array.Line { Start = new Array.Point { X = 2, Y = 1 }, End = new Array.Point { X = 2, Y = 6 } });
+            lines.Add(new Array.Line { Start = new Array.Point { X = 4, Y = 0 }, End = new Array.Point { X = 4, Y = 6 } });
+            lines.Add(new Array.Line { Start = new Array.Point { X = 7, Y = 1 }, End = new Array.Point { X = 7, Y = 6 } });
+
+            Assert.AreEqual(5, Array.CountCrossOver(lines.ToArray()));
+        }
+
+        #endregion
+        
     }
 }

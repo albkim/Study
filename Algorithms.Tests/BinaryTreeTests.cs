@@ -149,6 +149,21 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Max Depth
+
+        [TestMethod]
+        public void MaxDepthBFS() {
+            Assert.AreEqual(4, this.bt.MaxDepthBFS());
+        }
+
+        [TestMethod]
+        public void MaxDepthDFS()
+        {
+            Assert.AreEqual(4, this.bt.MaxDepthDFS());
+        }
+
+        #endregion
+
         #region Least Common Ancestor
 
         /// <summary>
