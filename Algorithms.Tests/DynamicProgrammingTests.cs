@@ -103,5 +103,46 @@ namespace Algorithms.Tests
         
         #endregion
 
+        #region All Palindromes
+
+        [TestMethod]
+        public void AllPalindromes()
+        {
+            var result = DynamicProgramming.AllPalindromes("abaabccba");
+
+            Assert.AreEqual(6, result.Count);
+            Assert.AreEqual("aa", result[0]);
+            Assert.AreEqual("cc", result[1]);
+            Assert.AreEqual("bccb", result[2]);
+            Assert.AreEqual("abccba", result[3]);
+            Assert.AreEqual("baab", result[4]);
+            Assert.AreEqual("aba", result[5]);
+        }
+
+        #endregion
+
+        #region Longest Increasing Sub Sequence
+
+        [TestMethod]
+        public void LongestIncreasingSubSequenceRecursive()
+        {
+            Assert.AreEqual(6, DynamicProgramming.LongestIncreasingSubSequenceRecursive(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80 }));
+        }
+
+        [TestMethod]
+        public void LongestIncreasingSubSequenceDynamic()
+        {
+            Assert.AreEqual(6, DynamicProgramming.LongestIncreasingSubSequenceDynamic(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80 }));
+        }
+
+        [TestMethod]
+        public void LongestIncreasingSubSequenceBinarySearch()
+        {
+            Assert.AreEqual(6, DynamicProgramming.LongestIncreasingSubSequenceBinarySearch(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80 }));
+            Assert.AreEqual(6, DynamicProgramming.LongestIncreasingSubSequenceBinarySearch(new int[] { 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 }));
+        }
+
+        #endregion
+
     }
 }

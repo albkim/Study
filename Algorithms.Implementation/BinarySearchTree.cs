@@ -47,5 +47,52 @@ namespace Algorithms.Implementation
 
             return left && right && (minValue < root.Value) && (maxValue > root.Value);
         }
+                
+        #region Serialize & Deserialize
+
+        // if BST, we can serialize by doing pre-order
+        public List<int> SerializeTree()
+        {
+            List<int> result = new List<int>();
+
+            this.SerializeTree(this.Root, result);
+
+            return result;
+        }
+
+        private void SerializeTree(TreeNode<int> node, List<int> list) {
+            if (node == null) {
+                return;
+            }
+
+            list.Add(node.Value);
+
+            this.SerializeTree(node.Left, list);
+            this.SerializeTree(node.Right, list);
+        }
+
+	    public void Deserialize(List<int> data) {
+            int index = 0;
+            this.Root = this.Deserialize(data, ref index, int.MinValue, int.MaxValue);
+        }
+
+        private TreeNode<int> Deserialize(List<int> data, ref int index, int min, int max) {
+            TreeNode<int> node = new TreeNode<int> { Value = data[index] };
+
+            if ((data.Count > (index + 1)) && (data[index + 1] < max) && (data[index + 1] > min) && (data[index + 1] < node.Value))
+            {
+                index++;
+                node.Left = this.Deserialize(data, ref index, min, node.Value);
+            }
+            if ((data.Count > (index + 1)) && (data[index + 1] < max) && (data[index + 1] > min) && (data[index + 1] > node.Value))
+            {
+                index++;
+                node.Right = this.Deserialize(data, ref index, node.Value, max);
+            }
+
+            return node;
+        }
+
+        #endregion
     }
 }

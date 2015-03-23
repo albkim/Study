@@ -466,6 +466,234 @@ namespace Algorithms.Implementation
         }
 
         #endregion
+
+        #region All Palindromes
+
+        /// <summary>
+        /// Find all palindrome greater than length 2
+        /// This is very similar to technique for longest palindrome
+        /// 
+        /// abaabccba 
+        /// 
+        /// aba, baab, bccb, abccba....
+        ///         j
+        ///         a   b   a   a   b   c   c   b   a
+        ///  i  a   1   0   1   0   0   0   0   0   0
+        ///     b   0   1   0   0   1   0   0   0   0
+        ///     a   0   0   1   1   0   0   0   0   0
+        ///     a   0   0   0   1   0   0   0   0   1
+        ///     b   0   0   0   0   1   0   0   1   0
+        ///     c   0   0   0   0   0   1   1   0   0
+        ///     c   0   0   0   0   0   0   1   0   0
+        ///     b   0   0   0   0   0   0   0   1   0
+        ///     a   0   0   0   0   0   0   0   0   1
+        ///  
+        /// if i == j then yes since it's the same letter but we don't want to add this to the result
+        /// if s[i] == s[i + 1] then yes since it's the same repeating letter (aa or cc)
+        /// if s[i] == s[j] then dp[i,j] = dp[i+1, j-1]
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static List<string> AllPalindromes(string word)
+        {
+            List<string> result = new List<string>();
+
+            int[,] cache = new int[word.Length, word.Length];
+            
+            for(int i = 0; i < word.Length; i++) {
+                //base case 1...same letter
+                cache[i, i] = 1;
+
+                //base case 2...repeating letter
+                if (i < (word.Length - 1)) {
+                    if (word[i] == word[i + 1]) {
+                        cache[i, i + 1] = 1;
+                        result.Add(word.Substring(i, 2));
+                    }
+                }
+            }
+
+            //since we look at i + 1...we want to build i from high to low
+            for(int i = (word.Length - 1); i >= 0; i--) {
+                for(int j = i + 1; j < word.Length; j++) {
+                    if (cache[i, j] != 1)
+                    {
+                        cache[i, j] = ((word[i] == word[j]) && (cache[i + 1, j - 1] == 1)) ? 1 : 0;
+                    }
+                    if ((cache[i, j] == 1) && ((j - i) >= 2)) {
+                        result.Add(word.Substring(i, j - i + 1));
+                    }
+                }
+            }
+
+            return result;
+        }
+        
+        #endregion
+
+        #region Longest Increasing Sub Sequence
+
+        /// <summary>
+        /// 10, 22, 9, 33, 21, 50, 41, 60, 80
+        /// 
+        /// 10, 22, 33, 50, 60, 80 -> length 6
+        /// 
+        /// recurrence
+        /// for each number, find the max length within the sub sequence up to current numbers
+        /// 
+        /// complexity 2^n
+        /// 
+        ///                  f(4)
+        ///        f(3)      f(2)       f(1)
+        ///  f(2)       f(1) f(1)
+        ///  f(1)
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static int LongestIncreasingSubSequenceRecursive(int[] numbers)
+        {
+            return LongestIncreasingSubSequenceRecursive(numbers, numbers.Length - 1);
+        }
+
+        private static int LongestIncreasingSubSequenceRecursive(int[] numbers, int currentIndex)
+        {
+            if (currentIndex == 0)
+            {
+                return 1;
+            }
+
+            int length = 0;
+
+            for (int index = 0; index < currentIndex; index++)
+            {
+                if (numbers[index] < numbers[currentIndex]) {
+                    length = System.Math.Max(length, 1 + LongestIncreasingSubSequenceRecursive(numbers, index));
+                }
+            }
+
+            return length;
+        }
+
+        /// <summary>
+        ///         10  22  9   33  21  50  41  60  80
+        /// 10      1   
+        /// 22      1   2   
+        /// 9       0   0   1   
+        /// 33      1   2   2   3   
+        /// 21      1   1   1   1   2   
+        /// 50      1   2   2   3   3   4   
+        /// 41      1   2   2   3   3   3   4   
+        /// 60      1   2   2   3   3   4   4   5   
+        /// 80      1   2   2   3   3   4   4   5   6
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static int LongestIncreasingSubSequenceDynamic(int[] numbers)
+        {
+            int[] cache = new int[numbers.Length];
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                //worst case, it will be 1 which is by itself
+                int max = 1;
+
+                //iterate up to previous index
+                for (int j = 0; j < i; j++)
+                {
+                    //if previous number is smaller, we can include this count + 1
+                    if (numbers[i] >= numbers[j])
+                    {
+                        max = System.Math.Max(max, cache[j] + 1);
+                    }
+                }
+                cache[i] = max;
+            }
+
+            return cache[numbers.Length - 1];
+        }
+
+        /// <summary>
+        /// Think of how human will do this, lets try to track all possible sequences but also optimize
+        /// what we track
+        /// 
+        /// 10
+        /// 
+        /// 10
+        /// 10, 22
+        /// 
+        /// 9,  here 9 & 10 are redundent because they both give us sequence of length 1...
+        /// 10, if we want to maximize our change (let's say there is 10 again) we should keep the lowest
+        /// 10, 22
+        /// 
+        /// 9,
+        /// 10, 22
+        /// 10, 22, 33
+        /// 
+        /// 9,
+        /// 10, 21 (same as previous, replace 22 with 21)
+        /// 10, 22, 33
+        /// 
+        /// 9,
+        /// 10, 21,
+        /// 10, 22, 33,
+        /// 10, 22, 33, 50
+        /// 
+        /// we can simplify this rule
+        /// have a 1-D array of tail values 9, 21, 22, 50. If the number is smaller than number at index 0, replace
+        /// if the number is larger than last number, extend the array. If the number is in between, replace
+        /// the next larger value
+        /// 
+        /// nlogn complexity
+        /// </summary>
+        /// <param name="numbers"></param>
+        public static int LongestIncreasingSubSequenceBinarySearch(int[] numbers) {
+            List<int> tailCache = new List<int>();
+            
+            foreach(int number in numbers) {
+                if ((tailCache.Count == 0) || (tailCache[tailCache.Count - 1] < number))
+                {
+                    tailCache.Add(number);
+                }
+                else if (tailCache[0] > number)
+                {
+                    tailCache[0] = number;
+                }
+                else
+                {
+                    //in between...find the next largest
+                    int start = 0;
+                    int end = tailCache.Count - 1;
+                    int nextIndex = end;
+                    int next = int.MaxValue;
+
+                    while (start <= end)
+                    {
+                        int mid = start + (int)System.Math.Floor((end - start) / 2d);
+                        if (tailCache[mid] <= number)
+                        {
+                            start = mid + 1;
+                        }
+                        else
+                        {
+                            if (tailCache[mid] < next)
+                            {
+                                next = tailCache[mid];
+                                nextIndex = mid;
+                            }
+                            end = mid - 1;
+                        }
+                    }
+
+                    tailCache[nextIndex] = number;
+                }
+            }
+
+            return tailCache.Count;
+        }
+
+        #endregion
+
+
     }
 
 }

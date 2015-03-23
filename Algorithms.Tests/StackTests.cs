@@ -5,14 +5,16 @@ using Algorithms.Implementation;
 namespace Algorithms.Tests
 {
     [TestClass]
-    public class MinStackTests
+    public class StackTests
     {
-        
+
+        #region Min Stack
+
         [TestMethod]
         public void PushAndMin()
         {
-            MinStackConstantSpace stackCS = new MinStackConstantSpace();
-            MinStack stack = new MinStack();
+            Stack.MinStackConstantSpace stackCS = new Stack.MinStackConstantSpace();
+            Stack.MinStack stack = new Stack.MinStack();
 
             stackCS.Push(10);
             stack.Push(10);
@@ -24,8 +26,8 @@ namespace Algorithms.Tests
         [TestMethod]
         public void MultiplePushAndMin()
         {
-            MinStackConstantSpace stackCS = new MinStackConstantSpace();
-            MinStack stack = new MinStack();
+            Stack.MinStackConstantSpace stackCS = new Stack.MinStackConstantSpace();
+            Stack.MinStack stack = new Stack.MinStack();
 
             stackCS.Push(10);
             stackCS.Push(9);
@@ -41,8 +43,8 @@ namespace Algorithms.Tests
         [TestMethod]
         public void PopAndMin()
         {
-            MinStackConstantSpace stackCS = new MinStackConstantSpace();
-            MinStack stack = new MinStack();
+            Stack.MinStackConstantSpace stackCS = new Stack.MinStackConstantSpace();
+            Stack.MinStack stack = new Stack.MinStack();
 
             stackCS.Push(10);
             stackCS.Push(9);
@@ -60,8 +62,8 @@ namespace Algorithms.Tests
         [TestMethod]
         public void PopAndMinAfterPop()
         {
-            MinStackConstantSpace stackCS = new MinStackConstantSpace();
-            MinStack stack = new MinStack();
+            Stack.MinStackConstantSpace stackCS = new Stack.MinStackConstantSpace();
+            Stack.MinStack stack = new Stack.MinStack();
 
             stackCS.Push(10);
             stackCS.Push(9);
@@ -84,8 +86,8 @@ namespace Algorithms.Tests
         [TestMethod]
         public void Negative()
         {
-            MinStackConstantSpace stackCS = new MinStackConstantSpace();
-            MinStackConstantSpace stack = new MinStackConstantSpace();
+            Stack.MinStackConstantSpace stackCS = new Stack.MinStackConstantSpace();
+            Stack.MinStackConstantSpace stack = new Stack.MinStackConstantSpace();
 
             stackCS.Push(1);
             stackCS.Push(-2);
@@ -116,5 +118,26 @@ namespace Algorithms.Tests
             Assert.AreEqual(1, stack.Pop());
         }
 
+        #endregion
+
+        #region Balanced Parentheses
+
+        [TestMethod]
+        public void BalancedParentheses()
+        {
+            Assert.IsTrue(Stack.BalancedParentheses("((()))"));
+            Assert.IsFalse(Stack.BalancedParentheses(")("));
+        }
+
+        [TestMethod]
+        public void BalancedParenthesesMultiple()
+        {
+            Assert.IsTrue(Stack.BalancedParenthesesMultiple("{([])}"));
+            Assert.IsFalse(Stack.BalancedParenthesesMultiple("{[(}])"));
+        }
+
+        #endregion
+
     }
+
 }

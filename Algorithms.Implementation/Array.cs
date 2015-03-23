@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 
 namespace Algorithms.Implementation
 {
@@ -1256,6 +1257,152 @@ namespace Algorithms.Implementation
             }
 
             return sample;
+        }
+
+        #endregion
+
+        #region Dot Product Sparse Vector
+
+        //the question might be how to store the sparse vector...the typical answer is position & value
+        //using dictionary or an array...each will have a different solution
+        public static BigInteger DotProductDictionary(Dictionary<int, int> vector1, Dictionary<int, int> vector2)
+        {
+            Dictionary<int, int> smaller = (vector1.Count > vector2.Count) ? vector2 : vector1;
+            Dictionary<int, int> larger = (vector1.Count > vector2.Count) ? vector1 : vector2;
+
+            //overflow...2^32 * 2^32 in each array...and then 2^32 entries...so we need 2^96 unsigned int
+            BigInteger dotProduct = 0;
+            foreach (int position in smaller.Keys)
+            {
+                if (larger.ContainsKey(position))
+                {
+                    dotProduct += smaller[position] * larger[position];
+                }
+            }
+
+            return dotProduct;
+        }
+
+        public static BigInteger DotProductList(List<Tuple<int, int>> vector1, List<Tuple<int, int>> vector2)
+        {
+            //overflow...2^32 * 2^32 in each array...and then 2^32 entries...so we need 2^96 unsigned int
+            BigInteger dotProduct = 0;
+
+            int vector1Index = 0;
+            int vector2Index = 0;
+
+            while ((vector1Index < vector1.Count) && (vector2Index < vector2.Count))
+            {
+                //if position of vector 1 is lower, advance vector 1 position
+                if (vector1[vector1Index].Item1 < vector2[vector2Index].Item1)
+                {
+                    vector1Index++;
+                }
+                else if (vector1[vector1Index].Item1 > vector2[vector2Index].Item1)
+                {
+                    vector2Index++;
+                }
+                else {
+                    dotProduct += vector1[vector1Index].Item2 * vector2[vector2Index].Item2;
+                    vector1Index++;
+                    vector2Index++;
+                }
+            }
+
+            return dotProduct;
+        }
+
+        #endregion
+
+        #region Look To Say
+
+        /// <summary>
+        /// generate the following sequence up to given number of times
+        /// 1, 11, 21, 1211, 111221, 312211
+        /// 1, one 1, two 1, one 2 one 1, one 1 one 2 two 1, three 1 two 2 one 1
+        /// 
+        /// seems like i just need to count number of time each number occurrs consequtively and convert
+        /// that to a number
+        /// </summary>
+        /// <returns></returns>
+        public static List<int> LookToSay(int number)
+        {
+            List<int> result = new List<int>();
+
+            int currentNumber = 1;
+            for (int count = 0; count < number; count++)
+            {
+                StringBuilder nextNumber = new StringBuilder();
+
+                char lastCharacter = 'a';
+                int characterCount = 1;
+                foreach(char character in currentNumber.ToString()) {
+                    if (character == lastCharacter)
+                    {
+                        characterCount++;
+                    }
+                    else 
+                    {
+                        //add the occurrence and number
+                        if (lastCharacter != 'a')
+                        {
+                            nextNumber.Append(characterCount.ToString());
+                            nextNumber.Append(lastCharacter);
+                        }
+
+                        //initialize to new number
+                        lastCharacter = character;
+                        characterCount = 1;
+                    }
+                }
+
+                //final number
+                nextNumber.Append(characterCount.ToString());
+                nextNumber.Append(lastCharacter);
+
+                //add the number
+                result.Add(currentNumber);
+                
+                //change the current numbers
+                currentNumber = int.Parse(nextNumber.ToString());
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Max Sum Non Adjacent Sub Sequence
+
+        /// <summary>
+        /// Find the max sum from the array where no two consecutive numbers are considered
+        /// 3 2 7 10 should return 13 (sum of 3 and 10) 
+        /// 3 2 5 10 7 should return 15 (sum of 3, 5 and 7)
+        /// 
+        /// Continuously perform this logic
+        /// max including current number = previous max excluded + current number
+        /// max excluding current number = max of previous (included, excluded)
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static int MaxSumNonAdjacentSubSequence(int[] numbers)
+        {
+            if ((numbers == null) || (numbers.Length == 0)) {
+                throw new ArgumentException();
+            }
+
+            int previousMaxIncluded;
+            int maxIncluded = numbers[0];
+            int maxExcluded = 0;
+
+            for (int index = 1; index < numbers.Length; index++)
+            {
+                previousMaxIncluded = maxIncluded;
+                maxIncluded = maxExcluded + numbers[index];
+                maxExcluded = System.Math.Max(previousMaxIncluded, maxExcluded);
+            }
+
+            return System.Math.Max(maxIncluded, maxExcluded);
         }
 
         #endregion

@@ -439,6 +439,63 @@ namespace Algorithms.Tests
         }
 
         #endregion
+
+        #region Dot Product Sparse Vector
         
+        [TestMethod]
+        public void DotProductDictionary()
+        {
+            Dictionary<int, int> vector1 = new Dictionary<int, int> { { 1, 4 }, { 4, 2 }, { 5, 3 } };
+            Dictionary<int, int> vector2 = new Dictionary<int, int> { { 1, 7 }, { 2, 6 }, { 5, 1 } };
+
+            Assert.AreEqual(31, Array.DotProductDictionary(vector1, vector2));
+        }
+
+        [TestMethod]
+        public void DotProductList()
+        {
+            List<System.Tuple<int, int>> vector1 = new List<System.Tuple<int, int>> {
+                new System.Tuple<int, int>(1, 4), new System.Tuple<int, int>(4, 2), new System.Tuple<int, int>(5, 3)
+            };
+            List<System.Tuple<int, int>> vector2 = new List<System.Tuple<int, int>> {
+                new System.Tuple<int, int>(1, 7), new System.Tuple<int, int>(2, 6), new System.Tuple<int, int>(5, 1)
+            };
+
+            Assert.AreEqual(31, Array.DotProductList(vector1, vector2));
+        }
+
+        #endregion
+
+        #region Look To Say
+
+        [TestMethod]
+        public void LookToSay()
+        {
+            var result = Array.LookToSay(6);
+
+            Assert.AreEqual(6, result.Count);
+
+            Assert.AreEqual(1, result[0]);
+            Assert.AreEqual(11, result[1]);
+            Assert.AreEqual(21, result[2]);
+            Assert.AreEqual(1211, result[3]);
+            Assert.AreEqual(111221, result[4]);
+            Assert.AreEqual(312211, result[5]);
+        }
+
+        #endregion
+
+        #region Max Sum Non Adjacent Sub Sequence
+
+        [TestMethod]
+        public void MaxSumNonAdjacentSubSequence()
+        {
+            Assert.AreEqual(13, Array.MaxSumNonAdjacentSubSequence(new int[] { 3, 2, 7, 10 }));
+            Assert.AreEqual(15, Array.MaxSumNonAdjacentSubSequence(new int[] { 3, 2, 5, 10, 7 }));
+            Assert.AreEqual(168, Array.MaxSumNonAdjacentSubSequence(new int[] { 4, 5, 17, 3, 12, 29, 0, -25, 25, 28, 16, 16, 16, 11, -10, -4, 3, -25, 10, -20, 1, -9, 23, 13, -25, 9, -24, 15, 5, -20 }));
+        }
+
+        #endregion
+
     }
 }

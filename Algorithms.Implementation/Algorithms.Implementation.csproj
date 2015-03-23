@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,15 +50,13 @@
     <Compile Include="Celebrity.cs" />
     <Compile Include="CircularLinkedList.cs" />
     <Compile Include="ContinuousRegion.cs" />
-    <Compile Include="DeepIterator.cs" />
+    <Compile Include="Iterator.cs" />
     <Compile Include="DynamicProgramming.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="BackTracking.cs" />
     <Compile Include="IntegerPartition.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="Majority.cs" />
-    <Compile Include="MinStack.cs" />
-    <Compile Include="MinStackConstantSpace.cs" />
     <Compile Include="Models\Graphes\Graph.cs" />
     <Compile Include="Models\GraphNode.cs" />
     <Compile Include="Math.cs" />
@@ -74,6 +73,7 @@
     <Compile Include="Array.cs" />
     <Compile Include="Sort.cs" />
     <Compile Include="ShortestPath.cs" />
+    <Compile Include="Stack.cs" />
     <Compile Include="String.cs" />
     <Compile Include="Trie.cs" />
   </ItemGroup>
