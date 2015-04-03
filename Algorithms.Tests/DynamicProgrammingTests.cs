@@ -56,9 +56,9 @@ namespace Algorithms.Tests
         [TestMethod]
         public void LongestSubstringDynamic()
         {
-            var result = DynamicProgramming.LongestSubstringDynamic("BANANA", "ATANA");
-
-            Assert.AreEqual("AANA", result);
+            Assert.AreEqual("AANA", DynamicProgramming.LongestSubstringDynamic("BANANA", "ATANA"));
+            Assert.AreEqual("ADH", DynamicProgramming.LongestSubstringDynamic("ABCDGH", "AEDFHR"));
+            Assert.AreEqual("GTAB", DynamicProgramming.LongestSubstringDynamic("AGGTAB", "GXTXAYB"));
         }
 
         #endregion
@@ -99,6 +99,17 @@ namespace Algorithms.Tests
             Assert.AreEqual("aaa", result[0]);
             Assert.AreEqual("bb cc", result[1]);
             Assert.AreEqual("ddddd", result[2]);
+        }
+
+        [TestMethod]
+        public void ReduceRaggednessAdv()
+        {
+            var result = DynamicProgramming.ReduceRaggedness(new string[] { "I", "would", "like", "to", "be", "wrapped", "into", "three", "lines" }, 15);
+
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual("I would like to", result[0]);
+            Assert.AreEqual("be wrapped into", result[1]);
+            Assert.AreEqual("three lines", result[2]);
         }
         
         #endregion
