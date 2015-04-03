@@ -113,5 +113,40 @@ namespace Algorithms.Tests
 
             Assert.IsFalse(tree.IsValidBST());
         }
+
+
+        [TestMethod]
+        public void SerializeDeserialize()
+        {
+            /*
+             *       5
+             *    2
+             *  1   3
+             */
+            var tree = new BinarySearchTree
+            {
+                Root = new TreeNode<int>
+                {
+                    Value = 5,
+                    Left = new TreeNode<int>
+                    {
+                        Value = 2,
+                        Left = new TreeNode<int> { Value = 1 },
+                        Right = new TreeNode<int> { Value = 3 }
+                    }
+                }
+            };
+
+            List<int> data = tree.SerializeTree();
+
+            tree.Deserialize(data);
+
+            Assert.IsNotNull(tree.Root);
+            Assert.AreEqual(5, tree.Root.Value);
+            Assert.AreEqual(2, tree.Root.Left.Value);
+            Assert.AreEqual(1, tree.Root.Left.Left.Value);
+            Assert.AreEqual(3, tree.Root.Left.Right.Value);
+        }
+
     }
 }

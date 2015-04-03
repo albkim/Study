@@ -122,7 +122,7 @@ namespace Algorithms.Implementation
                 }
                 else
                 {
-                    if ((array[mid] > number) && (array[mid] < next))
+                    if (array[mid] < next)
                     {
                         next = array[mid];
                     }

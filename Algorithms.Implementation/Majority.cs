@@ -12,7 +12,7 @@ namespace Algorithms.Implementation
         /// <summary>
         /// if there is a majority in n characters it should be such that
         /// count of majority > n/2 (n/2 being all other characters)
-        /// so if we add one for each repeat, subtract one for each repeat and reset if we get to 0 (there are as
+        /// so if we add one for each repeat, subtract one for each non repeat and reset if we get to 0 (there are as
         /// many other characters than current majority), we should be left with the majority
         /// aaaaaaa bbbbbb then number of a should be 1 greater than b regardless of what order they appear
         /// 

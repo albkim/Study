@@ -74,12 +74,64 @@ namespace Algorithms.Implementation
             return right;
         }
 
+        /// <summary>
+        /// Slightly mode efficient way to partition by not moving the mid element,
+        /// Used for dutch flag sort
+        /// given 0, 1, 2...sort all elements such that it's 0001111222222
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static void ThreeWayPartition(int[] array, int pivot)
+        {
+            int low = 0; //beginning of mid regon...+1 from end of low region
+            int mid = 0; //beginning of unknown region...+1 from end of mid region
+            int high = array.Length - 1; //end of unknown region...-1 from beginning of high region
+            
+            //000110XXXXX2222
+            //   l m    h 
+            //0000110XXXX2222
+            //    l m   h
+
+            //while there is some element in the unknown region
+            while (mid <= high)
+            {
+                if (array[mid] < pivot)
+                {
+                    swap(array, low, mid);
+                    low++;
+                    mid++;
+                }
+                else if (array[mid] > pivot)
+                {
+                    swap(array, mid, high);
+                    high--;
+                }
+                else
+                {
+                    mid++;
+                }
+            }
+        }
+
         private static void swap(int[] array, int left, int right)
         {
             int temp = array[left];
             array[left] = array[right];
             array[right] = temp;
         }
+
+        #region Merging k lists
+
+        // Typically used in external sort scenario
+        // Have a pointer for each list
+        // Extract the first element from each list into a min heap
+        // Take the min element into a new list and then move the pointer for that
+        // list by one...until all elements are exhausted
+        // n log k (where n is the total number of items in all lists) 
+
+        #endregion
 
     }
 

@@ -12,7 +12,136 @@ namespace Algorithms.Implementation
 
         public TreeNode<T> Root { get; set; }
 
-        #region Level
+        #region Traversal
+
+        public List<T> InOrderIterative()
+        {
+            List<T> result = new List<T>();
+            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+
+            TreeNode<T> current = this.Root;
+
+            while (true)
+            {
+                if (current != null)
+                {
+                    //there is a left node...later this will also add right side node
+                    stack.Push(current);
+                    current = current.Left;
+                }
+                else
+                {
+                    //we are done traversing to left...pop and start processing
+
+                    //terminal condition...if stack is empty...we are done
+                    if (stack.Count == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        current = stack.Pop();
+                        
+                        //do something with current...
+                        result.Add(current.Value);
+
+                        //set any right side node for processing
+                        current = current.Right;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// similar trick as in-order using current
+        /// </summary>
+        /// <returns></returns>
+        public List<T> PostOrderIterative()
+        {
+            List<T> result = new List<T>();
+            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+
+            TreeNode<T> current = this.Root;
+
+            while (true)
+            {
+                if (current != null)
+                {
+                    //check if there is a right node of current, if so push right and then current
+                    if (current.Right != null)
+                    {
+                        stack.Push(current.Right);
+                    }
+                    stack.Push(current);
+
+                    current = current.Left;
+                }
+                else
+                {
+                    //we are done traversing to left...pop and start processing
+
+                    //terminal condition...if stack is empty...we are done
+                    if (stack.Count == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        current = stack.Pop();
+
+                        if ((current.Right != null) && (stack.Count > 0) && (current.Right.Equals(stack.Peek())))
+                        {
+                            //if this right is already in the stack, we need to switch the root with right side, so we can
+                            //process right side first
+                            TreeNode<T> right = stack.Pop();
+                            stack.Push(current);
+                            current = right;
+                        }
+                        else
+                        {
+                            //do something with current...
+                            result.Add(current.Value);
+                            current = null;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> PreOrderIterative()
+        {
+            List<T> result = new List<T>();
+            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+            stack.Push(this.Root);
+
+            while (stack.Count > 0)
+            {
+                TreeNode<T> node = stack.Pop();
+
+                //do current processing
+                result.Add(node.Value);
+
+                //since we are using stack, we want to push right side first
+                if (node.Right != null)
+                {
+                    stack.Push(node.Right);
+                }
+                if (node.Left != null)
+                {
+                    stack.Push(node.Left);
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Level & ZigZag
 
         /// <summary>
         ///          1
@@ -120,19 +249,61 @@ namespace Algorithms.Implementation
             }
         }
 
-        public List<List<T>> LevelZigZag()
+        public List<List<T>> BFSWithLevelIterative()
+        {
+            List<List<T>> result = new List<List<T>>();
+
+            Queue<TreeNode<T>> temp;
+            Queue<TreeNode<T>> current = new Queue<TreeNode<T>>();
+            Queue<TreeNode<T>> next = new Queue<TreeNode<T>>();
+            current.Enqueue(this.Root);
+
+            while (current.Count > 0)
+            {
+                List<T> level = new List<T>();
+
+                while (current.Count > 0)
+                {
+                    TreeNode<T> node = current.Dequeue();
+                    
+                    //process level logic
+                    level.Add(node.Value);
+
+                    if (node.Left != null)
+                    {
+                        next.Enqueue(node.Left);
+                    }
+                    if (node.Right != null)
+                    {
+                        next.Enqueue(node.Right);
+                    }
+                }
+
+                //process end of level logic
+                result.Add(level);
+
+                //switch queues
+                temp = current;
+                current = next;
+                next = temp;
+            }
+
+            return result;
+        }
+
+        public List<List<T>> LevelZigZagRecursive()
         {
             List<List<T>> result = new List<List<T>>();
 
             Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
             stack.Push(this.Root);
 
-            this.LevelZigZag(result, stack, false);
+            this.LevelZigZagRecursive(result, stack, false);
 
             return result;
         }
 
-        private void LevelZigZag(List<List<T>> result, Stack<TreeNode<T>> stack, bool leftFirst)
+        private void LevelZigZagRecursive(List<List<T>> result, Stack<TreeNode<T>> stack, bool leftFirst)
         {
             Stack<TreeNode<T>> lowerLevel = new Stack<TreeNode<T>>();
 
@@ -161,7 +332,114 @@ namespace Algorithms.Implementation
 
             if (lowerLevel.Count > 0)
             {
-                LevelZigZag(result, lowerLevel, !leftFirst);
+                LevelZigZagRecursive(result, lowerLevel, !leftFirst);
+            }
+        }
+
+        public List<List<T>> LevelZigZagIterative()
+        {
+            List<List<T>> result = new List<List<T>>();
+
+            Stack<TreeNode<T>> temp;
+            Stack<TreeNode<T>> current = new Stack<TreeNode<T>>();
+            Stack<TreeNode<T>> next = new Stack<TreeNode<T>>();
+            current.Push(this.Root);
+
+            bool scanLeft = false;
+
+            while (current.Count > 0)
+            {
+                List<T> level = new List<T>();
+
+                while (current.Count > 0)
+                {
+                    TreeNode<T> node = current.Pop();
+
+                    //process level logic
+                    level.Add(node.Value);
+
+                    //if we scan left, it will process right to left since we are using stack
+                    TreeNode<T> firstNode = (scanLeft) ? node.Left : node.Right;
+                    TreeNode<T> secondNode = (scanLeft) ? node.Right : node.Left;
+                    if (firstNode != null)
+                    {
+                        next.Push(firstNode);
+                    }
+                    if (secondNode != null)
+                    {
+                        next.Push(secondNode);
+                    }
+                }
+
+                //process end of level logic
+                result.Add(level);
+
+                //switch stack & direction
+                temp = current;
+                current = next;
+                next = temp;
+                scanLeft = !scanLeft;
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Iterative Deepening
+
+        /// <summary>
+        /// This is a technique where we perform depth bound DFS to simulate BFS
+        /// The traversal pattern is like BFS so we can find things quickly but the space usage is like DFS
+        /// where the queue doesn't grow exponentially with each depth
+        /// 
+        ///           A
+        ///        B     C
+        ///     D    EF      G
+        /// 
+        /// 1. A
+        /// 2. A B C
+        /// 3. A B D E C F G
+        /// </summary>
+        /// <returns></returns>
+        public List<List<T>> LevelWithIterativeDeepening()
+        {
+            List<List<T>> result = new List<List<T>>();
+            
+            int depth = 0;
+            while (result.Count == depth)
+            {
+                depth++;
+                this.IDDfs(result, this.Root, 1, depth);
+            }
+
+            return result;
+        }
+        
+        private void IDDfs(List<List<T>> result, TreeNode<T> node, int currentDepth, int bound)
+        {
+            if ((currentDepth > bound) || (node == null))
+            {
+                return;
+            }
+
+            if (node.Left != null)
+            {
+                this.IDDfs(result, node.Left, currentDepth + 1, bound);
+            }
+
+            if (currentDepth == bound)
+            {
+                if (result.Count < currentDepth)
+                {
+                    result.Add(new List<T>());
+                }
+                result[currentDepth - 1].Add(node.Value);
+            }
+
+            if (node.Right != null)
+            {
+                this.IDDfs(result, node.Right, currentDepth + 1, bound);
             }
         }
 
@@ -371,6 +649,8 @@ namespace Algorithms.Implementation
         }
 
         #endregion
+
+
 
     }
 

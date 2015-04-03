@@ -10,6 +10,7 @@ namespace Algorithms.Tests
     [TestClass]
     public class LinkedListTests
     {
+
         #region Remove
 
         [TestMethod]
@@ -162,5 +163,38 @@ namespace Algorithms.Tests
         }
 
         #endregion
+
+        #region Convert To Bst 
+
+        [TestMethod]
+        public void ConvertToBst()
+        {
+            Node one = new Node { Value = 1 };
+            Node two = new Node { Value = 2 };
+            Node three = new Node { Value = 3 };
+            Node four = new Node { Value = 4 };
+            Node five = new Node { Value = 5 };
+            Node six = new Node { Value = 6 };
+
+            one.Next = two;
+            two.Next = three;
+            three.Next = four;
+            four.Next = five;
+            five.Next = six;
+
+            LinkedList list = new LinkedList { Head = one };
+
+            TreeNode<int> bst = list.ConvertToBst<int>();
+
+            Assert.AreEqual(3, bst.Value);
+            Assert.AreEqual(1, bst.Left.Value);
+            Assert.AreEqual(2, bst.Left.Right.Value);
+            Assert.AreEqual(5, bst.Right.Value);
+            Assert.AreEqual(4, bst.Right.Left.Value);
+            Assert.AreEqual(6, bst.Right.Right.Value);
+        }
+
+        #endregion
+
     }
 }

@@ -40,7 +40,37 @@ namespace Algorithms.Tests
 
             this.bt.Root = root;
         }
-        
+
+        #region Traversal
+
+        [TestMethod]
+        public void InOrderIterative()
+        {
+            var result = this.bt.InOrderIterative();
+
+            Assert.AreEqual(8, result.Count);
+            CollectionAssert.AreEqual(new int[] { 9, 2, 3, 4, 8, 1, 5, 7 }, result);
+        }
+
+        [TestMethod]
+        public void PreOrderIterative()
+        {
+            var result = this.bt.PreOrderIterative();
+
+            Assert.AreEqual(8, result.Count);
+            CollectionAssert.AreEqual(new int[] { 1, 3, 2, 9, 4, 8, 5, 7 }, result);
+        }
+
+        [TestMethod]
+        public void PostOrderIterative()
+        {
+            var result = this.bt.PostOrderIterative();
+
+            Assert.AreEqual(8, result.Count);
+            CollectionAssert.AreEqual(new int[] { 9, 2, 8, 4, 3, 7, 5, 1 }, result);
+        }
+
+        #endregion
 
         #region Level
 
@@ -108,6 +138,31 @@ namespace Algorithms.Tests
             Assert.AreEqual(8, result[3][1]);
         }
 
+        [TestMethod]
+        public void BFSWithLevelIterative()
+        {
+            var result = this.bt.BFSWithLevelIterative();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result[0][0]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(5, result[1][1]);
+
+            Assert.AreEqual(3, result[2].Count);
+            Assert.AreEqual(2, result[2][0]);
+            Assert.AreEqual(4, result[2][1]);
+            Assert.AreEqual(7, result[2][2]);
+
+            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(9, result[3][0]);
+            Assert.AreEqual(8, result[3][1]);
+        }
+
         /// <summary>
         ///          1
         ///         / \
@@ -123,9 +178,9 @@ namespace Algorithms.Tests
         ///   7, 4, 2
         ///   9 8
         [TestMethod]
-        public void LevelZigZag()
+        public void LevelZigZagRecursive()
         {
-            var result = this.bt.LevelZigZag();
+            var result = this.bt.LevelZigZagRecursive();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(4, result.Count);
@@ -141,6 +196,60 @@ namespace Algorithms.Tests
             Assert.AreEqual(7, result[2][0]);
             Assert.AreEqual(4, result[2][1]);
             Assert.AreEqual(2, result[2][2]);
+
+            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(9, result[3][0]);
+            Assert.AreEqual(8, result[3][1]);
+        }
+
+        [TestMethod]
+        public void LevelZigZagIterative()
+        {
+            var result = this.bt.LevelZigZagIterative();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result[0][0]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(5, result[1][1]);
+
+            Assert.AreEqual(3, result[2].Count);
+            Assert.AreEqual(7, result[2][0]);
+            Assert.AreEqual(4, result[2][1]);
+            Assert.AreEqual(2, result[2][2]);
+
+            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(9, result[3][0]);
+            Assert.AreEqual(8, result[3][1]);
+        }
+
+        #endregion
+
+        #region Iterative Deepening
+
+        [TestMethod]
+        public void LevelWithIterativeDeepening()
+        {
+            var result = this.bt.LevelWithIterativeDeepening();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result[0][0]);
+
+            Assert.AreEqual(2, result[1].Count);
+            Assert.AreEqual(3, result[1][0]);
+            Assert.AreEqual(5, result[1][1]);
+
+            Assert.AreEqual(3, result[2].Count);
+            Assert.AreEqual(2, result[2][0]);
+            Assert.AreEqual(4, result[2][1]);
+            Assert.AreEqual(7, result[2][2]);
 
             Assert.AreEqual(2, result[3].Count);
             Assert.AreEqual(9, result[3][0]);

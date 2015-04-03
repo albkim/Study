@@ -38,6 +38,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -51,7 +52,7 @@
     <Compile Include="CelebrityTests.cs" />
     <Compile Include="CircularLinkedListTests.cs" />
     <Compile Include="ContinuousRegionTests.cs" />
-    <Compile Include="DeepIteratorTests.cs" />
+    <Compile Include="IteratorTests.cs" />
     <Compile Include="MajorityTests.cs" />
     <Compile Include="SortTests.cs" />
     <Compile Include="DynamicProgrammingTests.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="ArrayTests.cs" />
     <Compile Include="ShortestPathTests.cs" />
     <Compile Include="StringTests.cs" />
-    <Compile Include="MinStackTests.cs" />
+    <Compile Include="StackTests.cs" />
     <Compile Include="BinaryTreeTests.cs" />
     <Compile Include="PriorityQueueTests.cs" />
     <Compile Include="NearestPointsTests.cs" />
