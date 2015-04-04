@@ -784,15 +784,23 @@ namespace Algorithms.Implementation
 
             for (int i = text.Length - 2; i >= 0; i--)
             {
+                int lastBreak = -1;
                 for (int j = i + 1; j < text.Length; j++)
                 {
                     string word = text.Substring(i, j - i + 1);
                     if (dictionary.Contains(word))
                     {
                         valid[i, j] = true;
+                        lastBreak = j;
+                    }
+                    else if (lastBreak > -1)
+                    {
+                        valid[i, j] = valid[lastBreak, j];
                     }
                 }
             }
+
+            return valid[0, text.Length - 1];
         }
 
         #endregion

@@ -168,7 +168,17 @@ namespace Algorithms.Tests
             Assert.IsTrue(DynamicProgramming.BreakWordRecursive("samsungandmango", breakWordDictionary));
             Assert.IsFalse(DynamicProgramming.BreakWordRecursive("samsungandmangok", breakWordDictionary));
         }
-        
+
+        [TestMethod]
+        public void BreakWordDynamic()
+        {
+            Assert.IsTrue(DynamicProgramming.BreakWordDynamic("ilikesamsung", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordDynamic("iiiiiiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordDynamic("ilikelikeimangoiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordDynamic("samsungandmango", breakWordDictionary));
+            Assert.IsFalse(DynamicProgramming.BreakWordDynamic("samsungandmangok", breakWordDictionary));
+        }
+    
         #endregion
 
     }
