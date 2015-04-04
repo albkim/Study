@@ -705,14 +705,94 @@ namespace Algorithms.Implementation
         }
 
         #endregion
-
-
-
+                
         #region Break Word
 
-        public static List<string> BreakWorkRecursive(string text, List<string> dictionary)
+        /// <summary>
+        /// Give a dictionary of valid words and a text, return whether the text can be broken into all valid words
+        /// 
+        /// { i, like, sam, sung, samsung, mobile, ice, cream, icecream, man, go, mango}
+        /// 
+        /// ilike -> true (i like)
+        /// ilikesamsung -> true (i like samsung or i like sam sung)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static bool BreakWordRecursive(string text, List<string> dictionary)
         {
+            return BreakWordRecursive(text, 0, text.Length - 1, dictionary);
+        }
 
+        private static bool BreakWordRecursive(string text, int startIndex, int endIndex, List<string> dictionary)
+        {
+            //if it's one character, this is simply looking up the dictionary for the valid single characters
+            if (endIndex == startIndex)
+            {
+                return dictionary.Contains(text.Substring(startIndex, 1));
+            }
+
+            //now try all variation of the sub text from the existing text
+            for (int index = startIndex; index <= endIndex; index++)
+            {
+                string word = text.Substring(startIndex, index - startIndex + 1);
+                //if it's a valid word, test the rest of the text
+                if (dictionary.Contains(word))
+                {
+                    if (index < endIndex) {
+                        if (BreakWordRecursive(text, index + 1, endIndex, dictionary))
+                        {
+                            return true;
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        ///         j       i   l   i   k   e   s   a   m   s   u   n   g
+        /// i
+        /// i               1   
+        /// l                   0
+        /// i                       1
+        /// k                           0
+        /// e                               0
+        /// s                                   0   0   1   0   0   0   1
+        /// a                                       0   1   0   0   0   1
+        /// m                                           0   0   0   0   0
+        /// s                                               0   0   0   1
+        /// u                                                   0   0   0
+        /// n                                                       0   0
+        /// g                                                           0
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static bool BreakWordDynamic(string text, List<string> dictionary)
+        {
+            bool[,] valid = new bool[text.Length, text.Length];
+
+            for(int j = 0; j < text.Length; j++) {
+                valid[j, j] = dictionary.Contains(text[j].ToString());
+            }
+
+            for (int i = text.Length - 2; i >= 0; i--)
+            {
+                for (int j = i + 1; j < text.Length; j++)
+                {
+                    string word = text.Substring(i, j - i + 1);
+                    if (dictionary.Contains(word))
+                    {
+                        valid[i, j] = true;
+                    }
+                }
+            }
         }
 
         #endregion

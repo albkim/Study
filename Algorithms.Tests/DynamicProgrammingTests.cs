@@ -155,5 +155,21 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Break Word
+
+        private List<string> breakWordDictionary = new List<string> {"mobile","samsung","sam","sung","man","mango",
+                           "icecream","and","go","i","like","ice","cream"};
+        
+        [TestMethod]
+        public void BreakWorkRecursive() {
+            Assert.IsTrue(DynamicProgramming.BreakWordRecursive("ilikesamsung", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordRecursive("iiiiiiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordRecursive("ilikelikeimangoiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordRecursive("samsungandmango", breakWordDictionary));
+            Assert.IsFalse(DynamicProgramming.BreakWordRecursive("samsungandmangok", breakWordDictionary));
+        }
+        
+        #endregion
+
     }
 }
