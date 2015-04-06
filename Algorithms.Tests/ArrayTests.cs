@@ -497,5 +497,23 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Overlapping Activities
+
+        [TestMethod]
+        public void OverlappingActivities()
+        {
+            List<Algorithms.Implementation.Array.Times> activities = new List<Algorithms.Implementation.Array.Times> {
+                new Algorithms.Implementation.Array.Times{ Start = 1, End = 5 },
+                new Algorithms.Implementation.Array.Times{ Start = 7, End = 10 },
+                new Algorithms.Implementation.Array.Times{ Start = 3, End = 8 },
+                new Algorithms.Implementation.Array.Times{ Start = 9, End = 12 },
+                new Algorithms.Implementation.Array.Times{ Start = 4, End = 9 }
+            };
+
+            Assert.AreEqual(3, Array.OverlappingActivities(activities));
+        }
+
+        #endregion
+
     }
 }

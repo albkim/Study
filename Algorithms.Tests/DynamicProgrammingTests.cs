@@ -178,6 +178,13 @@ namespace Algorithms.Tests
             Assert.IsTrue(DynamicProgramming.BreakWordDynamic("samsungandmango", breakWordDictionary));
             Assert.IsFalse(DynamicProgramming.BreakWordDynamic("samsungandmangok", breakWordDictionary));
         }
+
+        [TestMethod]
+        public void BreakWordTwoDynamic()
+        {
+            var result = DynamicProgramming.BreakWordTwoDynamic("ilikeicecreamandmango", breakWordDictionary);
+            Assert.AreEqual(4, result.Count);
+        }
     
         #endregion
 

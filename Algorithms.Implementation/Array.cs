@@ -1407,6 +1407,109 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Activity Selection
+
+        public struct Times
+        {
+            public int Start { get; set; }
+            public int End { get; set; }
+        }
+
+        /// <summary>
+        /// This is a classic greedy algorithm
+        /// 
+        /// If you sort all activities by end time, you can sequentially take any
+        /// activity where start time is after current activity. Since we always optimized
+        /// on end time, we should have the most number of activities
+        /// 
+        /// O(n)
+        /// </summary>
+        /// <param name="activities"></param>
+        /// <returns></returns>
+        public static int ActivitySelectionGreedy(List<Times> activities)
+        {
+            List<Times> sortedActivities = activities.OrderBy(a => a.End).ToList();
+
+            int count = 1;
+            Times lastActivity = sortedActivities[0];
+            for (int index = 1; index < sortedActivities.Count; index++)
+            {
+                if (sortedActivities[index].Start > lastActivity.End)
+                {
+                    lastActivity = sortedActivities[index];
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        #endregion
+
+        #region Overlapping Activities
+
+        private enum TimeTrackOperation
+        {
+            Start,
+            End
+        }
+
+        private struct TimeTrack
+        {
+            public int Time { get; set; }
+            public int Index { get; set; }
+            public TimeTrackOperation Operation { get; set; }
+        }
+
+        /// <summary>
+        /// Given set of overlapping activities in terms of start/end time,
+        /// find the minimum number of meeting rooms
+        /// 
+        /// Seems like it's just simple book keeping
+        /// 
+        ///     xxxxxxx   wwwww
+        ///       yyyyyyyyyyy  tttt
+        ///          zzzzzz
+        /// 
+        /// Sort by start time, and then careful track parallel activities
+        /// </summary>
+        /// <param name="activities"></param>
+        /// <returns></returns>
+        public static int OverlappingActivities(List<Times> activities)
+        {
+            Dictionary<int, int> tracker = new Dictionary<int, int>();
+
+            int count = 0;
+            List<TimeTrack> activitySequences = new List<TimeTrack>();
+            foreach (Times times in activities)
+            {
+                activitySequences.Add(new TimeTrack { Time = times.Start, Index = count, Operation = TimeTrackOperation.Start });
+                activitySequences.Add(new TimeTrack { Time = times.End, Index = count, Operation = TimeTrackOperation.End });
+                count++;
+            }
+
+            count = 0;
+            List<TimeTrack> sortedActivitySequences = activitySequences.OrderBy(a => a.Time).ToList();
+            foreach (TimeTrack timeTrack in sortedActivitySequences)
+            {
+                if (timeTrack.Operation == TimeTrackOperation.Start)
+                {
+                    tracker.Add(timeTrack.Index, timeTrack.Index);
+                    if (tracker.Count > count)
+                    {
+                        count = tracker.Count;
+                    }
+                }
+                else
+                {
+                    tracker.Remove(timeTrack.Index);
+                }
+            }
+            return count;
+        }
+
+        #endregion
+
     }
 
 }

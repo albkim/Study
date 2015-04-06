@@ -273,5 +273,21 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Regex
+
+        [TestMethod]
+        public void Regex()
+        {
+            Assert.IsFalse(String.Regex("aa", "a"));
+            Assert.IsTrue(String.Regex("aa", "aa"));
+            Assert.IsFalse(String.Regex("aaa", "aa"));
+            Assert.IsTrue(String.Regex("aa", "a*"));
+            Assert.IsTrue(String.Regex("aa", ".*"));
+            Assert.IsTrue(String.Regex("ab", ".*"));
+            Assert.IsTrue(String.Regex("aab", "c*a*b"));
+        }
+
+        #endregion
+
     }
 }

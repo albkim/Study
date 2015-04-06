@@ -346,5 +346,17 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Diameter
+
+        [TestMethod]
+        public void Diameter()
+        {
+            var result = this.bt.Diameter();
+
+            Assert.AreEqual(6, result);
+        }
+
+        #endregion
+
     }
 }

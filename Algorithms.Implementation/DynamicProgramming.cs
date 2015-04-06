@@ -9,6 +9,17 @@ namespace Algorithms.Implementation
     public class DynamicProgramming
     {
 
+        /*
+         Sub problems for String/Sequence
+
+	        Suffix (n)
+	        Prefix (n)
+
+            Substring (n^2)
+         
+         */
+         
+         
         #region Knapsack
 
         /// <summary>
@@ -758,13 +769,13 @@ namespace Algorithms.Implementation
         /// 
         ///         j       i   l   i   k   e   s   a   m   s   u   n   g
         /// i
-        /// i               1   
-        /// l                   0
+        /// i               1               1           1               1
+        /// l                   0           1           1               1
         /// i                       1
         /// k                           0
         /// e                               0
         /// s                                   0   0   1   0   0   0   1
-        /// a                                       0   1   0   0   0   1
+        /// a                                       0   0   0   0   0   0
         /// m                                           0   0   0   0   0
         /// s                                               0   0   0   1
         /// u                                                   0   0   0
@@ -784,7 +795,7 @@ namespace Algorithms.Implementation
 
             for (int i = text.Length - 2; i >= 0; i--)
             {
-                int lastBreak = -1;
+                int lastBreak = valid[i, i] ? i : -1;
                 for (int j = i + 1; j < text.Length; j++)
                 {
                     string word = text.Substring(i, j - i + 1);
@@ -793,14 +804,135 @@ namespace Algorithms.Implementation
                         valid[i, j] = true;
                         lastBreak = j;
                     }
-                    else if (lastBreak > -1)
+                    else if ((lastBreak > -1) && ((lastBreak + 1) < text.Length))
                     {
-                        valid[i, j] = valid[lastBreak, j];
+                        valid[i, j] = valid[lastBreak + 1, j];
                     }
                 }
             }
 
             return valid[0, text.Length - 1];
+        }
+
+        /// <summary>
+        /// 
+        ///         j       i   l   i   k   e   s   a   m   s   u   n   g
+        /// i
+        /// i               1               1           1               2
+        /// l                   0           1           1               2
+        /// i                       1
+        /// k                           0
+        /// e                               0
+        /// s                                   0   0   1   0   0   0   2
+        /// a                                       0   0   0   0   0   0
+        /// m                                           0   0   0   0   0
+        /// s                                               0   0   0   1
+        /// u                                                   0   0   0
+        /// n                                                       0   0
+        /// g                                                           0
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static List<string> BreakWordTwoDynamic(string text, List<string> dictionary)
+        {
+            int[,] valid = new int[text.Length, text.Length];
+
+            for (int j = 0; j < text.Length; j++)
+            {
+                valid[j, j] = dictionary.Contains(text[j].ToString()) ? 1 : 0;
+            }
+
+            for (int i = text.Length - 2; i >= 0; i--)
+            {
+                int lastBreak = valid[i, i] == 1 ? i : -1;
+                for (int j = i + 1; j < text.Length; j++)
+                {
+                    string word = text.Substring(i, j - i + 1);
+                    
+                    if ((lastBreak > -1) && ((lastBreak + 1) < text.Length))
+                    {
+                        valid[i, j] = valid[lastBreak + 1, j];
+                    }
+                    if (dictionary.Contains(word))
+                    {
+                        valid[i, j] += 1;
+                        lastBreak = j;
+                    }
+                }
+            }
+
+            List<string> result = new List<string>();
+            result.Add("");
+
+            for (int j = 0; j < text.Length; j++)
+            {
+                //we want to do this for every possible string in result set
+                for (int i = 0; i < result.Count; i++)
+                {
+                    //add current char
+                    result[i] += text[j];
+
+                    //if valid has a number higher than 0 we want to add space
+                    if (valid[0, j] > 0)
+                    {
+                        result[i] += " ";
+                    }
+                }
+
+                //now if the valid has a number higher than 1, that means we have a word consisting of one or more words
+                //since our reference is the very first result, duplicate and eliminate the correct number of spaces
+                if (valid[0, j] > 1)
+                {
+                    int resultCount = result.Count;
+                    for (int resultIndex = 0; resultIndex < resultCount; resultIndex++)
+                    {
+                        string duplicate = result[resultIndex];
+                        int lastSpaceIndex = duplicate.LastIndexOf(' ') - 1;
+                        for (int space = 1; space < valid[0, j]; space++)
+                        {
+                            //since we add a space at the end, we need to search for second last
+                            int secondLastSpaceIndex = duplicate.LastIndexOf(' ', lastSpaceIndex);
+                            duplicate = duplicate.Remove(secondLastSpaceIndex, 1);
+                            lastSpaceIndex = secondLastSpaceIndex - 1;
+                        }
+                        result.Add(duplicate);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Parenthesization
+
+        /// <summary>
+        /// Given a set of numbers and operations
+        /// 
+        /// 1 + 5 * 20 / 5 + 20 - 30
+        /// 
+        /// Find the parenthesization which gives lowest answer
+        /// 
+        /// What we want
+        /// Find the last operation
+        /// 
+        /// ( ) ? ( ) gives you the smallest answer
+        /// (Ai -> Ak) ? (Ak + 1 -> Aj)
+        /// 
+        /// Total cost is 4 ^ n
+        /// 
+        /// Sub problem is sub string (n ^ 2)
+        /// Recurrence is Ai -> Aj (n)
+        /// 
+        /// So we want
+        /// DP(i, k) + DP(k + 1, j) + Cost of last operation
+        /// </summary>
+        /// <returns></returns>
+        public static int Parenthesize()
+        {
+            return 0;
         }
 
         #endregion

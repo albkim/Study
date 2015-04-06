@@ -114,6 +114,7 @@ namespace Algorithms.Tests
             Assert.IsFalse(tree.IsValidBST());
         }
 
+        #region Serialize & Deserialize
 
         [TestMethod]
         public void SerializeDeserialize()
@@ -147,6 +148,40 @@ namespace Algorithms.Tests
             Assert.AreEqual(1, tree.Root.Left.Left.Value);
             Assert.AreEqual(3, tree.Root.Left.Right.Value);
         }
+
+        #endregion
+
+        #region Next Smallest
+
+        [TestMethod]
+        public void NextSmallest()
+        {
+            /*
+             *       5
+             *    2
+             *  1   3
+             */
+            var tree = new BinarySearchTree
+            {
+                Root = new TreeNode<int>
+                {
+                    Value = 5,
+                    Left = new TreeNode<int>
+                    {
+                        Value = 2,
+                        Left = new TreeNode<int> { Value = 1 },
+                        Right = new TreeNode<int> { Value = 3 }
+                    }
+                }
+            };
+
+            Assert.AreEqual(3, tree.NextSmallest(2));
+            Assert.AreEqual(2, tree.NextSmallest(1));
+            Assert.AreEqual(5, tree.NextSmallest(3));
+            Assert.AreEqual(-1, tree.NextSmallest(5));
+        }
+
+        #endregion
 
     }
 }

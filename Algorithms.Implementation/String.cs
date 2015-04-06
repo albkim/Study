@@ -584,6 +584,7 @@ namespace Algorithms.Implementation
         /// this should be simple, naive solution gives n^3 complexity (for each sub sequence n^2, try
         /// palindrom check n), dynamic solutions gives n^2 with n^2 space, what about iterative solution
         /// 
+        /// this is O(n^2)
         /// for each character, try expanding the palindrom as far as it goes
         /// Just be careful that there are two types of palindrom
         /// 
@@ -762,6 +763,48 @@ namespace Algorithms.Implementation
 
         ///for reusable method, store index of all occurrence for each work in a dictionary. Then for 2 words, use the
         ///min different in array to find the min different index. (min(abs(x-y)) in Array.cs
+
+        #endregion
+
+        #region Regex
+
+        /// support * and .
+        public static bool Regex(string text, string pattern)
+        {
+            //if there is no more pattern, text should also be 0
+            if (pattern.Length == 0) {
+                return text.Length == 0;
+            }
+
+            //base case if the second character is not *, we can just compare character by character
+            if ((pattern.Length == 1) || (pattern[1] != '*'))
+            {
+                bool current = ((text[0] == pattern[0]) || (pattern[0] == '.'));
+                return Regex(text.Substring(1), pattern.Substring(1)) && current;
+            }
+
+            //if we are here, that means we have *...this is more complex
+
+            //first we need to handle 0 occurrence
+            if (Regex(text, pattern.Substring(2)))
+            {
+                return true;
+            }
+
+            //try all variation of repeating characters
+            int index = 0;
+            while ((index < text.Length) && ((text[index] == pattern[0]) || (pattern[0] == '.')))
+            {
+                if (Regex(text.Substring(index + 1), pattern.Substring(2)))
+                {
+                    return true;
+                }
+                index++;
+            }
+
+            //no match
+            return false;
+        }
 
         #endregion
 

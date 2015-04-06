@@ -650,7 +650,54 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Diameter (Longest path)
 
+        /// <summary>
+        /// Diameter of a binary tree is the longest path between two leaf nodes
+        /// It could go through the root or may not
+        /// 
+        ///             7                       7
+        ///              L                      N
+        ///          L      L               L       N
+        ///        L   N   N  L          L     L
+        ///      L              L      L         L
+        ///                               L         L
+        ///                               
+        /// For a given sub tree, the longest path is the max of the following
+        ///     Diameter of left (this is the case in second where left sub tree contains the longest diameter which isn't shown by height
+        ///     Diameter of right
+        ///     Combined left + right height + 1  (this is the case in first where the left and right sides form the longest)
+        /// </summary>
+        /// <returns></returns>
+        public int Diameter()
+        {
+            return this.Diameter(this.Root);
+        }
+
+        private int Diameter(TreeNode<T> node)
+        {
+            int leftDiameter = (node.Left != null) ? this.Diameter(node.Left) : 0;
+            int rightDiameter = (node.Right != null) ? this.Diameter(node.Right) : 0;
+            int leftHeight = (node.Left != null) ? this.Height(node.Left) : 0;
+            int rightHeight = (node.Right != null) ? this.Height(node.Right) : 0;
+
+            return System.Math.Max(leftHeight + rightHeight + 1, System.Math.Max(leftDiameter, rightDiameter));
+        }
+
+        /// <summary>
+        /// Height of a tree is calculated by 1 + max (left height, right height)
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private int Height(TreeNode<T> node)
+        {
+            int leftHeight = (node.Left != null) ? this.Height(node.Left) : 0;
+            int rightHeight = (node.Right != null) ? this.Height(node.Right) : 0;
+
+            return 1 + System.Math.Max(leftHeight, rightHeight);
+        }
+
+        #endregion
 
     }
 

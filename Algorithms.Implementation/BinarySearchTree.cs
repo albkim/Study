@@ -94,5 +94,60 @@ namespace Algorithms.Implementation
         }
 
         #endregion
+
+        #region Next Smallest
+
+        /// <summary>
+        /// Handle the following
+        /// 
+        ///     if all numbers are smaller than the number, return x
+        ///     
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public int NextSmallest(int number)
+        {
+            return this.NextSmallest(this.Root, number);
+        }
+        
+        /// <summary>
+        /// if current value is smaller or equal to the number, then return something from right subtree
+        /// 
+        /// if current value is larger, we have two conditions
+        ///     if there is a left subtree, see if it returns a value
+        ///     if not return the current
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        private int NextSmallest(TreeNode<int> node, int number)
+        {
+            if (node.Value <= number)
+            {
+                if (node.Right != null)
+                {
+                    return this.NextSmallest(node.Right, number);
+                }
+
+                //if there is no more right to traverse, maybe all numbers are smaller than the number
+                return -1;
+            }
+
+            int result = node.Value;
+
+            if (node.Left != null)
+            {
+                int possibility = this.NextSmallest(node.Left, number);
+                if (possibility != -1)
+                {
+                    result = possibility;
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
     }
 }
