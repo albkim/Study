@@ -18,23 +18,27 @@ namespace Algorithms.Implementation
 
         private static bool Search(int[] array, int number, int start, int end)
         {
-            int pivotIndex = start + (int)System.Math.Floor((end - start) / 2d);
-            int pivot = array[pivotIndex];
+            while (start <= end)
+            {
+                int pivotIndex = start + (int)System.Math.Floor((end - start) / 2d);
+                int pivot = array[pivotIndex];
 
-            if (pivot == number)
-            {
-                //we found the number
-                return true;
-            }
-            else if ((number < pivot) && (start < pivotIndex))
-            {
-                //if number is on the left side and there is a room to go
-                return Search(array, number, start, pivotIndex - 1);
-            }
-            else if ((number > pivot) && (end > pivotIndex))
-            {
-                //if the number is larger
-                return Search(array, number, pivotIndex + 1, end);
+                if (pivot == number)
+                {
+                    //we found the number
+                    return true;
+                }
+                
+                if (number < pivot)
+                {
+                    //if number is on the left side and there is a room to go
+                    end = pivotIndex - 1;
+                }
+                else
+                {
+                    //if the number is larger
+                    start = pivotIndex + 1;
+                }
             }
 
             //if we are here, we did not find it and ran out of numbers
@@ -62,38 +66,42 @@ namespace Algorithms.Implementation
         /// <returns></returns>
         private static bool SearchRotatedArray(int[] array, int number, int start, int end)
         {
-            int pivotIndex = start + (int)System.Math.Floor((end - start) / 2d);
-            int pivot = array[pivotIndex];
+            while (start <= end)
+            {
+                int pivotIndex = start + (int)System.Math.Floor((end - start) / 2d);
+                int pivot = array[pivotIndex];
 
-            if (pivot == number)
-            {
-                //same as normal binary search, if we hit the number as the pivot, we have found it
-                return true;
-            }
-            else if (number < pivot)
-            {
-                //we know we should go left in normal case, but we need some additional logic
-                if ((array[start] <= number) && (start < pivotIndex))
+                if (pivot == number)
                 {
-                    //we got lucky, left side is sequential and the number lies somewhere on the left
-                    return SearchRotatedArray(array, number, start, pivotIndex - 1);
+                    //same as normal binary search, if we hit the number as the pivot, we have found it
+                    return true;
                 }
-                else if (end > pivotIndex)
+                
+                if (number < pivot)
                 {
-                    //else go right
-                    return SearchRotatedArray(array, number, pivotIndex + 1, end);
+                    //we know we should go left in normal case, but we need some additional logic
+                    if (array[start] <= number)
+                    {
+                        //we got lucky, left side is sequential and the number lies somewhere on the left
+                        end = pivotIndex - 1;
+                    }
+                    else
+                    {
+                        //else go right
+                        start = pivotIndex + 1;
+                    }
                 }
-            }
-            else if (number > pivot)
-            {
-                if ((array[end] >= number) && (end > pivotIndex))
+                else
                 {
-                    //we got lucky, right side is sequential and the number lies somewhere on the right
-                    return SearchRotatedArray(array, number, pivotIndex + 1, end);
-                }
-                else if (start < pivotIndex)
-                {
-                    return SearchRotatedArray(array, number, start, pivotIndex - 1);
+                    if (array[end] >= number)
+                    {
+                        //we got lucky, right side is sequential and the number lies somewhere on the right
+                        start = pivotIndex + 1;
+                    }
+                    else
+                    {
+                        end = pivotIndex - 1;
+                    }
                 }
             }
 
@@ -148,8 +156,8 @@ namespace Algorithms.Implementation
         //given two sorted array a & b, find kth smallest element in the union of the arrays
         //if ai is between bj-1 and bj then ai is the element we seek. so i + j + 1 = k
         //1, 2, 3, 4, 5
-        //1, 2, 3, 4, 5
-        //5th element (a2 = 3, b2 = 3), since a2 is between b1 = 2 and b2 = 3, 2 + 2 + 1 = 5
+        //1, 2,    4, 5
+        //5th element (ai = 3, bj = 4), since ai = 3 is between bj-1 = 2 and bj = 4, 2 + 2 + 1 = 5
         public static int SearchTwoSortedArraysForKthSmallest(int[] a, int[] b, int k)
         {
             if ((a == null) || (b == null))

@@ -1318,7 +1318,7 @@ namespace Algorithms.Implementation
 
         /// <summary>
         /// generate the following sequence up to given number of times
-        /// 1, 11, 21, 1211, 111221, 312211
+        /// 1, 11, 21, 1211, 111221, 312211, 13112221, 1113213211, 31131211131221
         /// 1, one 1, two 1, one 2 one 1, one 1 one 2 two 1, three 1 two 2 one 1
         /// 
         /// seems like i just need to count number of time each number occurrs consequtively and convert
