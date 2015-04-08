@@ -114,5 +114,42 @@ namespace Algorithms.Tests
             Assert.AreEqual(1, region.Count());
         }
 
+        [TestMethod]
+        public void CountContinuousConnected()
+        {
+            var region = new ContinuousRegion(new int[,]
+                             {
+                                {0, 1, 1, 0},
+                                {0, 1, 1, 0}
+                             });
+
+            Assert.AreEqual(1, region.Count());
+        }
+
+        [TestMethod]
+        public void CountContinuousDisconnected()
+        {
+            var region = new ContinuousRegion(new int[,]
+                             {
+                                {0, 1, 0, 1},
+                                {0, 1, 1, 1}
+                             });
+
+            Assert.AreEqual(1, region.Count());
+        }
+
+        [TestMethod]
+        public void CountContinuousDisconnected2()
+        {
+            var region = new ContinuousRegion(new int[,]
+                             {
+                                {0, 1, 0, 1},
+                                {0, 1, 1, 1},
+                                {0, 1, 0, 1}
+                             });
+
+            Assert.AreEqual(1, region.Count());
+        }
+
     }
 }

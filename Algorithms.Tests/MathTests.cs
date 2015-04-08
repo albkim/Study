@@ -21,6 +21,13 @@ namespace Algorithms.Tests
         }
 
         [TestMethod]
+        public void SquareRootLessThanOne()
+        {
+            Assert.AreEqual(0.300, Math.SqrtBinarySearch(0.09, 0.001));
+            Assert.AreEqual(0.500, Math.SqrtBinarySearch(0.25, 0.001));
+        }
+
+        [TestMethod]
         public void SumOfAllFactorOf3And5()
         {
             Assert.AreEqual(14, Math.SumOfAllFactorOf3And5(9));

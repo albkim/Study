@@ -78,7 +78,9 @@ namespace Algorithms.Implementation
             }
 
             double min = 0;
-            double max = number;
+
+            //need different handling for numbers > 1 and numbers < 1
+            double max = (number >= 1) ? number : 1;
 
             while (System.Math.Abs(max - min) > precision)
             {

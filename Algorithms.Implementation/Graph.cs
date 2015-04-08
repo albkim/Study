@@ -184,7 +184,7 @@ namespace Algorithms.Implementation.Models
         ///     
         /// Kahn's algorithm (O(v) + O(e))
         /// 
-        ///     for each node with incoming edge, add it to a queue
+        ///     for each node with no incoming edge, add it to a queue
         ///     
         ///     while queue is not empty
         ///         remove a node, and add it to the tail of the sorted list

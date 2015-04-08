@@ -52,8 +52,11 @@ namespace Algorithms.Implementation
                     {
                         //now this item may be valid since it's smaller than available space
                         //cost is max of the following
-                        //if current item is included, then n-1 item + current item with W minus current weight
-                        //if current item is not included then n-1 item and W
+                        //either we take current item or we do not take the current item
+                        //  taking current item - max of all previous items minus current weight + current value 
+                        //      Value[item - 1, space - currentWeight] + currentValue
+                        //  not taking current item - max of all previous items with full weight
+                        //      Value[item - 1, space]
                         Value[item, space] = System.Math.Max(Value[item - 1, space - currentWeight] + currentValue, Value[item - 1, space]);
                     }
                     else
@@ -271,6 +274,13 @@ namespace Algorithms.Implementation
                 return 0;
             }
 
+            if ((m < 1) || (n < 1))
+            {
+                //error case
+                throw new ArgumentException();
+                //try 3, 3...there is no way.
+            }
+
             if (m < n)
             {
                 //if m is smaller we can only go n - m
@@ -327,8 +337,8 @@ namespace Algorithms.Implementation
         }
 
         /// <summary>
-        ///             C   A   T   A   P   U   L   T
-        ///         0   0   0   0   0   0   0   0   0 
+        ///         j   C   A   T   A   P   U   L   T
+        ///      i  0   0   0   0   0   0   0   0   0 
         ///      C  0   1   1   1   1   1   1   1   1   
         ///      A  0   0   1   1   2   2   2   2   2
         ///      T  0   0   0   1   1   1   1   1   3
@@ -646,7 +656,7 @@ namespace Algorithms.Implementation
         /// 10, 22
         /// 
         /// 9,  here 9 & 10 are redundent because they both give us sequence of length 1...
-        /// 10, if we want to maximize our change (let's say there is 10 again) we should keep the lowest
+        /// 10, if we want to maximize our chance (let's say there is 10 again) we should keep the lowest
         /// 10, 22
         /// 
         /// 9,
@@ -663,7 +673,7 @@ namespace Algorithms.Implementation
         /// 10, 22, 33, 50
         /// 
         /// we can simplify this rule
-        /// have a 1-D array of tail values 9, 21, 22, 50. If the number is smaller than number at index 0, replace
+        /// have a 1-D array of tail values 9, 21, 33, 50. If the number is smaller than number at index 0, replace
         /// if the number is larger than last number, extend the array. If the number is in between, replace
         /// the next larger value
         /// 

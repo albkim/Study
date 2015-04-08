@@ -71,6 +71,13 @@ namespace Algorithms.Tests
             Assert.AreEqual(2, DynamicProgramming.TraverseMatrix(3, 2));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TraverseMatrixError()
+        {
+            DynamicProgramming.TraverseMatrix(3, 3);
+        }
+
         #endregion
 
         #region Discontinuous String
