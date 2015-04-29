@@ -40,6 +40,7 @@ namespace Algorithms.Tests
         public void TestBinarySearchRotatedTrue()
         {
             Assert.IsTrue(BinarySearch.SearchRotatedArray(new int[] { 6, 7, 8, 1, 2, 3, 4, 5 }, 3));
+            Assert.IsTrue(BinarySearch.SearchRotatedArray(new int[] { 8, 1, 2, 3, 4, 5, 6, 7}, 1));
             Assert.IsTrue(BinarySearch.SearchRotatedArray(new int[] { 3, 4, 5, 6, 7, 8, 1, 2 }, 6));
             Assert.IsTrue(BinarySearch.SearchRotatedArray(new int[] { 4, 5, 6, 7, 8, 1, 2, 3 }, 4));
             Assert.IsTrue(BinarySearch.SearchRotatedArray(new int[] { 6, 7, 8, 1, 2, 3, 4, 5 }, 5));

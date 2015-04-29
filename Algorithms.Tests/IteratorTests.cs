@@ -79,6 +79,76 @@ namespace Algorithms.Tests
 
             Assert.IsTrue(iterator.MoveNext());
             Assert.AreEqual(7, iterator.Current);
+
+            Assert.IsFalse(iterator.MoveNext());
+        }
+
+        /// <summary>
+        ///          1
+        ///         / \
+        ///        3   5
+        ///       / \   \
+        ///      2   4   7
+        ///     /     \
+        ///    9       8
+        ///    
+        [TestMethod]
+        public void PostOrderIterative()
+        {
+            BinaryTree<int> bt = new BinaryTree<int>();
+
+            TreeNode<int> root = new TreeNode<int>
+            {
+                Value = 1,
+                Left = new TreeNode<int>
+                {
+                    Value = 3,
+                    Left = new TreeNode<int>
+                    {
+                        Value = 2,
+                        Left = new TreeNode<int> { Value = 9 }
+                    },
+                    Right = new TreeNode<int>
+                    {
+                        Value = 4,
+                        Right = new TreeNode<int> { Value = 8 }
+                    }
+                },
+                Right = new TreeNode<int>
+                {
+                    Value = 5,
+                    Right = new TreeNode<int> { Value = 7 }
+                }
+            };
+
+            bt.Root = root;
+
+            Iterator.BinaryTreePostOrderIterator<int> iterator = new Iterator.BinaryTreePostOrderIterator<int>(bt);
+
+            Assert.AreEqual(9, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(2, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(8, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(4, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(3, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(7, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(5, iterator.Current);
+
+            Assert.IsTrue(iterator.MoveNext());
+            Assert.AreEqual(1, iterator.Current);
+            
+            Assert.IsFalse(iterator.MoveNext());
         }
 
         #endregion

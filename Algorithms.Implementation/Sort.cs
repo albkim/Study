@@ -45,37 +45,34 @@ namespace Algorithms.Implementation
             //we could randomly choose here to get better run time
             int pivot = array[start];
 
+            //plllluuuuuhhhhh
+            //s    l   r
+
             int left = start + 1;
             int right = end;
 
-            //do until we meet
-            while (left < right)
+            //while there is an element in unknown region
+            while (left <= right)
             {
-                //now if the condition is violated, swap left and right
-                while (array[left] <= pivot)
-                {
-                    left++;
-                }
-
-                while (array[right] > pivot)
-                {
-                    right--;
-                }
-
-                if (left < right)
+                if (array[left] > pivot)
                 {
                     swap(array, left, right);
+                    right--;
+                }
+                else
+                {
+                    left++;
                 }
             }
 
             //put the pivot in the right place
-            swap(array, start, right);
+            swap(array, start, left - 1);
 
             return right;
         }
 
         /// <summary>
-        /// Slightly mode efficient way to partition by not moving the mid element,
+        /// Slightly more efficient way to partition by not moving the mid element,
         /// Used for dutch flag sort
         /// given 0, 1, 2...sort all elements such that it's 0001111222222
         /// </summary>

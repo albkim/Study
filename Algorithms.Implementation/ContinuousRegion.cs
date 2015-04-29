@@ -25,9 +25,8 @@ namespace Algorithms.Implementation
                     //we found a new region
                     if (_matrix[row, column] == 1)
                     {
-                        //we need to DFS all direction and set the other connected regions to 0
-                        int[,] check = new int[_matrix.GetLength(0), _matrix.GetLength(1)];
-                        MarkRegion(row, column, check, false);
+                        //we need to DFS all direction and set the all the connected regions to 0
+                        MarkRegion(row, column);
                         count++;
                     }
                 }
@@ -36,31 +35,28 @@ namespace Algorithms.Implementation
             return count;
         }
 
-        private void MarkRegion(int row, int column, int[,] check, bool markCurrentCell)
+        private void MarkRegion(int row, int column)
         {
-            check[row, column] = 1;
-            if (_matrix[row, column] == 1)
+            _matrix[row, column] = 0;
+
+            //mark the current cell as 0
+            //then dfs only if the next cell is 1...this will also prevent back tracking
+
+            if ((row > 0) && (_matrix[row - 1, column] == 1))
             {
-                if (markCurrentCell)
-                {
-                    _matrix[row, column] = 0;
-                }
-                if ((row > 0) && (check[row - 1, column] == 0))
-                {
-                    MarkRegion(row - 1, column, check, true);
-                }
-                if ((row < (_matrix.GetLength(0) - 1)) && (check[row + 1, column] == 0))
-                {
-                    MarkRegion(row + 1, column, check, true);
-                }
-                if ((column > 0) && (check[row, column - 1] == 0))
-                {
-                    MarkRegion(row, column - 1, check, true);
-                }
-                if ((column < (_matrix.GetLength(1) - 1)) && (check[row, column + 1] == 0))
-                {
-                    MarkRegion(row, column + 1, check, true);
-                }
+                MarkRegion(row - 1, column);
+            }
+            if ((row < (_matrix.GetLength(0) - 1)) && (_matrix[row + 1, column] == 1))
+            {
+                MarkRegion(row + 1, column);
+            }
+            if ((column > 0) && (_matrix[row, column - 1] == 1))
+            {
+                MarkRegion(row, column - 1);
+            }
+            if ((column < (_matrix.GetLength(1) - 1)) && (_matrix[row, column + 1] == 1))
+            {
+                MarkRegion(row, column + 1);
             }
         }
     }

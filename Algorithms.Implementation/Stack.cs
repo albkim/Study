@@ -181,6 +181,58 @@ namespace Algorithms.Implementation
             return true;
         }
 
+        /// <summary>
+        /// Use a variable s to denote the start of the valid pattern
+        /// 
+        /// when we encounter ) at index i, there are 3 cases:
+        ///     1. stack is empty - no valid pattern, s = i + 1
+        ///     2. stack has 1 element - we found the end of a pattern...calculate length as i - s + 1...and compare to max
+        ///     3. stack has multiple elements - since all patterns from the top of the stack (only invalid is many ')'), meaning stack would be empty,
+        ///        length is i - s.top...only if we push index into s
+        /// </summary>
+        /// <param name="parantheses"></param>
+        /// <returns></returns>
+        public static int LengthOfLongestBalancedParanthese(string parantheses)
+        {
+            int max = 0;
+            int start = 0;
+            Stack<int> tracker = new Stack<int>();
+
+            for (int index = 0; index < parantheses.Length; index++)
+            {
+                char chr = parantheses[index];
+                if (chr == '(')
+                {
+                    tracker.Push(index);
+                }
+                else
+                {
+                    if (tracker.Count == 0)
+                    {
+                        //invalid pattern...case 1
+                        start = index + 1;
+                    }
+                    else
+                    {
+                        tracker.Pop();
+                        if (tracker.Count == 0)
+                        {
+                            //case 2
+                            max = System.Math.Max(max, index - start + 1);
+                        }
+                        else
+                        {
+                            //sub pattern...if everything afterward is invalid or we run out of closing brackets, this could be longest
+                            //case 3
+                            max = System.Math.Max(max, index - tracker.Peek());
+                        }
+                    }
+                }
+            }
+
+            return max;
+        }
+
         #endregion
 
     }

@@ -709,21 +709,23 @@ namespace Algorithms.Implementation
 			int rightCount = CountInversionR(numbers.Skip(mid).ToArray(), out sortedRight);
 
 			int index = 0;
+            int leftIndex = 0;
 			int rightIndex = 0;
-			int mergeCount = 0;
 			int inversionCount = 0;
 			foreach (int number in sortedLeft)
 			{
+                int mergeCount = 0;
 				while ((rightIndex < sortedRight.Length) && (sortedRight[rightIndex] < number))
 				{
 					sortedNumbers[index] = sortedRight[rightIndex];
 
 					index++;
 					rightIndex++;
-					mergeCount++;
+					mergeCount += sortedLeft.Length - leftIndex;
 				}
 
 				sortedNumbers[index] = number;
+                leftIndex++;
 				index++;
 				inversionCount += mergeCount;
 			}
@@ -881,9 +883,62 @@ namespace Algorithms.Implementation
 
 		#endregion
 
-		#region Stocks
+        #region Roman Numerals to a Number
 
-		public static int MaxProfitOneBuyOneSell(int[] prices)
+        private static int BasicUnits(char chr)
+        {
+            switch (chr) {
+                case 'I' :
+                    return 1;
+                case 'V':
+                    return 5;
+                case 'X':
+                    return 10;
+                case 'L':
+                    return 50;
+                case 'C':
+                    return 100;
+                case 'D':
+                    return 500;
+                case 'M':
+                    return  1000;
+            }
+
+            throw new ArgumentException();
+        }
+
+        /// <summary>
+        /// Rule
+        ///     each 1 unit can repeat up to 3 times
+        ///     each 1 unit can be placed before 5 and 10 to make 4 & 9
+        /// </summary>
+        /// <param name="roman"></param>
+        /// <returns></returns>
+        public static int RomanToNumber(string roman)
+        {
+            int result = 0;
+
+            for (int index = 0; index < roman.Length; index++)
+            {
+                result += BasicUnits(roman[index]);
+
+                if ((index > 0) && (BasicUnits(roman[index]) > BasicUnits(roman[index - 1])))
+                {
+                    //this means we hit the second rule which is a subtraction...
+                    //since we would have added as a normal case, we need to subtract twice!
+                    //IV...we would have added 1 + 5...really we want 4
+                    result -= (2 * BasicUnits(roman[index - 1]));
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Stocks
+
+        public static int MaxProfitOneBuyOneSell(int[] prices)
 		{
 			int min = int.MaxValue;
 			int maxProfit = 0;
@@ -1187,26 +1242,19 @@ namespace Algorithms.Implementation
             int index = 0;
             foreach (int height in heights)
             {
-                if (storage.Count == 0 || storage.Peek().Height < height)
+                while ((storage.Count > 0) && (storage.Peek().Height > height))
                 {
-                    storage.Push(new LargestStorage { Index = index, Height = height });
-                }
-                else if (storage.Peek().Height == height)
-                {
-                    //don't have to do anything
-                }
-                else
-                {
-                    while ((storage.Count > 0) && (storage.Peek().Height > height))
+                    LargestStorage last = storage.Pop();
+                    long area = (index - last.Index) * last.Height;
+                    if (area > maxArea)
                     {
-                        LargestStorage last = storage.Pop();
-                        long area = (index - last.Index) * last.Height;
-                        if (area > maxArea)
-                        {
-                            maxArea = area;
-                        }
+                        maxArea = area;
                     }
                 }
+
+                //need to put the current one for the future
+                storage.Push(new LargestStorage { Index = index, Height = height });
+
                 index++;
             }
 
@@ -1382,6 +1430,9 @@ namespace Algorithms.Implementation
         /// Continuously perform this logic
         /// max including current number = previous max excluded + current number
         /// max excluding current number = max of previous (included, excluded)
+        /// 
+        /// i=3, x=0 -> i=2, x=3 -> i=10, x=3 -> i=13, x=10
+        /// i=3, x=0 -> i=2, x=3 -> i=8, x=3 -> i=13, x=8 -> i=15, x=13
         /// </summary>
         /// <param name="numbers"></param>
         /// <returns></returns>

@@ -77,25 +77,26 @@ namespace Algorithms.Implementation
                     return true;
                 }
                 
-                if (number < pivot)
+                //now look at which direction is sorted
+                if (array[start] <= pivot)
                 {
-                    //we know we should go left in normal case, but we need some additional logic
-                    if (array[start] <= number)
+                    //left half is sorted, meaning rotation happend on the right
+                    if ((array[start] <= number) && (number < pivot))
                     {
-                        //we got lucky, left side is sequential and the number lies somewhere on the left
+                        //luck we are in the sorted region...eliminate right half
                         end = pivotIndex - 1;
                     }
                     else
                     {
-                        //else go right
                         start = pivotIndex + 1;
                     }
                 }
                 else
                 {
-                    if (array[end] >= number)
+                    //right half is sorted, meaning rotation happened on the left
+                    if ((pivot < number) && (number <= array[end]))
                     {
-                        //we got lucky, right side is sequential and the number lies somewhere on the right
+                        //luck we are in the sorted region...eliminate left half
                         start = pivotIndex + 1;
                     }
                     else

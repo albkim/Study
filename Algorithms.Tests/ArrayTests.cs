@@ -381,6 +381,19 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Roman Numerals to a Number
+
+        [TestMethod]
+        public void RomanToNumber()
+        {
+            Assert.AreEqual(3, Array.RomanToNumber("III"));
+            Assert.AreEqual(4, Array.RomanToNumber("IV"));
+            Assert.AreEqual(1954, Array.RomanToNumber("MCMLIV"));
+            Assert.AreEqual(1990, Array.RomanToNumber("MCMXC"));
+        }
+
+        #endregion
+
         #region Interval Merging
 
         [TestMethod]

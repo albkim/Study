@@ -136,6 +136,16 @@ namespace Algorithms.Tests
             Assert.IsFalse(Stack.BalancedParenthesesMultiple("{[(}])"));
         }
 
+        [TestMethod]
+        public void LengthOfLongestBalancedParanthese()
+        {
+            Assert.AreEqual(6, Stack.LengthOfLongestBalancedParanthese("((()))"));
+            Assert.AreEqual(2, Stack.LengthOfLongestBalancedParanthese("()"));
+            Assert.AreEqual(4, Stack.LengthOfLongestBalancedParanthese("()()"));
+            Assert.AreEqual(4, Stack.LengthOfLongestBalancedParanthese("((()()"));
+            Assert.AreEqual(8, Stack.LengthOfLongestBalancedParanthese("((()()))"));
+        }
+
         #endregion
 
     }

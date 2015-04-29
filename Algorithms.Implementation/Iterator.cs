@@ -95,29 +95,110 @@ namespace Algorithms.Implementation
 
             public bool MoveNext()
             {
-                Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
-
                 if (this.current.Right != null)
                 {
                     this.current = this.current.Right;
                     this.TraverseLeftTree();
-                }
-                else
-                {
-                    this.current = this.stack.Pop();
+                    
+                    return true;
                 }
 
-                return true;
+                if (this.stack.Count > 0) 
+                {
+                    this.current = this.stack.Pop();
+
+                    return true;
+                }
+
+                return false;
             }
 
             private void TraverseLeftTree()
             {
-                if (this.current != null)
+                while (this.current != null)
                 {
-                    while (this.current.Left != null)
+                    this.stack.Push(this.current);
+                    this.current = this.current.Left;
+                }
+
+                if (this.stack.Count > 0)
+                {
+                    this.current = this.stack.Pop();
+                }
+            }
+
+        }
+
+        #endregion
+
+        #region Binary Tree - Post Order
+
+        public class BinaryTreePostOrderIterator<T>
+        {
+
+            private Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+            private BinaryTree<T> bt;
+            private TreeNode<T> current;
+
+            public T Current
+            {
+                get
+                {
+                    return this.current.Value;
+                }
+            }
+
+            public BinaryTreePostOrderIterator(BinaryTree<T> bt)
+            {
+                this.bt = bt;
+                this.current = this.bt.Root;
+                this.TraverseSubTree();
+            }
+
+            public bool MoveNext()
+            {
+                if (this.stack.Count > 0)
+                {
+                    this.current = this.stack.Pop();
+
+                    this.SwitchRightWithRoot(true);
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            private void TraverseSubTree()
+            {
+                while (this.current != null)
+                {
+                    if (this.current.Right != null)
                     {
-                        this.stack.Push(this.current);
-                        this.current = this.current.Left;
+                        this.stack.Push(this.current.Right);
+                    }
+                    this.stack.Push(this.current);
+                    this.current = this.current.Left;
+                }
+
+                if (this.stack.Count > 0)
+                {
+                    this.current = this.stack.Pop();
+
+                    this.SwitchRightWithRoot(false);
+                }
+            }
+
+            private void SwitchRightWithRoot(bool traverseRight)
+            {
+                if ((this.current != null) && (this.stack.Count > 0) && (this.stack.Peek() == this.current.Right))
+                {
+                    TreeNode<T> right = this.stack.Pop();
+                    this.stack.Push(this.current);
+                    this.current = right;
+                    if (traverseRight)
+                    {
+                        this.TraverseSubTree();
                     }
                 }
             }
