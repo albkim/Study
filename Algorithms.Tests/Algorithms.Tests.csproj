@@ -54,6 +54,7 @@
     <Compile Include="ContinuousRegionTests.cs" />
     <Compile Include="IteratorTests.cs" />
     <Compile Include="MajorityTests.cs" />
+    <Compile Include="Read4kTests.cs" />
     <Compile Include="SortTests.cs" />
     <Compile Include="DynamicProgrammingTests.cs" />
     <Compile Include="GraphTests.cs" />

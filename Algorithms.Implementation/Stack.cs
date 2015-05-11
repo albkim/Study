@@ -224,6 +224,10 @@ namespace Algorithms.Implementation
                         {
                             //sub pattern...if everything afterward is invalid or we run out of closing brackets, this could be longest
                             //case 3
+                            //(((()())
+                            //   _)
+                            //   ___)
+                            //  _____)
                             max = System.Math.Max(max, index - tracker.Peek());
                         }
                     }

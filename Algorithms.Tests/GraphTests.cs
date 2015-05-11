@@ -7,6 +7,7 @@ namespace Algorithms.Tests
 
     using Algorithms.Implementation.Models;
     using Algorithms.Implementation.Models.Graphes;
+    using System;
 
     [TestClass]
     public class GraphTests
@@ -275,28 +276,44 @@ namespace Algorithms.Tests
 
         #endregion
 
-        #region Task Scheduler
+        #region Job Dependency
 
         [TestMethod]
-        public void TaskScheduler()
+        public void SingleThreaded()
         {
-            Graph.Task task5 = new Graph.Task { Value = 5, Dependencies = new List<Graph.Task>() };
-            Graph.Task task4 = new Graph.Task { Value = 4, Dependencies = new List<Graph.Task> { task5 } };
-            Graph.Task task3 = new Graph.Task { Value = 3, Dependencies = new List<Graph.Task> { task4, task5 } };
-            Graph.Task task2 = new Graph.Task { Value = 2, Dependencies = new List<Graph.Task> { task3, task4, task5 } };
-            Graph.Task task1 = new Graph.Task { Value = 1, Dependencies = new List<Graph.Task> { task2, task3, task4, task5 } };
-            
-            List<Graph.Task> tasks = new List<Graph.Task> { task1, task2, task3, task4, task5 };
+            Graph.Job job5 = new Graph.Job { Name = "5", dependencies = new List<Graph.Job>() };
+            Graph.Job job4 = new Graph.Job { Name = "4", dependencies = new List<Graph.Job>() { job5 } };
+            Graph.Job job3 = new Graph.Job { Name = "3", dependencies = new List<Graph.Job>() { job4 } };
+            Graph.Job job2 = new Graph.Job { Name = "2", dependencies = new List<Graph.Job>() { job3 } };
+            Graph.Job job1 = new Graph.Job { Name = "1", dependencies = new List<Graph.Job>() { job2 } };
 
-            var result = Graph.TaskScheduler(tasks);
+            List<Graph.Job> jobs = new List<Graph.Job> { job1, job2, job3, job4, job5 };
+
+            var result = Graph.SingleThreaded(jobs);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(5, result.Count);
-            Assert.AreEqual(5, result[0]);
-            Assert.AreEqual(4, result[1]);
-            Assert.AreEqual(3, result[2]);
-            Assert.AreEqual(2, result[3]);
-            Assert.AreEqual(1, result[4]);
+            Assert.AreEqual("5", result[0]);
+            Assert.AreEqual("4", result[1]);
+            Assert.AreEqual("3", result[2]);
+            Assert.AreEqual("2", result[3]);
+            Assert.AreEqual("1", result[4]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SingleThreadedCyclic()
+        {
+            Graph.Job job5 = new Graph.Job { Name = "5", dependencies = new List<Graph.Job>() };
+            Graph.Job job4 = new Graph.Job { Name = "4", dependencies = new List<Graph.Job>() { job5 } };
+            Graph.Job job3 = new Graph.Job { Name = "3", dependencies = new List<Graph.Job>() { job4 } };
+            Graph.Job job2 = new Graph.Job { Name = "2", dependencies = new List<Graph.Job>() { job3 } };
+            Graph.Job job1 = new Graph.Job { Name = "1", dependencies = new List<Graph.Job>() {  } };
+            job5.dependencies.Add(job2);
+
+            List<Graph.Job> jobs = new List<Graph.Job> { job1, job2, job3, job4, job5 };
+
+            Graph.SingleThreaded(jobs);
         }
 
         #endregion

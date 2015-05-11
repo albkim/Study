@@ -103,43 +103,32 @@ namespace Algorithms.Implementation
             }
 
             bool[] isUsed = new bool[range];
-
             return Can1Win(isUsed, number, 0);
         }
 
         private static bool Can1Win(bool[] isUsed, int number, int turn)
         {
-            //if we cross total then this player won
-            if (number <= 0)
+            //try to the biggest number to give this turn's player maximum chance to win
+            for (int index = isUsed.Length - 1; index >= 0; index--)
             {
-                //only return true if this was the 1st player
-                return (turn % 2 == 1);
-            }
-                        
-            //need one special handling for ideal play
-            //if there exists a number not used which can win, this player should take it
-            for (int largeNumber = isUsed.Length; largeNumber >= number; largeNumber--)
-            {
-                if (!isUsed[largeNumber - 1])
+                if (!isUsed[index])
                 {
-                    //since this player is taking a turn it's 1+
-                    return (turn % 2 == 0);
-                }
-            }
-
-            for (int count = 1; count <= isUsed.Length; count++)
-            {
-                if (!isUsed[count - 1])
-                {
-                    isUsed[count - 1] = true;
-
-                    if (Can1Win(isUsed, number - count, turn + 1))
+                    if ((number - (index + 1)) > 0)
                     {
-                        return true;
+                        //try next turn
+                        isUsed[index] = true;
+                        if (Can1Win(isUsed, number - (index + 1), turn + 1))
+                        {
+                            return true;
+                        }
+                        isUsed[index] = false;
                     }
-                    
-                    //back track
-                    isUsed[count - 1] = false;
+                    else
+                    {
+                        //this guy won
+                        //since if there is a chance, this guy takes it, thus making this the ideal play
+                        return ((turn % 2) == 0);
+                    }
                 }
             }
 

@@ -100,68 +100,71 @@ namespace Algorithms.Implementation.Models
 
         #endregion
 
-        #region Task Scheduler
+        #region Job Dependency
 
-        public class Task
+        public struct Job
         {
+            public string Name { get; set; }
 
-            private List<Task> dependencies = new List<Task>();
+            public List<Job> dependencies { get; set; }
 
-            public void Run() { }
+        }
 
-            public int Value { get; set; }
+        public static List<string> SingleThreaded(List<Job> jobs)
+        {
+            Dictionary<string, Job> jobLookup = new Dictionary<string, Job>();
+            Dictionary<string, List<Job>> edgeLookup = new Dictionary<string, List<Job>>();
 
-            public List<Task> Dependencies
+            //parse jobs into lookups
+            Queue<string> queue = new Queue<string>();
+            foreach (Job job in jobs)
             {
-                get
+                //this should create a graph with edges
+                //5 -> 4 
+                //4 -> 3
+                //3 -> 2
+                //2 -> 1
+                foreach (Job dependency in job.dependencies)
                 {
-                    return this.dependencies;
+                    List<Job> dependentJobs = edgeLookup.ContainsKey(dependency.Name) ? edgeLookup[dependency.Name] : new List<Job>();
+                    dependentJobs.Add(job);
+                    edgeLookup[dependency.Name] = dependentJobs;
                 }
-                set
+                if (job.dependencies.Count == 0)
                 {
-                    this.dependencies = value;
+                    queue.Enqueue(job.Name);
                 }
+                jobLookup.Add(job.Name, job);
             }
-        }
 
-        /// <summary>
-        /// Given the interface below, implement a task scheduler.
-        /// 
-        /// Additionally, the task scheduler should follow two rules.
-        /// 1. Each task may only be executed once.
-        /// 2. The dependencies of a task should be executed before the task itself.
-        /// </summary>
-        /// <param name="tasks"></param>
-        /// <returns></returns>
-        public static List<int> TaskScheduler(List<Task> tasks)
-        {
-            List<int> result = new List<int>();
-            Dictionary<int, Task> check = new Dictionary<int, Task>();
+            List<string> runResult = new List<string>();
 
-            TaskScheduler(tasks, check, result);
-
-            return result;
-        }
-
-        private static void TaskScheduler(List<Task> tasks, Dictionary<int, Task> check, List<int> result)
-        {
-            foreach (Task task in tasks)
+            while (queue.Count > 0)
             {
-                if (!check.ContainsKey(task.Value))
+                string currentJob = queue.Dequeue();
+                runResult.Add(currentJob);
+                
+                //clean up all the edges
+                if (edgeLookup.ContainsKey(currentJob))
                 {
-                    //add to check to prevent cycles
-                    check.Add(task.Value, task);
-
-                    //process dependencies first
-                    if (task.Dependencies.Count > 0)
+                    foreach (Job edge in edgeLookup[currentJob])
                     {
-                        TaskScheduler(task.Dependencies, check, result);
+                        edge.dependencies.Remove(jobLookup[currentJob]);
+                        if (edge.dependencies.Count == 0)
+                        {
+                            queue.Enqueue(edge.Name);
+                        }
                     }
-
-                    //now process the current
-                    result.Add(task.Value);
+                    edgeLookup.Remove(currentJob);
                 }
             }
+
+            if (edgeLookup.Count > 0)
+            {
+                throw new InvalidOperationException("Cyclic dependency found");
+            }
+
+            return runResult;
         }
 
         #endregion

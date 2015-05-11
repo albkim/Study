@@ -808,5 +808,65 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Parenthese Permutation
+
+        /// <summary>
+        /// Given a number generate all possible permutation of parentheses
+        /// 
+        /// n = 3
+        /// ()()()
+        /// (()())
+        /// ()(())
+        /// (())()
+        /// ((()))
+        /// 
+        /// When you have a parenthese "(", you have two choices, put another ( or put another ). We just
+        /// need to place two constraint
+        ///     When you put (, add a score of 1, when you put ), subtract a score of -1
+        ///     You cannot add another ( if number of ( is > total number (otherwise you won't have enough to close)
+        ///     You cannot go negative score, because you will then have invalid pattern
+        ///     If score is 0, this is a valid pattern
+        /// Think of this as a binary tree where left node is ( and right node is )
+        /// 
+        ///                                 (  1
+        ///                                / \
+        ///                       ((                           ()  2, 0
+        ///                       / \                         / 
+        ///                 (((          (()                 ()(             3, 1, 1 (invalid)
+        ///                    \          /\                 /\
+        ///                   ((()  (()(     (())    ()((         ()()    2, 2, 0, 2, 0
+        ///                     \     \      /         \           / 
+        ///                    ((()) (()() (())(      ()(()    ()()(      1, 1, 1, 1, 1
+        ///                     \      \     \         \          \
+        ///                    ((()))  (()()) (())()   ()(())    ()()()   0, 0, 0, 0, 0 
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static List<string> ParenthesePermutation(int number)
+        {
+            List<string> result = new List<string>();
+            ParenthesePermutation("(", number, 1, 0, result);
+            return result;
+        }
+
+        private static void ParenthesePermutation(string pattern, int number, int left, int right, List<string> result)
+        {
+            if ((left == number) && (left == right)) {
+                //we have found a valid permutation
+                result.Add(pattern);
+            }
+
+            if (left < number)
+            {
+                ParenthesePermutation(pattern + "(", number, left + 1, right, result);
+            }
+            if (left >= (right + 1))
+            {
+                ParenthesePermutation(pattern + ")", number, left, right + 1, result);
+            }
+        }
+
+        #endregion
+
     }
 }

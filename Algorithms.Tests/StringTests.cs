@@ -289,5 +289,23 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Parenthese Permutation
+
+        [TestMethod]
+        public void ParenthesePermutation()
+        {
+            List<string> result = String.ParenthesePermutation(3);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result.Count);
+            Assert.AreEqual("((()))", result[0]);
+            Assert.AreEqual("(()())", result[1]);
+            Assert.AreEqual("(())()", result[2]);
+            Assert.AreEqual("()(())", result[3]);
+            Assert.AreEqual("()()()", result[4]);
+        }
+
+        #endregion
+
     }
 }
