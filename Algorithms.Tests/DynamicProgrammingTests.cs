@@ -177,6 +177,23 @@ namespace Algorithms.Tests
         }
 
         [TestMethod]
+        public void BreakWordSmallDictionary()
+        {
+            Assert.IsTrue(DynamicProgramming.BreakWordSmallDictionary("ilikesamsung", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordSmallDictionary("iiiiiiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordSmallDictionary("ilikelikeimangoiii", breakWordDictionary));
+            Assert.IsTrue(DynamicProgramming.BreakWordSmallDictionary("samsungandmango", breakWordDictionary));
+            Assert.IsFalse(DynamicProgramming.BreakWordSmallDictionary("samsungandmangok", breakWordDictionary));
+        }
+
+        [TestMethod]
+        public void BreakWordTwoSmallDictionary()
+        {
+            var result = DynamicProgramming.BreakWordTwoSmallDictionary("ilikeicecreamandmango", breakWordDictionary);
+            Assert.AreEqual(4, result.Count);
+        }
+
+        [TestMethod]
         public void BreakWordDynamic()
         {
             Assert.IsTrue(DynamicProgramming.BreakWordDynamic("ilikesamsung", breakWordDictionary));

@@ -496,6 +496,21 @@ namespace Algorithms.Tests
             Assert.AreEqual(312211, result[5]);
         }
 
+        [TestMethod]
+        public void LookToSayNoString()
+        {
+            var result = Array.LookToSayNoString(6);
+
+            Assert.AreEqual(6, result.Count);
+
+            Assert.AreEqual(1, result[0]);
+            Assert.AreEqual(11, result[1]);
+            Assert.AreEqual(21, result[2]);
+            Assert.AreEqual(1211, result[3]);
+            Assert.AreEqual(111221, result[4]);
+            Assert.AreEqual(312211, result[5]);
+        }
+
         #endregion
 
         #region Max Sum Non Adjacent Sub Sequence

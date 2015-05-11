@@ -1418,6 +1418,52 @@ namespace Algorithms.Implementation
             return result;
         }
 
+        public static List<int> LookToSayNoString(int number)
+        {
+            List<int> result = new List<int>();
+
+            int currentNumber = 1;
+
+            for (int count = 0; count < number; count++)
+            {
+                int numberCount = 0;
+                int lastNumber = 0;
+                int lookToSayCount = 0;
+                int nextNumber = 0;
+
+                result.Add(currentNumber);
+
+                while (currentNumber > 0)
+                {
+                    int lastDigit = currentNumber % 10;
+                    
+                    if (lastDigit == lastNumber)
+                    {
+                        numberCount++;
+                    }
+                    else
+                    {
+                        if (lastNumber != 0)
+                        {                            
+                            nextNumber += ((numberCount * 10) + lastNumber) * ((int)System.Math.Pow(100, lookToSayCount));
+                            lookToSayCount++;
+                        }
+
+                        numberCount = 1;
+                        lastNumber = lastDigit;
+                    }
+
+                    currentNumber /= 10;
+                }
+
+                //last bit
+                nextNumber += ((numberCount * 10) + lastNumber) * ((int)System.Math.Pow(100, lookToSayCount));
+                currentNumber = nextNumber;
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Max Sum Non Adjacent Sub Sequence

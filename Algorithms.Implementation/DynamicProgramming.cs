@@ -736,6 +736,8 @@ namespace Algorithms.Implementation
         /// 
         /// ilike -> true (i like)
         /// ilikesamsung -> true (i like samsung or i like sam sung)
+        /// 
+        /// Complexity 2^n
         /// </summary>
         /// <param name="text"></param>
         /// <param name="dictionary"></param>
@@ -773,6 +775,131 @@ namespace Algorithms.Implementation
             }
 
             return false;
+        }
+        
+        /// <summary>
+        /// if dictionary is small...then you can reduce complexity by using dictionary to deliminate the words
+        /// and then iterate
+        /// 
+        /// o(n * m) where m is the size of the dictionary
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static bool BreakWordSmallDictionary(string text, List<string> dictionary)
+        {
+            bool[] valid = new bool[text.Length + 1];
+            valid[0] = true;
+
+            for (int index = 0; index < text.Length; index++)
+            {
+                if (!valid[index])
+                {
+                    //only evaluate from last match
+                    continue;
+                }
+
+                //now loop through all words in dictionary and try to find all valid words
+                foreach (string word in dictionary)
+                {
+                    //minor optimization...check length of the word in dictionary and see if it will fit
+                    int wordLength = word.Length;
+                    int validLength = index + wordLength;
+                    if (validLength > text.Length)
+                    {
+                        continue;
+                    }
+
+                    if (valid[validLength])
+                    {
+                        //already found...no need to do it again
+                        continue;
+                    }
+
+                    //finally check if the word we found is actual equal to the string
+                    if (text.Substring(index, wordLength) == word)
+                    {
+                        valid[validLength] = true;
+                    }
+                }
+            }
+
+            return valid[text.Length];
+        }
+
+        public static List<string> BreakWordTwoSmallDictionary(string text, List<string> dictionary)
+        {
+            List<string>[] validWords = new List<string>[text.Length + 1];
+            validWords[0] = new List<string>();
+
+            for (int index = 0; index < text.Length; index++)
+            {
+                if (validWords[index] == null)
+                {
+                    //only evaluate from last match
+                    continue;
+                }
+
+                //now loop through all words in dictionary and try to find all valid words
+                foreach (string word in dictionary)
+                {
+                    //minor optimization...check length of the word in dictionary and see if it will fit
+                    int wordLength = word.Length;
+                    int validLength = index + wordLength;
+                    if (validLength > text.Length)
+                    {
+                        continue;
+                    }
+
+                    //finally check if the word we found is actual equal to the string
+                    if (text.Substring(index, wordLength) == word)
+                    {
+                        List<string> words = validWords[validLength];
+                        if (words == null)
+                        {
+                            words = new List<string>();
+                            validWords[validLength] = words;
+                        }
+                        words.Add(word);
+                    }
+                }
+            }
+
+            List<string> result = new List<string>();
+
+            if (validWords[text.Length] != null)
+            {
+                //whole text is valid...we could have partial result but whole text may not be valid
+                GetWords(validWords, text.Length, result, new List<string>());
+            }
+
+            return result;
+        }
+
+        private static void GetWords(List<string>[] validWords, int end, List<string> result, List<string> path)
+        {
+            if (end == 0)
+            {
+                //we are done, add this as a result
+                StringBuilder text = new StringBuilder();
+                foreach (string word in path)
+                {
+                    if (text.Length > 0)
+                    {
+                        text.Append(" ");
+                    }
+                    text.Append(word);
+                }
+                result.Add(text.ToString());
+                return;
+            }
+
+            foreach (string word in validWords[end])
+            {
+                path.Insert(0, word);
+                GetWords(validWords, end - word.Length, result, path);
+                path.RemoveAt(0);
+            }
         }
 
         /// <summary>
