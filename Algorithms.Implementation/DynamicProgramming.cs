@@ -89,6 +89,8 @@ namespace Algorithms.Implementation
         /// +1 for delete, insertion and substitution
         /// e.g. Saturday & Sunday has 3
         /// S a(i) t(i) u r(n -> r) day
+        /// 
+        /// Complexity 3^min(n,m)
         /// </summary>
         /// <param name="string1"></param>
         /// <param name="string2"></param>
