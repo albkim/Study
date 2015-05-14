@@ -245,6 +245,40 @@ namespace Algorithms.Implementation
         }
 
         #endregion
-        
+
+        #region Number Palindrome
+
+        public static bool IsPalindrome(int x)
+        {
+            if (x < 0)
+            {
+                return false;
+            }
+
+            int length = (int)System.Math.Log(x, 10) + 1;
+
+            int diviser = (int)System.Math.Pow(10, length - 1);
+            while (length > 1)
+            {
+                int leftNumber = x / diviser;
+                int rightNumber = x % 10;
+
+                if (leftNumber != rightNumber)
+                {
+                    return false;
+                }
+
+                x -= leftNumber * diviser;
+                x /= 10;
+
+                length -= 2;
+                diviser /= 100;
+            }
+
+            return true;
+        }
+
+        #endregion
+
     }
 }

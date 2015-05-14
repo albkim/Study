@@ -52,85 +52,77 @@ namespace Algorithms.Implementation
 
         #region Justification
 
-        private class TextWrapper
+        public static IList<string> FullJustify(string[] words, int maxWidth)
         {
-            public string Text { get; set; }
-            public int Space { get; set; }
-        }
+            if ((words == null) || (words.Length == 0))
+            {
+                throw new ArgumentException();
+            }
 
-        public static void Justify(string[] text, int length)
-        {
-            List<List<TextWrapper>> storage = new List<List<TextWrapper>>();
+            if (maxWidth < 0)
+            {
+                throw new ArgumentException();
+            }
+
+            List<string> result = new List<string>();
 
             int lineLength = 0;
-            List<TextWrapper> line = new List<TextWrapper>();
-            foreach (string word in text)
+            List<string> line = new List<string>();
+            foreach (string word in words)
             {
-                int wordLength = word.Length;
-                int diff = length - (lineLength + wordLength);
-                if (diff < 0)
+                //new line logic
+                //+ 1 for space
+                int lineLengthWithSpace = lineLength + word.Length + ((line.Count > 0) ? ((line.Count) * 1) : 0);
+                if ((line.Count > 0) && (lineLengthWithSpace > maxWidth))
                 {
-                    lineLength = CleanupLastWord(lineLength, line);
-
-                    //readjust spaces and create new line
-                    int leftOverEqual = (int)System.Math.Floor((length - lineLength) / (1d * (line.Count - 1)));
-                    int leftOverMore = (length - lineLength) % (line.Count - 1);
-                    int index = 0;
-                    foreach (TextWrapper textWord in line)
-                    {
-                        textWord.Space += leftOverEqual + (index < leftOverMore ? 1 : 0);
-                    }
-                    storage.Add(line);
+                    HandleLine(line, lineLength, result, maxWidth, line.Count == 1);
+                    line.Clear();
                     lineLength = 0;
-                    line = new List<TextWrapper>();
                 }
 
-                TextWrapper textWrapper = new TextWrapper { Text = word, Space = (diff > 0) ? 1 : 0 };
-                line.Add(textWrapper);
-                lineLength += wordLength + textWrapper.Space;
+                line.Add(word);
+                lineLength += word.Length;
             }
 
-            //print rest
-            foreach (List<TextWrapper> printLine in storage)
+            //dont forget to handle the remainder
+            HandleLine(line, lineLength, result, maxWidth, true);
+
+            return result;
+        }
+
+        private static void HandleLine(List<string> line, int lineLength, List<string> result, int maxWidth, bool useTrailingSpace)
+        {
+            //normalize space
+            int remainder = maxWidth - lineLength;
+
+            //space = wordCount - 1...a_b_c
+            //make sure i handle 1 word lines...
+            int spaceInBetween = (!useTrailingSpace) ? remainder / (line.Count - 1) : 1;
+            int leftOverSpace = (!useTrailingSpace) ? remainder % (line.Count - 1) : 0;
+            int spaceAfter = (!useTrailingSpace) ? 0 : remainder - (spaceInBetween * (line.Count - 1));
+
+            StringBuilder lineBuilder = new StringBuilder();
+            for (int wordIndex = 0; wordIndex < line.Count; wordIndex++)
             {
-                foreach (TextWrapper word in printLine)
+                lineBuilder.Append(line[wordIndex]);
+                if (wordIndex < (line.Count - 1))
                 {
-                    Console.Write(word.Text);
-                    PrintSpace(word.Space);
+                    for (int spaceCount = 0; spaceCount < spaceInBetween + ((wordIndex < leftOverSpace) ? 1 : 0); spaceCount++)
+                    {
+                        lineBuilder.Append(" ");
+                    }
                 }
-                Console.Write("\r\n");
+                else
+                {
+                    for (int spaceCount = 0; spaceCount < spaceAfter; spaceCount++)
+                    {
+                        lineBuilder.Append(" ");
+                    }
+                }
             }
 
-            //process last line;
-            lineLength = CleanupLastWord(lineLength, line);
-            line[line.Count - 1].Space = length - lineLength + line[line.Count - 1].Space;
-            foreach (TextWrapper word in line)
-            {
-                Console.Write(word.Text);
-                PrintSpace(word.Space);
-            }
-        }
-
-        private static int CleanupLastWord(int lineLength, List<TextWrapper> line)
-        {
-            //remove space from last word, since it has to be aligned to the end
-            TextWrapper lastWord = line[line.Count - 1];
-
-            if (lastWord.Space > 0)
-            {
-                lineLength -= lastWord.Space;
-                lastWord.Space = 0;
-            }
-
-            return lineLength;
-        }
-
-        private static void PrintSpace(int space)
-        {
-            for (int count = 0; count < space; count++)
-            {
-                Console.Write(" ");
-            }
+            //add the result
+            result.Add(lineBuilder.ToString());
         }
 
         #endregion

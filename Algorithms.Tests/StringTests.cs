@@ -10,7 +10,30 @@ namespace Algorithms.Tests
     [TestClass]
     public class StringTests
     {
-     
+
+        #region Justification
+
+        [TestMethod]
+        public void FullJustify()
+        {
+            var result = String.FullJustify(new string[] {"a","b","c","d","e"}, 3);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual("a b", result[0]);
+            Assert.AreEqual("c d", result[1]);
+            Assert.AreEqual("e  ", result[2]);
+
+            result = String.FullJustify(new string[] { "What", "must", "be", "shall", "be." }, 12);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("What must be", result[0]);
+            Assert.AreEqual("shall be.   ", result[1]);
+        }
+
+        #endregion
+
         #region Boyer Moore Replace
 
         [TestMethod]

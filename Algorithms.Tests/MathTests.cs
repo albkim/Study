@@ -33,6 +33,19 @@ namespace Algorithms.Tests
             Assert.AreEqual(14, Math.SumOfAllFactorOf3And5(9));
             Assert.AreEqual(23, Math.SumOfAllFactorOf3And5(10));
         }
+
+        #region Number Palindrome
+
+        [TestMethod]
+        public void IsPalindrome()
+        {
+            Assert.IsFalse(Math.IsPalindrome(10));
+            Assert.IsFalse(Math.IsPalindrome(100));
+            Assert.IsTrue(Math.IsPalindrome(9999));
+        }
+
+        #endregion
+
     } 
 
 }

@@ -1607,6 +1607,110 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Merge Two Sorted Arrays
+
+        public static void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            //validation
+            if ((nums1 == null) || (nums2 == null))
+            {
+                throw new ArgumentException();
+            }
+            if (nums1.Length < (m + n))
+            {
+                throw new ArgumentException();
+            }
+
+            //if we populate from the back this should work i think
+            int leftIndex = m - 1;
+            for (int rightIndex = n - 1; rightIndex >= 0; rightIndex--)
+            {
+                //move larger number from left to end of left
+                int mergedIndex = 0;
+                while ((leftIndex >= 0 ? nums1[leftIndex] : int.MinValue) > nums2[rightIndex])
+                {
+                    mergedIndex = leftIndex + rightIndex + 1;
+                    nums1[mergedIndex] = nums1[leftIndex];
+                    leftIndex--;
+                }
+
+                //now move right one by one
+                mergedIndex = leftIndex + rightIndex + 1;
+                nums1[mergedIndex] = nums2[rightIndex];
+            }
+        }
+
+        #endregion
+
+        #region Permutation Sequence
+
+        // we can calculate the digit
+        // 123
+        // 132
+        // 213
+        // 231
+        // 312
+        // 321
+        // if we are looking at k = 5...each number can have up to (n-1)! permutations..this case 2 each
+        // so 5th one is the 1st of 3rd number which is 3...then it's matter of recursively find the right number
+        // e.g. 6th one is 2nd of the 3rd number, so find 3, and then pass n = 1, k = 2 with used marking 3
+        // since the k = 2 has to first (1!) of the second number, it's 2
+        public static string GetPermutation(int n, int k)
+        {
+            if ((n < 1) || (n > 9))
+            {
+                throw new ArgumentException();
+            }
+
+            if (k == 0)
+            {
+                return null;
+            }
+
+            int product = 1;
+            Dictionary<int, int> factorial = new Dictionary<int, int>();
+            for (int number = 1; number < n; number++)
+            {
+                product *= number;
+                factorial.Add(number, product);
+            }
+
+            bool[] used = new bool[n + 1];
+            return GetPermutation(n, k, used, factorial);
+        }
+
+        private static string GetPermutation(int n, int k, bool[] used, Dictionary<int, int> factorial)
+        {
+            StringBuilder result = new StringBuilder();
+
+            int unUsedCount = 0;
+            int orderOfNumber = (n == 1) ? 1 : (int)System.Math.Ceiling(k * 1d / factorial[n - 1]);
+            for (int number = 1; number < used.Length; number++)
+            {
+                if (!used[number])
+                {
+                    unUsedCount++;
+                    if (unUsedCount == orderOfNumber)
+                    {
+                        used[number] = true;
+                        result.Append(number);
+
+                        if (n > 1)
+                        {
+                            //5 - (2 * 2) = 1...6 - (2 * 2) = 2
+                            int secondOrder = k - (factorial[n - 1] * (orderOfNumber - 1));
+                            result.Append(GetPermutation(n - 1, secondOrder, used, factorial));
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return result.ToString();
+        }
+
+        #endregion
+
     }
 
 }
