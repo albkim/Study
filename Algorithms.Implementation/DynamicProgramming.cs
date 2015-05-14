@@ -1076,6 +1076,20 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Boggle
+
+        //have a grid of letters and a dictionary
+        //the objective is to find all possible valid words of length 3+
+
+        //naive - for each letter do dfs and check each substring against dictionary - O(n^2 m^2)
+        //better - create a trie with the dictionary and conditionally dfs if prefix exists - O( n m w ) + O(w l) 
+        //      where w is max length of word in dictionary and l is number of words in dictionary
+        //dp - eliminate words from the dictionary by checking if the word can be formed using the boggle board
+
+        
+
+        #endregion
+
     }
 
 }
