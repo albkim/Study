@@ -358,5 +358,57 @@ namespace Algorithms.Tests
 
         #endregion
 
+        #region Balanced Tree
+
+        [TestMethod]
+        public void IsBalanced()
+        {
+            TreeNode<int> root = new TreeNode<int>
+            {
+                Value = 1,
+                Left = new TreeNode<int>
+                {
+                    Value = 2,
+                    Left = new TreeNode<int>
+                    {
+                        Value = 3,
+                        Left = new TreeNode<int>
+                        {
+                            Value = 4,
+                            Left = new TreeNode<int> { Value = 5 },
+                            Right = new TreeNode<int> { Value = 5 }
+                        },
+                        Right = new TreeNode<int> { Value = 4 }
+                    },
+                    Right = new TreeNode<int>
+                    {
+                        Value = 3,
+                        Left = new TreeNode<int> { Value = 4 },
+                        Right = new TreeNode<int> { Value = 4 }
+                    }
+                },
+                Right = new TreeNode<int>
+                {
+                    Value = 2,
+                    Left = new TreeNode<int>
+                    {
+                        Value = 3,
+                        Left = new TreeNode<int> { Value = 4 },
+                        Right = new TreeNode<int> { Value = 4 }
+                    },
+                    Right = new TreeNode<int>
+                    {
+                        Value = 3
+                    }
+                }
+            };
+
+            BinaryTree<int> bt = new BinaryTree<int>();
+            bt.Root = root;
+            Assert.IsTrue(bt.IsBalanced());
+        }
+
+        #endregion
+
     }
 }

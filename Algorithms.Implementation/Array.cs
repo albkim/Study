@@ -272,43 +272,32 @@ namespace Algorithms.Implementation
 		/// <returns></returns>
 		public static int LargestContinuousProduct(int[] numbers)
 		{
-			int min = 1;
-			int max = 1;
+            if (numbers == null)
+            {
+                throw new ArgumentException();
+            }
 
-			int finalMax = int.MinValue;
+            if (numbers.Length == 0)
+            {
+                return 0;
+            }
 
-			foreach (int number in numbers)
-			{
-				if (number > 0)
-				{
-					//positive number
-					//max = previous max * number...assume we will always keep max > 0
-					max = max * number;
-					//min = previous min * number...assume we will always keep min < 0 or 1
-					min = System.Math.Min(min * number, 1);
-				}
-				else if (number < 0)
-				{
-					//negative number
-					//backup max before we overwrite
-					int tempMax = max;
-					//max = previous negative number (min) * current number will give positive max
-					max = System.Math.Max(min * number, 1);
-					//min = previous max number * current number
-					min = tempMax * number;
-				}
-				else
-				{
-					//0 case, reset to 1 so we can still calculate product next iteration
-					min = 1;
-					max = 1;
-				}
+			int min = numbers[0];
+            int max = numbers[0];
+            int finalMax = numbers[0];
 
-				if (max > finalMax)
-				{
-					finalMax = max;
-				}
-			}
+            for (int count = 1; count < numbers.Length; count++)
+            {
+                int number = numbers[count];
+                //we need to think about the following:
+                //  negative - last min value * current might give you maximum
+                //  first number / 0, take the current number
+
+                int tempMax = max;
+                max = System.Math.Max(System.Math.Max(max * number, min * number), number);
+                min = System.Math.Min(System.Math.Min(min * number, tempMax * number), number);
+                finalMax = System.Math.Max(finalMax, max);
+            }
 
 			return finalMax;
 		}
@@ -1643,6 +1632,61 @@ namespace Algorithms.Implementation
         #endregion
 
         #region Permutation Sequence
+
+        /// <summary>
+        /// [1,2,3] have the following permutations:
+        /// 
+        /// [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> Permute(int[] numbers)
+        {
+            if (numbers == null)
+            {
+                throw new ArgumentException();
+            }
+
+            if (numbers.Length == 0)
+            {
+                return new List<IList<int>>();
+            }
+
+            bool[] used = new bool[numbers.Length];
+
+            return Permute(numbers, used, 1);
+        }
+
+        public static IList<IList<int>> Permute(int[] numbers, bool[] used, int usedNum)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            for (int index = 0; index < numbers.Length; index++)
+            {
+                if (!used[index])
+                {
+                    if ((numbers.Length - usedNum) > 0)
+                    {
+                        used[index] = true;
+
+                        IList<IList<int>> subResult = Permute(numbers, used, usedNum + 1);
+                        foreach (IList<int> pattern in subResult)
+                        {
+                            for (int injection = 0; injection <= pattern.Count; injection++)
+                            {
+                                IList<int> newPattern = new List<int>(pattern);
+                                newPattern.Insert(injection, numbers[index]);
+                                result.Add(newPattern);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result.Add(new List<int>() { numbers[index] });
+                    }
+                }
+            }
+            return result;
+        }
 
         // we can calculate the digit
         // 123

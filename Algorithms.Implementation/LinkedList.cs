@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Algorithms.Implementation.Models;
+using System.Collections.Generic;
 
 namespace Algorithms.Implementation
 {
@@ -115,6 +116,67 @@ namespace Algorithms.Implementation
 
             return current;
         }
+
+        #region Deep Copy With Random Pointer
+
+        public class RandomListNode {
+            public int label;
+            public RandomListNode next, random;
+            public RandomListNode(int x) { this.label = x; }
+        };
+
+        public static RandomListNode CopyRandomList(RandomListNode head)
+        {
+            if (head == null)
+            {
+                return null;
+            }
+
+            //prevent cycle
+            HashSet<int> check = new HashSet<int>();
+
+            //hold created nodes
+            Dictionary<int, RandomListNode> cache = new Dictionary<int, RandomListNode>();
+
+            //copy of the head
+            RandomListNode copyHead = new RandomListNode(head.label);
+            RandomListNode copyCurrent = copyHead;
+
+            while (head != null)
+            {
+                if (head.random != null)
+                {
+                    RandomListNode copyRandom = cache.ContainsKey(head.random.label)
+                        ? cache[head.random.label]
+                        : new RandomListNode(head.random.label);
+                    cache[head.random.label] = copyRandom;
+                    copyCurrent.random = copyRandom;
+                }
+                if (head.next != null)
+                {
+                    RandomListNode copyNext = cache.ContainsKey(head.next.label)
+                        ? cache[head.next.label]
+                        : new RandomListNode(head.next.label);
+                    cache[head.next.label] = copyNext;
+                    copyCurrent.next = copyNext;
+
+                    if (!check.Contains(head.next.label))
+                    {
+                        check.Add(head.next.label);
+                        head = head.next;
+                        copyCurrent = copyCurrent.next;
+                    }
+                }
+                else
+                {
+                    head = null;
+                }
+            }
+
+            return copyHead;
+        }
+
+        #endregion
 
     }
 }

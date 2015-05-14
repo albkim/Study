@@ -100,6 +100,25 @@ namespace Algorithms.Tests
             Assert.AreEqual("cog", result[4]);
         }
 
+        [TestMethod]
+        public void WordLadder2()
+        {
+            var result = ShortestPath.WordLadder2("hit", "cog", new HashSet<string> { "hot", "dot", "dog", "lot", "log" });
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("hit", result[0][0]);
+            Assert.AreEqual("hot", result[0][1]);
+            Assert.AreEqual("dot", result[0][2]);
+            Assert.AreEqual("dog", result[0][3]);
+            Assert.AreEqual("cog", result[0][4]);
+
+            Assert.AreEqual("hit", result[1][0]);
+            Assert.AreEqual("hot", result[1][1]);
+            Assert.AreEqual("lot", result[1][2]);
+            Assert.AreEqual("log", result[1][3]);
+            Assert.AreEqual("cog", result[1][4]);
+        }
+
     }
 
 }

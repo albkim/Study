@@ -248,6 +248,7 @@ namespace Algorithms.Tests
             Assert.AreEqual(180, Array.LargestContinuousProduct(new int[] { 6, -3, -10, 0, 2 }));
             Assert.AreEqual(60, Array.LargestContinuousProduct(new int[] { -1, -3, -10, 0, 60 }));
             Assert.AreEqual(80, Array.LargestContinuousProduct(new int[] { -2, -3, 0, -2, -40 }));
+            Assert.AreEqual(-2, Array.LargestContinuousProduct(new int[] { -2 }));
         }
 
         #endregion
@@ -554,6 +555,17 @@ namespace Algorithms.Tests
         #endregion
 
         #region Permutation Sequence
+
+        [TestMethod]
+        public void Permute()
+        {
+            var result = Array.Permute(new int[] { 1, 2, 3 });
+            Assert.IsNotNull(result);
+            Assert.AreEqual(6, result.Count);
+            Assert.AreEqual(1, result[0][0]);
+            Assert.AreEqual(2, result[0][1]);
+            Assert.AreEqual(3, result[0][2]);
+        }
 
         [TestMethod]
         public void GetPermutation()

@@ -238,5 +238,135 @@ namespace Algorithms.Implementation
             return countDifferentLetter == 1;
         }
 
+        public static List<List<string>> WordLadder2(string start, string end, HashSet<string> dict) {
+            if ((start == null) || (end == null)) {
+                throw new ArgumentException();
+            }
+        
+            if (dict.Count == 0) {
+                return new List<List<string>>();
+            }
+        
+            List<List<string>> result = new List<List<string>>();
+        
+            if (start == end) {
+                List<string> singlePath = new List<string>();
+                result.Add(singlePath);
+                return result;
+            }
+
+            if (!dict.Contains(end))
+            {
+                dict.Add(end);
+            }
+        
+            HashSet<string> check = new HashSet<string>();
+            List<Dictionary<string, HashSet<string>>> path = new List<Dictionary<string, HashSet<string>>>();
+        
+            Queue<string> temp = null;
+            Queue<string> current = new Queue<string>();
+            Queue<string> next = new Queue<string>();
+        
+            //add the start
+            current.Enqueue(start);
+
+            int level = 0;
+            bool found = false;
+            while(current.Count > 0) {
+                path.Add(new Dictionary<string, HashSet<string>>());
+                while(current.Count > 0) {
+                    string word = current.Dequeue();
+                
+                    if (word == end) {
+                        found = true;
+                        //wipe next
+                        next.Clear();
+                    }
+                
+                    //prevent cycles
+                    if (check.Contains(word)) {
+                        continue;
+                    }
+                
+                    check.Add(word);
+                
+                    //dont add if the word is found
+                    if (!found) {
+                        foreach(string nextWord in GetNextWords(word, check, dict)) {
+                            next.Enqueue(nextWord);
+                            if (path[level].ContainsKey(nextWord)) {
+                                path[level][nextWord].Add(word);
+                            }
+                            else {
+                                HashSet<string> previousPath = new HashSet<string>();
+                                previousPath.Add(word);
+                                path[level].Add(nextWord, previousPath);
+                            }
+                        }
+                    }
+                }
+            
+                //flip the queue
+                temp = current;
+                current = next;
+                next = temp;
+                level++;
+            }
+        
+            if (found) {
+                List<string> newPath = new List<string>();
+                DfsPaths(result, path, newPath, end, level - 2);
+                result.Add(newPath);
+            }
+        
+            return result;
+        }
+
+        private static void DfsPaths(List<List<string>> result, List<Dictionary<string, HashSet<string>>> path, List<string> currentPath, string currentNode, int level) {
+            currentPath.Insert(0, currentNode);
+        
+            if ((level >= 0) && (path[level].ContainsKey(currentNode))) {
+                int count = 0;
+                HashSet<string> previousWords = path[level][currentNode];
+                foreach (string previousWord in previousWords)
+                {
+                    //we need to make a copy first, otherwise recursion will ruin the current path
+                    if (count == (previousWords.Count - 1))
+                    {
+                        DfsPaths(result, path, currentPath, previousWord, level - 1);
+                    }
+                    else
+                    {
+                        List<string> newPath = new List<string>(currentPath);
+                        DfsPaths(result, path, newPath, previousWord, level - 1);
+                        result.Add(newPath);
+                    }
+                    count++;
+                }
+            }
+        }
+
+        private static List<string> GetNextWords(string current, HashSet<string> check, HashSet<string> dict)
+        {
+            List<string> words = new List<string>();
+
+            for (int index = 0; index < current.Length; index++)
+            {
+                char[] wordBuilder = current.ToArray();
+                for (char ch = 'a'; ch <= 'z'; ch++)
+                {
+                    if (current[index] != ch) {
+                        wordBuilder[index] = ch;
+                        string word = new string(wordBuilder);
+                        if ((!check.Contains(word)) && (dict.Contains(word)))
+                        {
+                            words.Add(word);
+                        }
+                    }
+                }
+            }
+            return words;
+        }
+
     }
 }

@@ -239,5 +239,80 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Reverse Polish Notation
+
+        /// <summary>
+        /// Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+        /// 
+        /// ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
+        /// ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+        /// </summary>
+        /// <param name="tokens"></param>
+        /// <returns></returns>
+        public static int EvalRPN(string[] tokens)
+        {
+            if (tokens == null)
+            {
+                throw new ArgumentException();
+            }
+
+            if (tokens.Length == 0)
+            {
+                return 0;
+            }
+
+            //looks like we only need to look back 2 when we encounter an operator
+            //what if we push into stack, pop 2 if we encounter an operator, evaluate it
+            //and push it back until we encounter another symbol
+            //if we are done, just pop the final result from the stack
+
+            //in case of an overflow
+            Stack<long> stack = new Stack<long>();
+            foreach (string token in tokens)
+            {
+                if ((token == "+") || (token == "-") || (token == "*") || (token == "/"))
+                {
+                    if (stack.Count < 2)
+                    {
+                        throw new ArgumentException();
+                    }
+
+                    long right = stack.Pop();
+                    long left = stack.Pop();
+
+                    long result = 0;
+                    switch (token)
+                    {
+                        case "+":
+                            result = left + right;
+                            break;
+                        case "-":
+                            result = left - right;
+                            break;
+                        case "*":
+                            result = left * right;
+                            break;
+                        case "/":
+                            result = left / right;
+                            break;
+                    }
+                    stack.Push(result);
+                }
+                else
+                {
+                    stack.Push(long.Parse(token));
+                }
+            }
+
+            if (stack.Count == 1)
+            {
+                return (int)stack.Pop();
+            }
+
+            throw new ArgumentException();
+        }
+
+        #endregion
+
     }
 }

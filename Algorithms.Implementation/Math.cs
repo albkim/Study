@@ -280,5 +280,63 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Happy Number
+
+        /*
+            A happy number is a number defined by the following process: Starting with any positive integer,
+            replace the number by the sum of the squares of its digits, and repeat the process until the number
+            equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+            Those numbers for which this process ends in 1 are happy numbers.
+
+            19 is a happy number
+
+            12 + 92 = 82
+            82 + 22 = 68
+            62 + 82 = 100
+            12 + 02 + 02 = 1
+         */
+        public static bool IsHappy(int n)
+        {
+            int number = n;
+
+            HashSet<int> check = new HashSet<int>();
+
+            //return false if we get into an infinite loop
+            while (!check.Contains(number))
+            {
+                check.Add(number);
+
+                if (number == 1)
+                {
+                    return true;
+                }
+
+                number = GetSumOfSquresOfDigits(number);
+            }
+            return false;
+        }
+
+        private static int GetSumOfSquresOfDigits(int number)
+        {
+            //123 = length of 3
+            int length = (int)System.Math.Log(number, 10) + 1;
+            //100 = 10 ^ (3 - 1)
+            int divisor = (int)System.Math.Pow(10, length - 1);
+
+            //overflow?
+            //(31)9^2...not possible
+            int sum = 0;
+            for (int count = 0; count < length; count++)
+            {
+                int digit = number / divisor;
+                sum += (int)System.Math.Pow(digit, 2);
+                number -= digit * divisor;
+                divisor /= 10;
+            }
+            return sum;
+        }
+
+        #endregion
+
     }
 }

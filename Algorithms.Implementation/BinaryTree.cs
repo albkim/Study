@@ -699,6 +699,36 @@ namespace Algorithms.Implementation
 
         #endregion
 
+        #region Balanced Tree
+
+        public bool IsBalanced()
+        {
+            if (this.Root == null)
+            {
+                return true;
+            }
+
+            //since it requires every node to only differ by one (not all leaf nodes), 
+            //we need to recursively compare left and right height of every sub tree
+            return IsBalanced(this.Root) != -1;
+        }
+
+        private int IsBalanced(TreeNode<T> node)
+        {
+            int left = (node.Left != null) ? IsBalanced(node.Left) : 0;
+            int right = (node.Right != null) ? IsBalanced(node.Right) : 0;
+
+            if ((left == -1) || (right == -1) || (System.Math.Abs(left - right) > 1))
+            {
+                return -1;
+            }
+
+            return System.Math.Max(left, right) + 1;
+        }
+
+        #endregion
+
+
     }
 
 }
