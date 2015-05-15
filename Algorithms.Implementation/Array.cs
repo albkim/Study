@@ -1596,41 +1596,6 @@ namespace Algorithms.Implementation
 
         #endregion
 
-        #region Merge Two Sorted Arrays
-
-        public static void Merge(int[] nums1, int m, int[] nums2, int n)
-        {
-            //validation
-            if ((nums1 == null) || (nums2 == null))
-            {
-                throw new ArgumentException();
-            }
-            if (nums1.Length < (m + n))
-            {
-                throw new ArgumentException();
-            }
-
-            //if we populate from the back this should work i think
-            int leftIndex = m - 1;
-            for (int rightIndex = n - 1; rightIndex >= 0; rightIndex--)
-            {
-                //move larger number from left to end of left
-                int mergedIndex = 0;
-                while ((leftIndex >= 0 ? nums1[leftIndex] : int.MinValue) > nums2[rightIndex])
-                {
-                    mergedIndex = leftIndex + rightIndex + 1;
-                    nums1[mergedIndex] = nums1[leftIndex];
-                    leftIndex--;
-                }
-
-                //now move right one by one
-                mergedIndex = leftIndex + rightIndex + 1;
-                nums1[mergedIndex] = nums2[rightIndex];
-            }
-        }
-
-        #endregion
-
         #region Permutation Sequence
 
         /// <summary>
